@@ -1,0 +1,29 @@
+{
+  "canisters": {
+    "neuronpool_frontend_backend": {
+      "main": "src/neuronpool_frontend_backend/main.mo",
+      "type": "motoko"
+    },
+    "neuronpool_frontend_frontend": {
+      "dependencies": [
+        "neuronpool_frontend_backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/neuronpool_frontend_frontend/src/index.html"
+      },
+      "source": [
+        "src/neuronpool_frontend_frontend/assets",
+        "dist/neuronpool_frontend_frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
