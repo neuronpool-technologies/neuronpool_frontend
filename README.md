@@ -1,4 +1,4 @@
-# NeuronPool frontend page
+# NeuronPool frontend
 
 This repo contains the code and CSS design for the NeuronPool frontend.
 
