@@ -1,18 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { lightColor } from "./colors";
+import { Provider } from "react-redux";
+import store from "./state/store";
+import { lightColor, darkColor } from "./colors";
 import App from "./App";
 
 const theme = extendTheme({
   config: {
-    initialColorMode: "dark",
+    initialColorMode: "light",
     useSystemColorMode: false,
   },
   styles: {
     global: (props) => ({
       body: {
-        bg: props.colorMode === "dark" ? lightColor : lightColor,
+        bg: props.colorMode === "light" ? lightColor : darkColor,
       },
     }),
   },
@@ -21,7 +23,9 @@ const theme = extendTheme({
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </ChakraProvider>
   </React.StrictMode>
 );

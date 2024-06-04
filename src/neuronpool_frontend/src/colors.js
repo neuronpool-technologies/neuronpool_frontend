@@ -1,7 +1,10 @@
 export const bottomGradient = "#92c0df";
-export const middleGradient= "#d6a2a6"
+export const middleGradient = "#d6a2a6";
 export const topGradient = "#f7c745";
 export const fontColor = "#1a1a1a";
 export const subFontColor = "#a9acb1";
 export const lightColor = "#fefbf1";
+export const lightColorBox = "#f7f7f8";
+export const darkColor = "#1d252a";
+export const darkColorBox = "#2c353d";
 export const mainColor = "#f04a01";

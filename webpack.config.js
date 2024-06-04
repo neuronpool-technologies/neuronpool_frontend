@@ -1,9 +1,9 @@
-require("dotenv").config();
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+require("dotenv").config({ path: "./.env" });
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -46,11 +46,11 @@ module.exports = {
   // tutorial, uncomment the following lines:
   module: {
     rules: [
-     { test: /\.(ts|tsx|jsx)$/, loader: "ts-loader" },
-     { test: /\.css$/, use: ["style-loader", "css-loader"] },
-     { test: /\.(gif|svg|jpg|png|ico|jpeg|webp)$/, loader: "file-loader" },
-    ]
-   },
+      { test: /\.(ts|tsx|jsx)$/, loader: "ts-loader" },
+      { test: /\.css$/, use: ["style-loader", "css-loader"] },
+      { test: /\.(gif|svg|jpg|png|ico|jpeg|webp)$/, loader: "file-loader" },
+    ],
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, frontend_entry),
@@ -75,6 +75,9 @@ module.exports = {
           noErrorOnMissing: true,
         },
       ],
+    }),
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(process.env),
     }),
   ],
   // proxy /api to port 4943 during development.
