@@ -13,8 +13,6 @@ import {
   lightColorBox,
   lightBorderColor,
   darkBorderColor,
-  darkColor,
-  lightColor,
 } from "../../colors";
 
 const FaqItem = ({ title, body }) => {
@@ -24,6 +22,7 @@ const FaqItem = ({ title, body }) => {
       w="100%"
       allowToggle
       allowMultiple
+      reduceMotion
       bg={colorMode === "light" ? lightColorBox : darkColorBox}
       border={
         colorMode === "light"
@@ -32,7 +31,6 @@ const FaqItem = ({ title, body }) => {
       }
       boxShadow="md"
       borderRadius="lg"
-      reduceMotion={false}
     >
       <AccordionItem border="none">
         <AccordionButton p={6} _hover="none">
