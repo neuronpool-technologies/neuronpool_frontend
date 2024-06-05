@@ -12,6 +12,7 @@ import {
   Avatar,
   Image as ChakraImage,
   useClipboard,
+  useColorMode,
 } from "@chakra-ui/react";
 import {
   ChevronDownIcon,
@@ -19,12 +20,18 @@ import {
   CopyIcon,
   CheckIcon,
 } from "@chakra-ui/icons";
-import { setLogin, setLogout, setPrincipal } from "../state/LoginSlice";
-import { useNavigate } from "react-router-dom";
+import {
+  setLogin,
+  setLogout,
+  setPrincipal,
+  setWallet,
+} from "../state/LoginSlice";
 import { AuthClient } from "@dfinity/auth-client";
 import { Usergeek } from "usergeek-ic-js";
 import { useDispatch, useSelector } from "react-redux";
 import IcLogo from "../../assets/ic-logo.png";
+import { InitProfile } from "../tools/InitProfile";
+import { darkColorBox, lightColorBox } from "../colors";
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -102,10 +109,11 @@ const Auth = () => {
 export default Auth;
 
 const UserProfile = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const principal = useSelector((state) => state.Profile.principal);
+  const icp_address = useSelector((state) => state.Profile.icp_address);
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const logout = async () => {
     const authClient = await AuthClient.create();
@@ -113,8 +121,24 @@ const UserProfile = () => {
     dispatch(setLogout());
     dispatch(setPrincipal(""));
     Usergeek.setPrincipal(undefined);
-    navigate("/");
   };
+
+  const saveProfile = async () => {
+    const { icp_address, icp_balance } = await InitProfile({
+      principal: principal,
+    });
+
+    dispatch(
+      setWallet({
+        icp_address: icp_address,
+        icp_balance: icp_balance,
+      })
+    );
+  };
+
+  useEffect(() => {
+    saveProfile();
+  }, []);
 
   return (
     <Menu autoSelect={false}>
@@ -130,7 +154,11 @@ const UserProfile = () => {
             : null}
         </Flex>
       </MenuButton>
-      <MenuList alignItems={"center"} zIndex={3}>
+      <MenuList
+        alignItems={"center"}
+        zIndex={3}
+        bg={colorMode === "light" ? lightColorBox : darkColorBox}
+      >
         <Flex align="center" m={3} gap={2}>
           <Avatar
             size="sm"
@@ -142,10 +170,10 @@ const UserProfile = () => {
             : null}
         </Flex>
         <CopyToClipboardButton value={principal} type={"principal ID"} />
-        {/* <CopyToClipboardButton
+        <CopyToClipboardButton
           value={icp_address.toLowerCase()}
           type={"ICP address"}
-        /> */}
+        />
         <MenuDivider />
         <MenuGroup title="App version">
           <Flex align="center" mx={3} gap={2}>
