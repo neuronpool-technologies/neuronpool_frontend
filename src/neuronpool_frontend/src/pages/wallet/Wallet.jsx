@@ -15,6 +15,7 @@ import {
   lightBorderColor,
   darkBorderColor,
 } from "../../colors";
+import { WalletFaq } from "../../components";
 
 const Wallet = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -43,6 +44,7 @@ const Wallet = () => {
           <Divider />
         </VStack>
       </Box>
+      <WalletFaq />
     </Container>
   );
 };
