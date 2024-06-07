@@ -182,16 +182,11 @@ const SendIcp = () => {
           amount: amountConverted - icp_fee,
         });
 
-        const { icp_address, icp_balance } = await InitProfile({
+        const profile = await InitProfile({
           principal: principal,
         });
 
-        dispatch(
-          setWallet({
-            icp_address: icp_address,
-            icp_balance: icp_balance,
-          })
-        );
+        dispatch(setWallet(profile));
 
         setSending(false);
         setSent(true);

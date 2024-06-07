@@ -32,6 +32,10 @@ import { useDispatch, useSelector } from "react-redux";
 import IcLogo from "../../assets/ic-logo.png";
 import { InitProfile } from "../tools/InitProfile";
 import { darkColorBox, lightColorBox } from "../colors";
+import { InitProtocolInformation } from "../tools/InitProtocolInformation";
+import { setProtocolInformation } from "../state/ProtocolSlice";
+import { InitOperationHistory } from "../tools/InitOperationHistory";
+import { setHistory } from "../state/HistorySlice";
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -57,6 +61,15 @@ const Auth = () => {
       Usergeek.setPrincipal(principal);
       Usergeek.trackSession();
     }
+
+    // fetch information here
+    const [protocolInformation, history] = await Promise.all([
+      InitProtocolInformation(),
+      InitOperationHistory(),
+    ]);
+
+    dispatch(setProtocolInformation(protocolInformation));
+    dispatch(setHistory(history));
   };
 
   const connect = () => {
@@ -124,16 +137,11 @@ const UserProfile = () => {
   };
 
   const saveProfile = async () => {
-    const { icp_address, icp_balance } = await InitProfile({
+    const profile = await InitProfile({
       principal: principal,
     });
 
-    dispatch(
-      setWallet({
-        icp_address: icp_address,
-        icp_balance: icp_balance,
-      })
-    );
+    dispatch(setWallet(profile));
   };
 
   useEffect(() => {

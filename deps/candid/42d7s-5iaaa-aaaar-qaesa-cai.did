@@ -1,0 +1,192 @@
+type StakerPrizeNeurons = 
+ record {
+   all_prize_neurons: vec NeuronId;
+   claimed: vec DisburseReward;
+ };
+type StakeWithdrawal = 
+ record {
+   amount_e8s: nat64;
+   blockchain_fee: nat64;
+   neuron_id: NeuronId;
+   staker: principal;
+ };
+type StakeTransfer = 
+ record {
+   amount_e8s: nat64;
+   blockchain_fee: nat64;
+   staker: principal;
+ };
+type SpawnReward = 
+ record {
+   neuron_id: NeuronId;
+   winner: principal;
+ };
+type RewardTimer = 
+ record {
+   timer_duration_nanos: nat64;
+   timer_id: nat;
+ };
+type ProtocolInformationResult = 
+ variant {
+   err;
+   ok: ProtocolInformation;
+ };
+type ProtocolInformation = 
+ record {
+   account_identifier: text;
+   default_neuron_followee: NeuronId;
+   icrc_identifier: text;
+   main_neuron_dissolve_seconds: nat32;
+   minimum_stake: nat64;
+   minimum_withdrawal: nat64;
+   protocol_fee_percentage: nat64;
+   reward_timer_duration_nanos: nat64;
+   total_protocol_fees: nat64;
+   total_stake_amount: nat64;
+ };
+type OperationResponse = 
+ variant {
+   err: text;
+   ok: OperationIndex;
+ };
+type OperationIndex = nat;
+type Operation = 
+ record {
+   action: Action;
+   timestamp_nanos: nat64;
+ };
+type NnsNeuronInformation = 
+ record {
+   account: vec nat8;
+   age_seconds: nat64;
+   aging_since_timestamp_seconds: nat64;
+   cached_neuron_stake_e8s: nat64;
+   controller: opt principal;
+   created_timestamp_seconds: nat64;
+   dissolve_delay_seconds: nat64;
+   dissolve_state: opt DissolveState;
+   followees: vec record {
+                    int32;
+                    Followees;
+                  };
+   hot_keys: vec principal;
+   id: opt NeuronId__1;
+   joined_community_fund_timestamp_seconds: opt nat64;
+   known_neuron_data: opt KnownNeuronData;
+   kyc_verified: bool;
+   maturity_e8s_equivalent: nat64;
+   neuron_fees_e8s: nat64;
+   not_for_profit: bool;
+   recent_ballots: vec BallotInfo;
+   retrieved_at_timestamp_seconds: nat64;
+   spawn_at_timestamp_seconds: opt nat64;
+   stake_e8s: nat64;
+   state: int32;
+   transfer: opt NeuronStakeTransfer;
+   voting_power: nat64;
+ };
+type NnsInformationResult = 
+ variant {
+   err: text;
+   ok: NnsNeuronInformation;
+ };
+type NeuronStakeTransfer = 
+ record {
+   block_height: nat64;
+   from: opt principal;
+   from_subaccount: vec nat8;
+   memo: nat64;
+   neuron_stake_e8s: nat64;
+   to_subaccount: vec nat8;
+   transfer_timestamp: nat64;
+ };
+type NeuronId__1 = record {id: nat64;};
+type NeuronId = nat64;
+type KnownNeuronData = 
+ record {
+   description: opt text;
+   name: text;
+ };
+type HistoryResult = 
+ variant {
+   err;
+   ok: History;
+ };
+type History = 
+ record {
+   operations: vec opt Operation;
+   total: nat;
+ };
+type HeapData = 
+ record {
+   heap_bytes: nat;
+   heap_mb: nat;
+   mem_bytes: nat;
+   mem_mb: nat;
+   operation_entries: nat;
+ };
+type Followees = record {followees: vec NeuronId__1;};
+type DissolveState = 
+ variant {
+   DissolveDelaySeconds: nat64;
+   WhenDissolvedTimestampSeconds: nat64;
+ };
+type DisburseReward = 
+ record {
+   amount: nat64;
+   neuron_id: NeuronId;
+   protocol_fee: nat64;
+   winner: principal;
+ };
+type CreateNeuron = 
+ record {
+   neuron_id: nat64;
+   token: text;
+ };
+type ConfigureResponse = 
+ variant {
+   err: text;
+   ok;
+ };
+type BallotInfo = 
+ record {
+   proposal_id: opt NeuronId__1;
+   vote: int32;
+ };
+type Action = 
+ variant {
+   CreateNeuron: CreateNeuron;
+   DisburseReward: DisburseReward;
+   RewardTimer: RewardTimer;
+   SpawnReward: SpawnReward;
+   StakeTransfer: StakeTransfer;
+   StakeWithdrawal: StakeWithdrawal;
+ };
+service : {
+  controller_get_canister_memory: () -> (HeapData) query;
+  controller_set_main_neuron_dissolve_delay: () -> (ConfigureResponse);
+  controller_set_main_neuron_following: (record {topic: int32;}) ->
+   (ConfigureResponse);
+  controller_set_spawn_reward_timer: () -> (OperationResponse);
+  controller_stake_main_neuron: (record {amount_e8s: nat64;}) ->
+   (OperationResponse);
+  get_main_neuron: () -> (NnsInformationResult);
+  get_neuron_information: (NeuronId) -> (NnsInformationResult);
+  get_operation_history: (record {
+                            length: nat;
+                            start: nat;
+                          }) -> (HistoryResult) query;
+  get_protocol_information: () -> (ProtocolInformationResult) query;
+  get_staker_balance: () -> (nat64) query;
+  get_staker_prize_neurons: () -> (StakerPrizeNeurons) query;
+  get_staker_withdrawal_neurons: () -> (vec NeuronId) query;
+  initiate_icp_stake_transfer: () -> (OperationResponse);
+  initiate_icp_stake_withdrawal: (record {amount_e8s: nat64;}) ->
+   (OperationResponse);
+  process_icp_prize_disburse: (record {neuronId: NeuronId;}) ->
+   (OperationResponse);
+  process_icp_stake_disburse: (record {neuronId: NeuronId;}) ->
+   (ConfigureResponse);
+  process_icp_stake_dissolve: (record {neuronId: NeuronId;}) ->
+   (ConfigureResponse);
+}

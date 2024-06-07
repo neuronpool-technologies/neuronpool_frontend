@@ -20,7 +20,6 @@ const FaqItem = ({ title, body }) => {
   return (
     <Accordion
       w="100%"
-      allowToggle
       allowMultiple
       reduceMotion
       bg={colorMode === "light" ? lightColorBox : darkColorBox}
@@ -33,7 +32,7 @@ const FaqItem = ({ title, body }) => {
       borderRadius="lg"
     >
       <AccordionItem border="none">
-        <AccordionButton p={6} _hover="none">
+        <AccordionButton p={6} _hover={{}}>
           <Text
             flex="1"
             textAlign="left"
@@ -44,7 +43,9 @@ const FaqItem = ({ title, body }) => {
           </Text>
           <AccordionIcon />
         </AccordionButton>
-        <AccordionPanel pb={4} fontWeight={500} px={6}>{body}</AccordionPanel>
+        <AccordionPanel pb={4} fontWeight={500} px={6}>
+          {body}
+        </AccordionPanel>
       </AccordionItem>
     </Accordion>
   );
