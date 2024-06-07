@@ -11,6 +11,7 @@ export const InitProfile = async ({ principal }) => {
     startLedgerIndexClient(),
   ]);
 
+  // get account information
   const account = AccountIdentifier.fromPrincipal({
     principal: Principal.fromText(principal),
   });
@@ -20,6 +21,7 @@ export const InitProfile = async ({ principal }) => {
     accountIdentifier: account,
   });
 
+  // get neuronpool information
   const [
     neuronpoolBalance,
     neuronpoolWithdrawalNeurons,

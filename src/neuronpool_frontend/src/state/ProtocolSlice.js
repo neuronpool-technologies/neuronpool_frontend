@@ -13,6 +13,8 @@ const ProtocolSlice = createSlice({
     main_neuron_dissolve_seconds: "",
     total_protocol_fees: "",
     total_stake_amount: "",
+    total_stakers: "",
+    icp_price_usd: "",
   },
   reducers: {
     setProtocolInformation: (state, action) => {
@@ -28,6 +30,8 @@ const ProtocolSlice = createSlice({
         action.payload.main_neuron_dissolve_seconds;
       state.total_protocol_fees = action.payload.total_protocol_fees;
       state.total_stake_amount = action.payload.total_stake_amount;
+      state.total_stakers = action.payload.total_stakers;
+      state.icp_price_usd = action.payload.icp_price_usd;
     },
   },
 });

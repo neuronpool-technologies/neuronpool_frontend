@@ -43,6 +43,7 @@ type ProtocolInformation =
    reward_timer_duration_nanos: nat64;
    total_protocol_fees: nat64;
    total_stake_amount: nat64;
+   total_stakers: nat;
  };
 type OperationResponse = 
  variant {

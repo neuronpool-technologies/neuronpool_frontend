@@ -2,8 +2,8 @@
   "canisters": {
     "42d7s-5iaaa-aaaar-qaesa-cai": {
       "name": "NeuronPool",
-      "wasm_hash": "ec5ce4b29c59a1e68c809b3f8292e9212a9de98799201f6af36eb7e05edc5e17",
-      "wasm_hash_download": "ec5ce4b29c59a1e68c809b3f8292e9212a9de98799201f6af36eb7e05edc5e17",
+      "wasm_hash": "12d15ac6ada1442aef1d7cc21cff01ee754b93ae7a79327c5423cf7a63d03cef",
+      "wasm_hash_download": "12d15ac6ada1442aef1d7cc21cff01ee754b93ae7a79327c5423cf7a63d03cef",
       "init_guide": "dfx deps pull",
       "init_arg": null,
       "candid_args": "()",

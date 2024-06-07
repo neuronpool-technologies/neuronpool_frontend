@@ -15,8 +15,13 @@ export const InitProtocolInformation = async () => {
       main_neuron_dissolve_seconds,
       total_protocol_fees,
       total_stake_amount,
+      total_stakers,
     },
   } = await neuronpool.get_protocol_information();
+
+  // get usd information
+  const url = "https://api.pro.coinbase.com/products/ICP-USD/ticker";
+  const { price } = await fetch(url).then((x) => x.json());
 
   return {
     account_identifier: account_identifier.toString(),
@@ -29,5 +34,7 @@ export const InitProtocolInformation = async () => {
     main_neuron_dissolve_seconds: main_neuron_dissolve_seconds.toString(),
     total_protocol_fees: total_protocol_fees.toString(),
     total_stake_amount: total_stake_amount.toString(),
+    total_stakers: total_stakers.toString(),
+    icp_price_usd: price,
   };
 };
