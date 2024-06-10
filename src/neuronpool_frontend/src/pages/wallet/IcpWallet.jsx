@@ -45,15 +45,17 @@ import {
   darkBorderColor,
   darkColorBox,
   darkGrayColor,
+  darkGrayTextColor,
   lightBorderColor,
   lightColorBox,
   lightGrayColor,
+  lightGrayTextColor,
 } from "../../colors";
 import { Auth } from "../../components";
 
 const IcpWallet = () => {
   const icpBalance = useSelector((state) => state.Profile.icp_balance);
-  const icp_address = useSelector((state) => state.Profile.loggedIn);
+  const loggedIn = useSelector((state) => state.Profile.loggedIn);
 
   const { colorMode, toggleColorMode } = useColorMode();
   return (
@@ -79,13 +81,13 @@ const IcpWallet = () => {
         </VStack>
         <Spacer />
         <Heading size={{ base: "sm", md: "md" }} noOfLines={1}>
-          {icp_address ? Number(e8sToIcp(icpBalance)).toFixed(4) : "--"}
+          {loggedIn ? Number(e8sToIcp(icpBalance)).toFixed(4) : "--"}
         </Heading>
       </Flex>
       <Flex w="100%">
         <Spacer />
         <HStack justify="end" wrap="wrap">
-          {icp_address ? (
+          {loggedIn ? (
             <>
               <ReceiveIcp />
               <SendIcp />
@@ -276,18 +278,42 @@ const SendIcp = () => {
                 >
                   <Flex w="100%">
                     <Flex align={"center"} gap={1}>
-                      <Text noOfLines={1}>Available</Text>
+                      <Text
+                        noOfLines={1}
+                        fontWeight={500}
+                        color={
+                          colorMode === "light"
+                            ? lightGrayTextColor
+                            : darkGrayTextColor
+                        }
+                      >
+                        Available
+                      </Text>
                     </Flex>
                     <Spacer />
-                    <Text noOfLines={1}>{e8sToIcp(icpBalance)} ICP</Text>
+                    <Text noOfLines={1} fontWeight={500}>
+                      {e8sToIcp(icpBalance)} ICP
+                    </Text>
                   </Flex>
                   <Divider />
                   <Flex w="100%">
                     <Flex align={"center"} gap={1}>
-                      <Text noOfLines={1}>Network fee</Text>
+                      <Text
+                        noOfLines={1}
+                        fontWeight={500}
+                        color={
+                          colorMode === "light"
+                            ? lightGrayTextColor
+                            : darkGrayTextColor
+                        }
+                      >
+                        Network fee
+                      </Text>
                     </Flex>
                     <Spacer />
-                    <Text noOfLines={1}>0.0001 ICP</Text>
+                    <Text noOfLines={1} fontWeight={500}>
+                      0.0001 ICP
+                    </Text>
                   </Flex>
                 </VStack>
               </FormControl>

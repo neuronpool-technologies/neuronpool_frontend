@@ -18,13 +18,15 @@ import IcpStake from "./IcpStake";
 import ProtocolStats from "./ProtocolStats";
 import { StakeFaq } from "../../components/";
 import StakerBalance from "./StakerBalance";
+import { useSelector } from "react-redux";
 
 const Stake = () => {
   const { colorMode, toggleColorMode } = useColorMode();
+  const loggedIn = useSelector((state) => state.Profile.loggedIn);
 
   return (
     <Container maxW="xl" my={5}>
-      <StakerBalance />
+      {loggedIn ? <StakerBalance /> : null}
       <Box
         boxShadow="md"
         borderRadius="lg"

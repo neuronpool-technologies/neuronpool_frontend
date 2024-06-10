@@ -15,6 +15,8 @@ import {
   darkBorderColor,
   darkColor,
   lightColor,
+  lightGrayTextColor,
+  darkGrayTextColor,
 } from "../../colors";
 import { useSelector } from "react-redux";
 import { e8sToIcp } from "../../tools/conversions";
@@ -78,14 +80,21 @@ const ProtocolStats = () => {
 export default ProtocolStats;
 
 const StatRow = ({ title, stat }) => {
+  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <>
       <Flex w="100%">
-        <Text noOfLines={1} fontWeight={500}>
+        <Text
+          noOfLines={1}
+          fontWeight={500}
+          color={colorMode === "light" ? lightGrayTextColor : darkGrayTextColor}
+        >
           {title}
         </Text>
         <Spacer />
-        <Text noOfLines={1}>{stat}</Text>
+        <Text noOfLines={1} fontWeight={500}>
+          {stat}
+        </Text>
       </Flex>
     </>
   );
