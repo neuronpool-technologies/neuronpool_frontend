@@ -26,7 +26,6 @@ const WalletFaq = () => {
         <Text
           fontWeight="bold"
           color={colorMode === "light" ? darkColor : lightColor}
-          fontSize={{ base: "sm", md: "md" }}
         >
           Wallet FAQ
         </Text>

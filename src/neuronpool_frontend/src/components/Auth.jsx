@@ -103,7 +103,7 @@ const Auth = () => {
       {loggedIn ? (
         <UserProfile />
       ) : (
-        <Button onClick={connect}>
+        <Button onClick={connect} w="100%">
           <Flex align="center">
             Connect Identity&nbsp;
             <ChakraImage

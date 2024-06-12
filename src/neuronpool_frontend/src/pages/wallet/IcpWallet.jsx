@@ -3,7 +3,6 @@ import {
   Heading,
   VStack,
   Button,
-  HStack,
   Flex,
   Box,
   Text,
@@ -60,7 +59,7 @@ const IcpWallet = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <>
-      <Flex align="center" p={1} w="100%">
+      <Flex align="center" p={1} w="100%" mb={3}>
         <ChakraImage
           src={IcLogo}
           alt="ICP logo"
@@ -84,19 +83,14 @@ const IcpWallet = () => {
           {loggedIn ? Number(e8sToIcp(icpBalance)).toFixed(4) : "--"}
         </Heading>
       </Flex>
-      <Flex w="100%">
-        <Spacer />
-        <HStack justify="end" wrap="wrap">
-          {loggedIn ? (
-            <>
-              <ReceiveIcp />
-              <SendIcp />
-            </>
-          ) : (
-            <Auth />
-          )}
-        </HStack>
-      </Flex>
+      {loggedIn ? (
+        <Flex w="100%" gap={3}>
+          <ReceiveIcp />
+          <SendIcp />
+        </Flex>
+      ) : (
+        <Auth large />
+      )}
     </>
   );
 };
@@ -111,7 +105,9 @@ const ReceiveIcp = () => {
 
   return (
     <>
-      <Button onClick={onOpen}>Receive</Button>
+      <Button onClick={onOpen} w={"100%"}>
+        Receive
+      </Button>
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent bg={colorMode === "light" ? lightColorBox : darkColorBox}>
@@ -210,7 +206,9 @@ const SendIcp = () => {
 
   return (
     <>
-      <Button onClick={onOpen}>Send</Button>
+      <Button onClick={onOpen} w={"100%"}>
+        Send
+      </Button>
       <Modal isOpen={isOpen} onClose={closeModal} isCentered>
         <ModalOverlay />
         <ModalContent bg={colorMode === "light" ? lightColorBox : darkColorBox}>

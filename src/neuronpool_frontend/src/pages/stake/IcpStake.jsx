@@ -6,14 +6,27 @@ import {
   InputLeftElement,
   Button,
   Image as ChakraImage,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  VStack,
+  Divider,
 } from "@chakra-ui/react";
 import IcLogo from "../../../assets/ic-logo.png";
 import { e8sToIcp, icpToE8s } from "../../tools/conversions";
 import { useSelector } from "react-redux";
+import Auth from "../../components/Auth";
+import InfoRow from "../../components/InfoRow";
 
 const IcpStake = () => {
   const [amount, setAmount] = useState("");
   const icpBalance = useSelector((state) => state.Profile.icp_balance);
+  const loggedIn = useSelector((state) => state.Profile.loggedIn);
   const [staking, setStaking] = useState(false);
 
   return (
@@ -45,7 +58,7 @@ const IcpStake = () => {
             _hover={{ opacity: "0.8" }}
             h="1.75rem"
             size="sm"
-            isDisabled={staking}
+            isDisabled={staking || !loggedIn}
             onClick={() => {
               const newAmount = e8sToIcp(Number(icpBalance));
               setAmount(newAmount || "");
@@ -55,12 +68,51 @@ const IcpStake = () => {
           </Button>
         </InputRightElement>
       </InputGroup>
-      {/* Should open modal */}
-      <Button size="lg" w="100%" colorScheme="blue">
-        Stake
-      </Button>
+      <StakeModal amount={amount} />
     </>
   );
 };
 
 export default IcpStake;
+
+const StakeModal = ({ amount }) => {
+  const loggedIn = useSelector((state) => state.Profile.loggedIn);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <>
+      {loggedIn ? (
+        <>
+          <Button onClick={onOpen} w="100%" size="lg" colorScheme="blue">
+            Stake
+          </Button>
+
+          <Modal isOpen={isOpen} onClose={onClose} isCentered>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader align="center">Stake</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <VStack align="start" p={3} gap={3}>
+                  <InfoRow title={"Stake amount"} stat={"hello"} />
+                  <Divider />
+                  <InfoRow title={"Network fee"} stat={"hello"} />
+                  <Divider />
+                  <InfoRow title={"Amount after fees"} stat={"hello"} />
+                </VStack>
+                {/* TODO add 3 steps */}
+              </ModalBody>
+
+              <ModalFooter>
+                <Button w="100%" colorScheme="blue">
+                  Confirm stake
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </>
+      ) : (
+        <Auth large />
+      )}
+    </>
+  );
+};

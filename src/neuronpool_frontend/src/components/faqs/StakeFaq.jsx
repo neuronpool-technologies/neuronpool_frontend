@@ -30,7 +30,6 @@ const StakeFaq = () => {
         <Text
           fontWeight="bold"
           color={colorMode === "light" ? darkColor : lightColor}
-          fontSize={{ base: "sm", md: "md" }}
         >
           Stake FAQ
         </Text>

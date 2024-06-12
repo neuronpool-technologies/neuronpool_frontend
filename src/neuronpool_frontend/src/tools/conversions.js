@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export function e8sToIcp(x) {
   if (!x) return 0;
   return x / Math.pow(10, 8);
@@ -9,4 +11,9 @@ export function icpToE8s(x) {
   } catch (e) {
     return 0n;
   }
+}
+
+export function convertSecondsToDays(seconds) {
+  const days = moment.duration(seconds, 'seconds').asDays();
+  return days;
 }

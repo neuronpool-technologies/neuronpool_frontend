@@ -41,7 +41,6 @@ const Wallet = () => {
         <VStack spacing={3} align="start">
           <Divider />
           <IcpWallet />
-          <Divider />
         </VStack>
       </Box>
       <WalletFaq />

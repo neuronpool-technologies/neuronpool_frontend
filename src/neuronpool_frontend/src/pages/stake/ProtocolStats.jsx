@@ -5,7 +5,6 @@ import {
   Flex,
   Text,
   VStack,
-  Spacer,
   Divider,
 } from "@chakra-ui/react";
 import {
@@ -15,11 +14,10 @@ import {
   darkBorderColor,
   darkColor,
   lightColor,
-  lightGrayTextColor,
-  darkGrayTextColor,
 } from "../../colors";
 import { useSelector } from "react-redux";
 import { e8sToIcp } from "../../tools/conversions";
+import { InfoRow } from "../../components";
 
 const ProtocolStats = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -35,7 +33,6 @@ const ProtocolStats = () => {
         <Text
           fontWeight="bold"
           color={colorMode === "light" ? darkColor : lightColor}
-          fontSize={{ base: "sm", md: "md" }}
         >
           NeuronPool statistics
         </Text>
@@ -53,12 +50,12 @@ const ProtocolStats = () => {
         bg={colorMode === "light" ? lightColorBox : darkColorBox}
       >
         <VStack align="start" p={3} gap={3}>
-          <StatRow
+          <InfoRow
             title={"Stakers"}
             stat={total_stakers ? total_stakers : "--"}
           />
           <Divider />
-          <StatRow
+          <InfoRow
             title={"Total staked"}
             stat={
               total_stake_amount
@@ -67,7 +64,7 @@ const ProtocolStats = () => {
             }
           />
           <Divider />
-          <StatRow
+          <InfoRow
             title={"Total value locked"}
             stat={total_stake_amount ? `$${tvl}` : "--"}
           />
@@ -78,24 +75,3 @@ const ProtocolStats = () => {
 };
 
 export default ProtocolStats;
-
-const StatRow = ({ title, stat }) => {
-  const { colorMode, toggleColorMode } = useColorMode();
-  return (
-    <>
-      <Flex w="100%">
-        <Text
-          noOfLines={1}
-          fontWeight={500}
-          color={colorMode === "light" ? lightGrayTextColor : darkGrayTextColor}
-        >
-          {title}
-        </Text>
-        <Spacer />
-        <Text noOfLines={1} fontWeight={500}>
-          {stat}
-        </Text>
-      </Flex>
-    </>
-  );
-};

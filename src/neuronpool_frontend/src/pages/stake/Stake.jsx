@@ -19,6 +19,7 @@ import ProtocolStats from "./ProtocolStats";
 import { StakeFaq } from "../../components/";
 import StakerBalance from "./StakerBalance";
 import { useSelector } from "react-redux";
+import StakeInfo from "./StakeInfo";
 
 const Stake = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -46,7 +47,7 @@ const Stake = () => {
         <VStack spacing={3} align="start">
           <Divider />
           <IcpStake />
-          <Divider />
+          <StakeInfo />
         </VStack>
       </Box>
       <ProtocolStats />
