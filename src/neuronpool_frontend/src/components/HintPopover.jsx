@@ -10,15 +10,13 @@ import { InfoIcon } from "@chakra-ui/icons";
 
 const HintPopover = ({ details }) => {
   return (
-    <Popover>
+    <Popover trigger="hover">
       <PopoverTrigger>
         <InfoIcon
           color="gray.500"
           aria-label="info"
           _hover={{
             cursor: "pointer",
-            transform: "scale(1.1)",
-            transition: "transform 0.2s",
           }}
         />
       </PopoverTrigger>

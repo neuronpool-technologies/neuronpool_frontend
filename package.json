@@ -14,7 +14,7 @@
     "start": "webpack serve --mode development --env development",
     "deploy:local": "dfx deploy --network=local",
     "deploy:ic": "dfx deploy --network=ic",
-    "generate": "dfx generate neuronpool_frontend_backend"
+    "generate": "dfx generate"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
@@ -31,6 +31,7 @@
     "framer-motion": "^11.2.0",
     "moment": "^2.30.1",
     "react": "^18.2.0",
+    "react-canvas-confetti": "^2.0.7",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.10.0",
