@@ -14,6 +14,12 @@ export function icpToE8s(x) {
 }
 
 export function convertSecondsToDays(seconds) {
-  const days = moment.duration(seconds, 'seconds').asDays();
+  const days = moment.duration(seconds, "seconds").asDays();
+  return days;
+}
+
+export function convertNanosecondsToDays(nanoseconds) {
+  const seconds = nanoseconds / 1e9;
+  const days = moment.duration(seconds, "seconds").asDays();
   return days;
 }

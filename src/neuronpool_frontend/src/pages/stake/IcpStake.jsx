@@ -50,13 +50,15 @@ import { setWallet } from "../../state/LoginSlice";
 const steps = [{ description: "Approve ICP" }, { description: "Stake ICP" }];
 
 const IcpStake = () => {
-  const icpBalance = useSelector((state) => state.Profile.icp_balance);
-  const loggedIn = useSelector((state) => state.Profile.loggedIn);
-  const principal = useSelector((state) => state.Profile.principal);
-  const minimumStake = useSelector((state) => state.Protocol.minimum_stake);
+  const { icp_balance, loggedIn, principal } = useSelector(
+    (state) => state.Profile
+  );
+  const { icrc_identifier, minimum_stake } = useSelector(
+    (state) => state.Protocol
+  );
   const dispatch = useDispatch();
 
-  const networkFeeE8s = 20_000;
+  const networkFeeE8s = 10_000;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -81,11 +83,9 @@ const IcpStake = () => {
     try {
       // step 1 approve:
       await ledger.icrc2Approve({
-        amount: icpToE8s(Number(amount)),
+        amount: icpToE8s(Number(amount)) - BigInt(networkFeeE8s),
         spender: {
-          owner: Principal.fromText(
-            process.env.REACT_APP_NEURONPOOL_CANISTER_ID
-          ),
+          owner: Principal.fromText(icrc_identifier),
           subaccount: [],
         },
       });
@@ -162,7 +162,7 @@ const IcpStake = () => {
           isDisabled={staking}
           isInvalid={
             (amount !== "" && icpToE8s(Number(amount)) <= 10000) ||
-            icpToE8s(Number(amount)) > Number(icpBalance)
+            icpToE8s(Number(amount)) > Number(icp_balance)
           }
           type="number"
           onChange={(event) => setAmount(event.target.value)}
@@ -174,7 +174,7 @@ const IcpStake = () => {
             size="sm"
             isDisabled={staking || !loggedIn}
             onClick={() => {
-              const newAmount = e8sToIcp(Number(icpBalance));
+              const newAmount = e8sToIcp(Number(icp_balance));
               setAmount(newAmount || "");
             }}
           >
@@ -189,9 +189,10 @@ const IcpStake = () => {
             w="100%"
             colorScheme="blue"
             isDisabled={
-              (!staked && Number(icpBalance) < Number(minimumStake)) ||
-              icpToE8s(Number(amount)) < Number(minimumStake) + networkFeeE8s ||
-              (!staked && icpToE8s(Number(amount)) > Number(icpBalance))
+              (!staked && Number(icp_balance) < Number(minimum_stake)) ||
+              icpToE8s(Number(amount)) <
+                Number(minimum_stake) + networkFeeE8s * 2 ||
+              (!staked && icpToE8s(Number(amount)) > Number(icp_balance))
             }
           >
             Stake
@@ -253,14 +254,16 @@ const IcpStake = () => {
                   <Divider />
                   <InfoRow
                     title={"Network fee"}
-                    stat={`${e8sToIcp(networkFeeE8s)} ICP`}
+                    stat={`${e8sToIcp(networkFeeE8s * 2)} ICP`}
                   />
                   <Divider />
                   <Box w="100%" color="green.500">
                     <InfoRow
                       title={"Amount after fee"}
                       stat={`${e8sToIcp(
-                        Number(icpToE8s(Number(amount)) - BigInt(networkFeeE8s))
+                        Number(
+                          icpToE8s(Number(amount)) - BigInt(networkFeeE8s * 2)
+                        )
                       )} ICP`}
                     />
                   </Box>
