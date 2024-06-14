@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
@@ -18,10 +17,7 @@ import {
 const FaqItem = ({ title, body }) => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <Accordion
-      w="100%"
-      allowMultiple
-      reduceMotion
+    <AccordionItem
       bg={colorMode === "light" ? lightColorBox : darkColorBox}
       border={
         colorMode === "light"
@@ -30,24 +26,23 @@ const FaqItem = ({ title, body }) => {
       }
       boxShadow="md"
       borderRadius="lg"
+      w="100%"
     >
-      <AccordionItem border="none">
-        <AccordionButton p={6} _hover={{}}>
-          <Text
-            flex="1"
-            textAlign="left"
-            fontWeight="bold"
-            fontSize={{ base: "sm", md: "md" }}
-          >
-            {title}
-          </Text>
-          <AccordionIcon />
-        </AccordionButton>
-        <AccordionPanel pb={4} fontWeight={500} px={6}>
-          {body}
-        </AccordionPanel>
-      </AccordionItem>
-    </Accordion>
+      <AccordionButton p={6} _hover={{}}>
+        <Text
+          flex="1"
+          textAlign="left"
+          fontWeight="bold"
+          fontSize={{ base: "sm", md: "md" }}
+        >
+          {title}
+        </Text>
+        <AccordionIcon />
+      </AccordionButton>
+      <AccordionPanel pb={4} fontWeight={500} px={6}>
+        {body}
+      </AccordionPanel>
+    </AccordionItem>
   );
 };
 

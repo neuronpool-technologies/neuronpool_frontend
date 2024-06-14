@@ -14,7 +14,7 @@ const HintPopover = ({ details }) => {
       <PopoverTrigger>
         <InfoIcon
           color="gray.500"
-          aria-label="info"
+          aria-label="Info icon"
           _hover={{
             cursor: "pointer",
           }}

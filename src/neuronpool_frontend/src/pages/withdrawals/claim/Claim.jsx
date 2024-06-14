@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Container,
   useColorMode,
   Heading,
   Box,
@@ -13,24 +12,22 @@ import {
   lightColorBox,
   lightBorderColor,
   darkBorderColor,
-} from "../../colors";
-import Request from "./request/Request";
-import Claim from "./claim/Claim";
-import RequestBalance from "./request/RequestBalance";
+} from "../../../colors";
+import ClaimBalance from "./ClaimBalance";
 import { useSelector } from "react-redux";
+import ClaimWithdrawals from "./ClaimWithdrawals";
 
-const Withdrawals = () => {
+const Claim = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const loggedIn = useSelector((state) => state.Profile.loggedIn);
 
   return (
-    <Container maxW="xl" my={5}>
-      {loggedIn ? <RequestBalance /> : null}
+    <>
+      {loggedIn ? <ClaimBalance /> : null}
       <Box
         boxShadow="md"
         borderRadius="lg"
         p={3}
-        mb={6}
         border={
           colorMode === "light"
             ? `solid ${lightBorderColor} 1px`
@@ -40,17 +37,16 @@ const Withdrawals = () => {
       >
         <Flex align="center" mb={3}>
           <Heading size={"md"} noOfLines={1}>
-            Request
+            Claim
           </Heading>
         </Flex>
         <VStack spacing={3} align="start">
           <Divider />
-          <Request />
+          <ClaimWithdrawals />
         </VStack>
       </Box>
-      <Claim />
-    </Container>
+    </>
   );
 };
 
-export default Withdrawals;
+export default Claim;
