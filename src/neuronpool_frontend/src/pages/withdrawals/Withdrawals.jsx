@@ -18,6 +18,7 @@ import Request from "./request/Request";
 import Claim from "./claim/Claim";
 import RequestBalance from "./request/RequestBalance";
 import { useSelector } from "react-redux";
+import RequestInfo from "./request/RequestInfo";
 
 const Withdrawals = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -46,9 +47,10 @@ const Withdrawals = () => {
         <VStack spacing={3} align="start">
           <Divider />
           <Request />
+          <RequestInfo />
         </VStack>
       </Box>
-      <Claim />
+      {/* <Claim /> */}
     </Container>
   );
 };

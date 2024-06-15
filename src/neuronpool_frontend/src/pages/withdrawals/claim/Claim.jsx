@@ -15,7 +15,7 @@ import {
 } from "../../../colors";
 import ClaimBalance from "./ClaimBalance";
 import { useSelector } from "react-redux";
-import ClaimWithdrawals from "./ClaimWithdrawals";
+import ClaimWithdrawal from "./ClaimWithdrawal";
 
 const Claim = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -42,7 +42,7 @@ const Claim = () => {
         </Flex>
         <VStack spacing={3} align="start">
           <Divider />
-          <ClaimWithdrawals />
+          <ClaimWithdrawal />
         </VStack>
       </Box>
     </>

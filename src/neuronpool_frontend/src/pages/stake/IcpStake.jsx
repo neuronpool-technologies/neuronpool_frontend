@@ -89,6 +89,7 @@ const IcpStake = () => {
           subaccount: [],
         },
       });
+
       // if ok
       setActiveStep(1);
 
@@ -161,7 +162,9 @@ const IcpStake = () => {
           value={amount}
           isDisabled={staking}
           isInvalid={
-            (amount !== "" && icpToE8s(Number(amount)) <= 10000) ||
+            (amount !== "" &&
+              icpToE8s(Number(amount)) <
+                Number(minimum_stake) + networkFeeE8s * 2) ||
             icpToE8s(Number(amount)) > Number(icp_balance)
           }
           type="number"
@@ -286,7 +289,7 @@ const IcpStake = () => {
           </Modal>
         </>
       ) : (
-        <Auth large />
+        <Auth />
       )}
     </>
   );
