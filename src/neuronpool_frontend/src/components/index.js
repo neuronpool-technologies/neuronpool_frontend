@@ -4,3 +4,4 @@ export { default as InfoRow } from "./InfoRow";
 export { default as HintPopover } from "./HintPopover";
 export { default as WalletFaq } from "./faqs/WalletFaq";
 export { default as StakeFaq } from "./faqs/StakeFaq";
+export { default as WithdrawalFaq } from "./faqs/WithdrawalFaq";

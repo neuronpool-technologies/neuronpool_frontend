@@ -30,29 +30,28 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { WarningIcon } from "@chakra-ui/icons";
-import IcLogo from "../../../assets/ic-logo.png";
-import { e8sToIcp, icpToE8s } from "../../tools/conversions";
+import IcLogo from "../../../../assets/ic-logo.png";
+import { e8sToIcp, icpToE8s } from "../../../tools/conversions";
 import { useSelector, useDispatch } from "react-redux";
-import Auth from "../../components/Auth";
-import InfoRow from "../../components/InfoRow";
+import { Auth, InfoRow } from "../../../components";
 import {
   lightBorderColor,
   darkBorderColor,
   lightColorBox,
   darkColorBox,
-} from "../../colors";
+} from "../../../colors";
 import Fireworks from "react-canvas-confetti/dist/presets/fireworks";
-import { startLedgerClient, startNeuronPoolClient } from "../../client/Client";
+import {
+  startLedgerClient,
+  startNeuronPoolClient,
+} from "../../../client/Client";
 import { Principal } from "@dfinity/principal";
-import { InitProfile } from "../../tools/InitProfile";
-import { setWallet } from "../../state/LoginSlice";
+import { fetchWallet } from "../../../state/LoginSlice";
 
 const steps = [{ description: "Approve ICP" }, { description: "Stake ICP" }];
 
 const IcpStake = () => {
-  const { icp_balance, loggedIn, principal } = useSelector(
-    (state) => state.Profile
-  );
+  const { icp_balance, loggedIn, principal } = useSelector((state) => state.Profile);
   const { icrc_identifier, minimum_stake } = useSelector(
     (state) => state.Protocol
   );
@@ -97,11 +96,7 @@ const IcpStake = () => {
       let stakeResult = await neuronpool.initiate_icp_stake_transfer();
 
       if ("err" in stakeResult) {
-        const profile = await InitProfile({
-          principal: principal,
-        });
-
-        dispatch(setWallet(profile));
+        dispatch(fetchWallet({ principal }));
 
         setStaking(false);
         setFailed(true);
@@ -109,11 +104,7 @@ const IcpStake = () => {
         console.error(stakeResult);
       } else {
         // refresh balances
-        const profile = await InitProfile({
-          principal: principal,
-        });
-
-        dispatch(setWallet(profile));
+        dispatch(fetchWallet({ principal }));
 
         // if ok
         setActiveStep(2);
@@ -122,11 +113,7 @@ const IcpStake = () => {
         setStaked(true);
       }
     } catch (error) {
-      const profile = await InitProfile({
-        principal: principal,
-      });
-
-      dispatch(setWallet(profile));
+      dispatch(fetchWallet({ principal }));
 
       setStaking(false);
       setFailed(true);

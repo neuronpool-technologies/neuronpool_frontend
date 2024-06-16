@@ -1,12 +1,8 @@
-import {
-  startLedgerIndexClient,
-  startNeuronPoolClient,
-} from "../client/Client";
+import { startLedgerIndexClient, startNeuronPoolClient } from "../Client";
 import { AccountIdentifier } from "@dfinity/ledger-icp";
 import { Principal } from "@dfinity/principal";
-import { useToast } from "@chakra-ui/react";
 
-export const InitProfile = async ({ principal }) => {
+export const InitWallet = async ({ principal }) => {
   try {
     const [neuronpool, index] = await Promise.all([
       startNeuronPoolClient(),
@@ -18,26 +14,26 @@ export const InitProfile = async ({ principal }) => {
       principal: Principal.fromText(principal),
     });
 
-    const balance = await index.accountBalance({
-      certified: false,
-      accountIdentifier: account,
-    });
-
     // get neuronpool information
     const [
+      icpBalance,
       neuronpoolBalance,
       neuronpoolWithdrawalNeurons,
       { claimed, all_prize_neurons },
     ] = await Promise.all([
+      index.accountBalance({
+        certified: false,
+        accountIdentifier: account,
+      }),
       neuronpool.get_staker_balance(),
       neuronpool.get_staker_withdrawal_neurons(),
       neuronpool.get_staker_prize_neurons(),
     ]);
-
+    
     // TODO may need to convert elements within arrays to srings for redux
     return {
       icp_address: account.toHex(),
-      icp_balance: balance.toString(),
+      icp_balance: icpBalance.toString(),
       neuronpool_balance: neuronpoolBalance.toString(),
       neuronpool_withdrawal_neurons: Array.from(neuronpoolWithdrawalNeurons),
       claimed_prize_neurons: claimed,

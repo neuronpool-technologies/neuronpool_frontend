@@ -12,7 +12,7 @@ const RequestInfo = () => {
       <InfoRow
         title={"Minimum withdrawal"}
         stat={
-          protocolInfo.minimum_stake
+          protocolInfo.minimum_withdrawal
             ? `${e8sToIcp(Number(protocolInfo.minimum_withdrawal))} ICP`
             : "--"
         }
@@ -20,13 +20,13 @@ const RequestInfo = () => {
       <Divider />
       <InfoRow
         title={"Network fee"}
-        stat={protocolInfo.minimum_stake ? `0.0001 ICP` : "--"}
+        stat={protocolInfo.minimum_withdrawal ? `0.0001 ICP` : "--"}
       />
       <Divider />
       <InfoRow
         title={"Withdrawal duration"}
         stat={
-          protocolInfo.minimum_stake
+          protocolInfo.main_neuron_dissolve_seconds
             ? `${convertSecondsToDays(
                 Number(protocolInfo.main_neuron_dissolve_seconds)
               )} days`
@@ -36,7 +36,7 @@ const RequestInfo = () => {
       <Divider />
       <InfoRow
         title={"Withdrawal fee"}
-        stat={protocolInfo.minimum_stake ? `FREE` : "--"}
+        stat={protocolInfo.main_neuron_dissolve_seconds ? `FREE` : "--"}
       >
         <HintPopover
           details={"NeuronPool does not charge a fee on withdrawals."}

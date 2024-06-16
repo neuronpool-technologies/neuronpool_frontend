@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { InitProtocolInformation } from "../client/data/InitProtocolInformation";
 
 const ProtocolSlice = createSlice({
   name: "protocol",
@@ -15,27 +16,41 @@ const ProtocolSlice = createSlice({
     total_stake_amount: "",
     total_stakers: "",
     icp_price_usd: "",
+    status: "idle",
+    error: null,
   },
-  reducers: {
-    setProtocolInformation: (state, action) => {
-      state.account_identifier = action.payload.account_identifier;
-      state.icrc_identifier = action.payload.icrc_identifier;
-      state.minimum_stake = action.payload.minimum_stake;
-      state.minimum_withdrawal = action.payload.minimum_withdrawal;
-      state.protocol_fee_percentage = action.payload.protocol_fee_percentage;
-      state.reward_timer_duration_nanos =
-        action.payload.reward_timer_duration_nanos;
-      state.default_neuron_followee = action.payload.default_neuron_followee;
-      state.main_neuron_dissolve_seconds =
-        action.payload.main_neuron_dissolve_seconds;
-      state.total_protocol_fees = action.payload.total_protocol_fees;
-      state.total_stake_amount = action.payload.total_stake_amount;
-      state.total_stakers = action.payload.total_stakers;
-      state.icp_price_usd = action.payload.icp_price_usd;
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProtocolInformation.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchProtocolInformation.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.account_identifier = action.payload.account_identifier;
+        state.icrc_identifier = action.payload.icrc_identifier;
+        state.minimum_stake = action.payload.minimum_stake;
+        state.minimum_withdrawal = action.payload.minimum_withdrawal;
+        state.protocol_fee_percentage = action.payload.protocol_fee_percentage;
+        state.reward_timer_duration_nanos =
+          action.payload.reward_timer_duration_nanos;
+        state.default_neuron_followee = action.payload.default_neuron_followee;
+        state.main_neuron_dissolve_seconds =
+          action.payload.main_neuron_dissolve_seconds;
+        state.total_protocol_fees = action.payload.total_protocol_fees;
+        state.total_stake_amount = action.payload.total_stake_amount;
+        state.total_stakers = action.payload.total_stakers;
+        state.icp_price_usd = action.payload.icp_price_usd;
+      })
+      .addCase(fetchProtocolInformation.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
   },
 });
 
-export const { setProtocolInformation } = ProtocolSlice.actions;
+export const fetchProtocolInformation = createAsyncThunk(
+  "protocol/fetchProtocolInformation",
+  async () => await InitProtocolInformation()
+);
 
 export default ProtocolSlice.reducer;

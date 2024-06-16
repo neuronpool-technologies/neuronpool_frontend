@@ -8,7 +8,7 @@ import {
   Flex,
   Container,
 } from "@chakra-ui/react";
-import IcpWallet from "./IcpWallet";
+import { IcpWallet } from "./components";
 import {
   darkColorBox,
   lightColorBox,

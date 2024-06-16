@@ -14,12 +14,14 @@ import {
   lightBorderColor,
   darkBorderColor,
 } from "../../colors";
-import IcpStake from "./IcpStake";
-import ProtocolStats from "./ProtocolStats";
+import {
+  IcpStake,
+  ProtocolStats,
+  StakerBalance,
+  StakeInfo,
+} from "./components";
 import { StakeFaq } from "../../components/";
-import StakerBalance from "./StakerBalance";
 import { useSelector } from "react-redux";
-import StakeInfo from "./StakeInfo";
 
 const Stake = () => {
   const { colorMode, toggleColorMode } = useColorMode();

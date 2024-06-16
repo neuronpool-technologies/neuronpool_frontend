@@ -33,13 +33,12 @@ import {
   CheckCircleIcon,
   WarningIcon,
 } from "@chakra-ui/icons";
-import IcLogo from "../../../assets/ic-logo.png";
+import IcLogo from "../../../../assets/ic-logo.png";
 import { useSelector, useDispatch } from "react-redux";
-import { e8sToIcp, icpToE8s } from "../../tools/conversions";
-import { startLedgerClient } from "../../client/Client";
-import { setWallet } from "../../state/LoginSlice";
+import { e8sToIcp, icpToE8s } from "../../../tools/conversions";
+import { startLedgerClient } from "../../../client/Client";
+import { fetchWallet } from "../../../state/LoginSlice";
 import { AccountIdentifier } from "@dfinity/ledger-icp";
-import { InitProfile } from "../../tools/InitProfile";
 import {
   darkBorderColor,
   darkColorBox,
@@ -49,8 +48,8 @@ import {
   lightColorBox,
   lightGrayColor,
   lightGrayTextColor,
-} from "../../colors";
-import { Auth } from "../../components";
+} from "../../../colors";
+import { Auth } from "../../../components";
 
 const IcpWallet = () => {
   const icpBalance = useSelector((state) => state.Profile.icp_balance);
@@ -152,8 +151,7 @@ const ReceiveIcp = () => {
 };
 
 const SendIcp = () => {
-  const principal = useSelector((state) => state.Profile.principal);
-  const icpBalance = useSelector((state) => state.Profile.icp_balance);
+  const { icpBalance, principal } = useSelector((state) => state.Profile);
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
@@ -180,11 +178,7 @@ const SendIcp = () => {
           amount: amountConverted - icp_fee,
         });
 
-        const profile = await InitProfile({
-          principal: principal,
-        });
-
-        dispatch(setWallet(profile));
+        dispatch(fetchWallet({ principal }));
 
         setSending(false);
         setSent(true);

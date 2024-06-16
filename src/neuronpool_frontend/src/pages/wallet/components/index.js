@@ -1,0 +1,1 @@
+export { default as IcpWallet } from "./IcpWallet";

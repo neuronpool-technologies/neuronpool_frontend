@@ -17,7 +17,7 @@ import {
 } from "../../../colors";
 import { useSelector } from "react-redux";
 import { e8sToIcp } from "../../../tools/conversions";
-import Auth from "../../../components/Auth";
+import { Auth}  from "../../../components/";
 
 const RequestBalance = () => {
   const { colorMode, toggleColorMode } = useColorMode();

@@ -1,8 +1,8 @@
 import React from "react";
 import { Divider, VStack } from "@chakra-ui/react";
-import { convertSecondsToDays, e8sToIcp } from "../../tools/conversions";
+import { convertSecondsToDays, e8sToIcp } from "../../../tools/conversions";
 import { useSelector } from "react-redux";
-import { HintPopover, InfoRow } from "../../components";
+import { HintPopover, InfoRow } from "../../../components";
 
 const StakeInfo = () => {
   const protocolInfo = useSelector((state) => state.Protocol);
@@ -26,7 +26,7 @@ const StakeInfo = () => {
       <InfoRow
         title={"Withdrawal duration"}
         stat={
-          protocolInfo.minimum_stake
+          protocolInfo.main_neuron_dissolve_seconds
             ? `${convertSecondsToDays(
                 Number(protocolInfo.main_neuron_dissolve_seconds)
               )} days`
@@ -37,7 +37,7 @@ const StakeInfo = () => {
       <InfoRow
         title={"Reward fee"}
         stat={
-          protocolInfo.minimum_stake
+          protocolInfo.protocol_fee_percentage
             ? `${protocolInfo.protocol_fee_percentage}%`
             : "--"
         }

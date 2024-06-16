@@ -14,18 +14,18 @@ import {
   darkBorderColor,
   darkColor,
   lightColor,
-} from "../../colors";
+} from "../../../colors";
 import { useSelector } from "react-redux";
-import { e8sToIcp } from "../../tools/conversions";
-import { InfoRow } from "../../components";
+import { e8sToIcp } from "../../../tools/conversions";
+import { InfoRow } from "../../../components";
 
 const ProtocolStats = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { total_stake_amount, total_stakers, icp_price_usd } = useSelector(
-    (state) => state.Protocol
-  );
+  const protocolInfo = useSelector((state) => state.Protocol);
 
-  let tvl = Number(icp_price_usd * e8sToIcp(total_stake_amount)).toFixed(2);
+  let tvl = Number(
+    protocolInfo.icp_price_usd * e8sToIcp(protocolInfo.total_stake_amount)
+  ).toFixed(2);
 
   return (
     <Box>
@@ -52,21 +52,25 @@ const ProtocolStats = () => {
         <VStack align="start" p={3} gap={3}>
           <InfoRow
             title={"Stakers"}
-            stat={total_stakers ? total_stakers : "--"}
+            stat={
+              protocolInfo.total_stakers ? protocolInfo.total_stakers : "--"
+            }
           />
           <Divider />
           <InfoRow
             title={"Total staked"}
             stat={
-              total_stake_amount
-                ? `${e8sToIcp(Number(total_stake_amount)).toFixed(2)} ICP`
+              protocolInfo.total_stake_amount
+                ? `${e8sToIcp(Number(protocolInfo.total_stake_amount)).toFixed(
+                    2
+                  )} ICP`
                 : "--"
             }
           />
           <Divider />
           <InfoRow
             title={"Total value locked"}
-            stat={total_stake_amount ? `$${tvl}` : "--"}
+            stat={protocolInfo.total_stake_amount ? `$${tvl}` : "--"}
           />
         </VStack>
       </Box>

@@ -1,4 +1,4 @@
-import { startNeuronPoolClient } from "../client/Client";
+import { startNeuronPoolClient } from "../Client";
 
 export const InitOperationHistory = async () => {
   try {

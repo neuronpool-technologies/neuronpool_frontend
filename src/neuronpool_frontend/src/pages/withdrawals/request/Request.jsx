@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setWallet } from "../../../state/LoginSlice";
+import { fetchWallet } from "../../../state/LoginSlice";
 import {
   Button,
   InputGroup,
@@ -43,7 +43,7 @@ import IcLogo from "../../../../assets/ic-logo.png";
 import { e8sToIcp, icpToE8s } from "../../../tools/conversions";
 import { InfoRow } from "../../../components";
 import { startNeuronPoolClient } from "../../../client/Client";
-import { InitProfile } from "../../../tools/InitProfile";
+import { InitWallet } from "../../../client/data/InitWallet";
 
 const steps = [
   { description: "Request ICP" },
@@ -82,11 +82,7 @@ const Request = () => {
 
       // check the withdrawal result
       if ("err" in withdrawalResult) {
-        const profile = await InitProfile({
-          principal: principal,
-        });
-
-        dispatch(setWallet(profile));
+        dispatch(fetchWallet({ principal }));
 
         setRequesting(false);
         setFailed(true);
@@ -96,8 +92,8 @@ const Request = () => {
         // if ok
         setActiveStep(1);
         // step 2 dissolve ICP
-        const { neuronpool_withdrawal_neurons } = await InitProfile({
-          principal: principal,
+        const { neuronpool_withdrawal_neurons } = await InitWallet({
+          principal,
         });
 
         // get the last ID added
@@ -113,22 +109,14 @@ const Request = () => {
 
         // check the dissolve result
         if ("err" in dissolveResult) {
-          const profile = await InitProfile({
-            principal: principal,
-          });
-
-          dispatch(setWallet(profile));
+          dispatch(fetchWallet({ principal }));
 
           setRequesting(false);
           setFailed(true);
           setRequested(true);
           console.error(dissolveResult);
         } else {
-          const profile = await InitProfile({
-            principal: principal,
-          });
-
-          dispatch(setWallet(profile));
+          dispatch(fetchWallet({ principal }));
           // if ok
           setActiveStep(2);
 
@@ -138,11 +126,7 @@ const Request = () => {
       }
       // catch network errors
     } catch (error) {
-      const profile = await InitProfile({
-        principal: principal,
-      });
-
-      dispatch(setWallet(profile));
+      dispatch(fetchWallet({ principal }));
 
       setRequesting(false);
       setFailed(true);

@@ -24,18 +24,15 @@ import {
   setLogin,
   setLogout,
   setPrincipal,
-  setWallet,
+  fetchWallet,
 } from "../state/LoginSlice";
 import { AuthClient } from "@dfinity/auth-client";
 import { Usergeek } from "usergeek-ic-js";
 import { useDispatch, useSelector } from "react-redux";
 import IcLogo from "../../assets/ic-logo.png";
-import { InitProfile } from "../tools/InitProfile";
 import { darkColorBox, lightColorBox } from "../colors";
-import { InitProtocolInformation } from "../tools/InitProtocolInformation";
-import { setProtocolInformation } from "../state/ProtocolSlice";
-import { InitOperationHistory } from "../tools/InitOperationHistory";
-import { setHistory } from "../state/HistorySlice";
+import { fetchProtocolInformation } from "../state/ProtocolSlice";
+import { fetchHistory } from "../state/HistorySlice";
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -62,14 +59,8 @@ const Auth = () => {
       Usergeek.trackSession();
     }
 
-    // fetch information here
-    const [protocolInformation, history] = await Promise.all([
-      InitProtocolInformation(),
-      InitOperationHistory(),
-    ]);
-
-    dispatch(setProtocolInformation(protocolInformation));
-    dispatch(setHistory(history));
+    dispatch(fetchProtocolInformation());
+    dispatch(fetchHistory());
   };
 
   const connect = () => {
@@ -132,20 +123,11 @@ const UserProfile = () => {
     const authClient = await AuthClient.create();
     await authClient.logout();
     dispatch(setLogout());
-    dispatch(setPrincipal(""));
     Usergeek.setPrincipal(undefined);
   };
 
-  const saveProfile = async () => {
-    const profile = await InitProfile({
-      principal: principal,
-    });
-
-    dispatch(setWallet(profile));
-  };
-
   useEffect(() => {
-    saveProfile();
+    dispatch(fetchWallet({ principal }));
   }, []);
 
   return (
