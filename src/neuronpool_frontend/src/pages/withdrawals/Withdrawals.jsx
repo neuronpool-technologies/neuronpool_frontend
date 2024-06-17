@@ -21,7 +21,7 @@ import { WithdrawalFaq } from "../../components";
 
 const Withdrawals = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const loggedIn = useSelector((state) => state.Profile.loggedIn);
+  const logged_in = useSelector((state) => state.Profile.logged_in);
 
   // TODO fetch the status of all the neurons withdrawing using a Promise.all
   // TODO pass this data into the ClaimBalance and the Claim withdrawal
@@ -46,7 +46,7 @@ const Withdrawals = () => {
 
   return (
     <Container maxW="xl" my={5}>
-      {loggedIn ? <RequestBalance /> : null}
+      {logged_in ? <RequestBalance /> : null}
       <Box
         boxShadow="md"
         borderRadius="lg"
@@ -70,7 +70,7 @@ const Withdrawals = () => {
           <RequestInfo />
         </VStack>
       </Box>
-      {loggedIn ? <ClaimBalance /> : null}
+      {logged_in ? <ClaimBalance /> : null}
       <Box
         boxShadow="md"
         borderRadius="lg"

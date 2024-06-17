@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { InitWallet } from "../client/data/InitWallet";
 
 const initialState = {
-  loggedIn: false,
+  logged_in: false,
   principal: "",
   icp_address: "",
   icp_balance: "",
@@ -14,12 +14,12 @@ const initialState = {
   error: null,
 };
 
-const LoginSlice = createSlice({
-  name: "login",
+const ProfileSlice = createSlice({
+  name: "profile",
   initialState,
   reducers: {
     setLogin: (state) => {
-      state.loggedIn = true;
+      state.logged_in = true;
     },
     setLogout: () => initialState,
     setPrincipal: (state, action) => {
@@ -48,11 +48,11 @@ const LoginSlice = createSlice({
   },
 });
 
-export const { setLogin, setLogout, setPrincipal } = LoginSlice.actions;
+export const { setLogin, setLogout, setPrincipal } = ProfileSlice.actions;
 
 export const fetchWallet = createAsyncThunk(
-  "login/fetchWallet",
+  "profile/fetchWallet",
   async ({ principal }) => await InitWallet({ principal })
 );
 
-export default LoginSlice.reducer;
+export default ProfileSlice.reducer;

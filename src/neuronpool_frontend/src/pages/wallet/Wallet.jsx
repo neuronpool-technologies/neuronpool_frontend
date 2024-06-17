@@ -8,7 +8,7 @@ import {
   Flex,
   Container,
 } from "@chakra-ui/react";
-import { IcpWallet } from "./components";
+import { IcpWallet, WalletBalance } from "./components";
 import {
   darkColorBox,
   lightColorBox,
@@ -16,12 +16,15 @@ import {
   darkBorderColor,
 } from "../../colors";
 import { WalletFaq } from "../../components";
+import { useSelector } from "react-redux";
 
 const Wallet = () => {
   const { colorMode, toggleColorMode } = useColorMode();
+  const logged_in = useSelector((state) => state.Profile.logged_in);
 
   return (
     <Container maxW="xl" my={5}>
+      {logged_in ? <WalletBalance /> : null}
       <Box
         boxShadow="md"
         borderRadius="lg"

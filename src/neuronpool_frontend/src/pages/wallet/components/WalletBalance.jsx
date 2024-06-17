@@ -20,13 +20,12 @@ import { useSelector } from "react-redux";
 import { e8sToIcp } from "../../../tools/conversions";
 import { Auth } from "../../../components";
 
-const StakerBalance = () => {
+const WalletBalance = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const icpBalance = useSelector((state) => state.Profile.icp_balance);
   const stakedBalance = useSelector(
     (state) => state.Profile.neuronpool_balance
   );
-
   return (
     <Box
       boxShadow="md"
@@ -95,4 +94,4 @@ const StakerBalance = () => {
   );
 };
 
-export default StakerBalance;
+export default WalletBalance;

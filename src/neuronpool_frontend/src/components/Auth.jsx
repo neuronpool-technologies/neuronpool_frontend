@@ -25,7 +25,7 @@ import {
   setLogout,
   setPrincipal,
   fetchWallet,
-} from "../state/LoginSlice";
+} from "../state/ProfileSlice";
 import { AuthClient } from "@dfinity/auth-client";
 import { Usergeek } from "usergeek-ic-js";
 import { useDispatch, useSelector } from "react-redux";
@@ -36,7 +36,10 @@ import { fetchHistory } from "../state/HistorySlice";
 
 const Auth = () => {
   const dispatch = useDispatch();
-  const loggedIn = useSelector((state) => state.Profile.loggedIn);
+  const logged_in = useSelector((state) => state.Profile.logged_in);
+  const protocolStatus = useSelector((state) => state.Protocol.status);
+  const historyStatus = useSelector((state) => state.History.status);
+
   const [client, setClient] = useState();
 
   const initAuth = async () => {
@@ -58,9 +61,16 @@ const Auth = () => {
       Usergeek.setPrincipal(principal);
       Usergeek.trackSession();
     }
+  };
 
-    dispatch(fetchProtocolInformation());
-    dispatch(fetchHistory());
+  const fetchData = async () => {
+    if (protocolStatus === "idle" || protocolStatus === "failed") {
+      dispatch(fetchProtocolInformation());
+    }
+
+    if (historyStatus === "idle" || historyStatus === "failed") {
+      dispatch(fetchHistory());
+    }
   };
 
   const connect = () => {
@@ -87,14 +97,15 @@ const Auth = () => {
 
   useEffect(() => {
     initAuth();
-  }, [loggedIn]);
+    fetchData();
+  }, [logged_in]);
 
   return (
     <>
-      {loggedIn ? (
+      {logged_in ? (
         <UserProfile />
       ) : (
-        <Button onClick={connect} w="100%">
+        <Button onClick={connect} w="100%" rounded="full" boxShadow="base">
           <Flex align="center">
             Connect Identity&nbsp;
             <ChakraImage
@@ -132,7 +143,12 @@ const UserProfile = () => {
 
   return (
     <Menu autoSelect={false}>
-      <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+      <MenuButton
+        as={Button}
+        rightIcon={<ChevronDownIcon />}
+        rounded="full"
+        boxShadow="base"
+      >
         <Flex align="center" gap={2}>
           <Avatar
             size="xs"

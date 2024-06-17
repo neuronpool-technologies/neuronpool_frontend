@@ -53,14 +53,16 @@ const ProtocolStats = () => {
           <InfoRow
             title={"Stakers"}
             stat={
-              protocolInfo.total_stakers ? protocolInfo.total_stakers : "--"
+              protocolInfo.status === "succeeded"
+                ? protocolInfo.total_stakers
+                : "--"
             }
           />
           <Divider />
           <InfoRow
             title={"Total staked"}
             stat={
-              protocolInfo.total_stake_amount
+              protocolInfo.status === "succeeded"
                 ? `${e8sToIcp(Number(protocolInfo.total_stake_amount)).toFixed(
                     2
                   )} ICP`
@@ -70,7 +72,7 @@ const ProtocolStats = () => {
           <Divider />
           <InfoRow
             title={"Total value locked"}
-            stat={protocolInfo.total_stake_amount ? `$${tvl}` : "--"}
+            stat={protocolInfo.status === "succeeded" ? `$${tvl}` : "--"}
           />
         </VStack>
       </Box>

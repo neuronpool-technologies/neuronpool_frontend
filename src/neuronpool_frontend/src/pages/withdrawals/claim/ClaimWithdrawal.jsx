@@ -4,12 +4,12 @@ import { Button } from "@chakra-ui/react";
 import { Auth } from "../../../components";
 
 const ClaimWithdrawal = () => {
-  const loggedIn = useSelector((state) => state.Profile.loggedIn);
+  const logged_in = useSelector((state) => state.Profile.logged_in);
 
   return (
     <>
-      {loggedIn ? (
-        <Button w="100%" colorScheme="blue">
+      {logged_in ? (
+        <Button w="100%" colorScheme="blue" rounded="full" boxShadow="base">
           Claim withdrawal
         </Button>
       ) : (

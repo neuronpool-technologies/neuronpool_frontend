@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchWallet } from "../../../state/LoginSlice";
+import { fetchWallet } from "../../../state/ProfileSlice";
 import {
   Button,
   InputGroup,
@@ -51,7 +51,7 @@ const steps = [
 ];
 
 const Request = () => {
-  const { loggedIn, neuronpool_balance, principal } = useSelector(
+  const { logged_in, neuronpool_balance, principal } = useSelector(
     (state) => state.Profile
   );
   const { minimum_withdrawal } = useSelector((state) => state.Protocol);
@@ -172,10 +172,12 @@ const Request = () => {
         />
         <InputRightElement width="4.5rem" h="100%">
           <Button
+            rounded="full"
+            boxShadow="base"
             _hover={{ opacity: "0.8" }}
             h="1.75rem"
             size="sm"
-            isDisabled={requesting || !loggedIn}
+            isDisabled={requesting || !logged_in}
             onClick={() => {
               const newAmount = e8sToIcp(Number(neuronpool_balance));
               setAmount(newAmount || "");
@@ -185,9 +187,11 @@ const Request = () => {
           </Button>
         </InputRightElement>
       </InputGroup>
-      {loggedIn ? (
+      {logged_in ? (
         <>
           <Button
+            rounded="full"
+            boxShadow="base"
             onClick={onOpen}
             w="100%"
             colorScheme="blue"
@@ -209,7 +213,7 @@ const Request = () => {
               bg={colorMode === "light" ? lightColorBox : darkColorBox}
             >
               <ModalHeader align="center">Confirm request</ModalHeader>
-              <ModalCloseButton />
+              {!requesting ? <ModalCloseButton /> : null}
               <ModalBody>
                 <Box
                   border={
@@ -272,6 +276,8 @@ const Request = () => {
 
               <ModalFooter>
                 <Button
+                  rounded="full"
+                  boxShadow="base"
                   w="100%"
                   colorScheme="blue"
                   isLoading={requesting}

@@ -12,7 +12,7 @@ const StakeInfo = () => {
       <InfoRow
         title={"Minimum stake"}
         stat={
-          protocolInfo.minimum_stake
+          protocolInfo.status === "succeeded"
             ? `${e8sToIcp(Number(protocolInfo.minimum_stake))} ICP`
             : "--"
         }
@@ -20,13 +20,13 @@ const StakeInfo = () => {
       <Divider />
       <InfoRow
         title={"Network fee"}
-        stat={protocolInfo.minimum_stake ? `0.0002 ICP` : "--"}
+        stat={protocolInfo.status === "succeeded" ? `0.0002 ICP` : "--"}
       />
       <Divider />
       <InfoRow
         title={"Withdrawal duration"}
         stat={
-          protocolInfo.main_neuron_dissolve_seconds
+          protocolInfo.status === "succeeded"
             ? `${convertSecondsToDays(
                 Number(protocolInfo.main_neuron_dissolve_seconds)
               )} days`
@@ -37,7 +37,7 @@ const StakeInfo = () => {
       <InfoRow
         title={"Reward fee"}
         stat={
-          protocolInfo.protocol_fee_percentage
+          protocolInfo.status === "succeeded"
             ? `${protocolInfo.protocol_fee_percentage}%`
             : "--"
         }

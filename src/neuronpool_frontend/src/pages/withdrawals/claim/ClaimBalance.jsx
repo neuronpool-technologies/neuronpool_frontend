@@ -13,8 +13,8 @@ import { CheckCircleIcon, TimeIcon } from "@chakra-ui/icons";
 import {
   lightBorderColor,
   darkBorderColor,
-  darkGrayColor,
-  lightGrayColor,
+  darkGrayColorBox,
+  lightGrayColorBox,
   lightGrayTextColor,
   darkGrayTextColor,
 } from "../../../colors";
@@ -28,22 +28,12 @@ const ClaimBalance = () => {
       borderTopRadius="lg"
       p={3}
       mb={-1}
-      borderRight={
+      border={
         colorMode === "light"
           ? `solid ${lightBorderColor} 1px`
           : `solid ${darkBorderColor} 1px`
       }
-      borderLeft={
-        colorMode === "light"
-          ? `solid ${lightBorderColor} 1px`
-          : `solid ${darkBorderColor} 1px`
-      }
-      borderTop={
-        colorMode === "light"
-          ? `solid ${lightBorderColor} 1px`
-          : `solid ${darkBorderColor} 1px`
-      }
-      bg={colorMode === "light" ? lightGrayColor : darkGrayColor}
+      bg={colorMode === "light" ? lightGrayColorBox : darkGrayColorBox}
     >
       <Flex align="center">
         <VStack align="start">
@@ -54,18 +44,18 @@ const ClaimBalance = () => {
               colorMode === "light" ? lightGrayTextColor : darkGrayTextColor
             }
           >
-            Withdrawals available
+            My withdrawals
           </Text>
           <Flex gap={3} align="center">
-          <Tooltip
+            <Tooltip
               hasArrow
               label="Available withdrawals"
               aria-label="Available withdrawals tooltip"
             >
-            <Flex align="center" gap={1.5}>
-              <CheckCircleIcon color="green.500" />
-              <Text fontWeight={500}>0</Text>
-            </Flex>
+              <Flex align="center" gap={1.5}>
+                <CheckCircleIcon color="green.500" />
+                <Text fontWeight={500}>0</Text>
+              </Flex>
             </Tooltip>
             <Divider
               orientation="vertical"

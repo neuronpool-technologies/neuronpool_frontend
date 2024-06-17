@@ -82,6 +82,8 @@ const Nav = () => {
                 <Button
                   onClick={toggleColorMode}
                   aria-label="Change color mode"
+                  rounded="full"
+                  boxShadow="base"
                 >
                   {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
                 </Button>
@@ -142,12 +144,17 @@ const MobileMenu = () => {
 
   return (
     <>
-      <IconButton icon={<HamburgerIcon />} onClick={onOpen} />
+      <IconButton
+        icon={<HamburgerIcon />}
+        onClick={onOpen}
+        rounded="full"
+        boxShadow="base"
+      />
       <Drawer onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent bg={colorMode === "light" ? lightColor : darkColor}>
           <DrawerHeader>
-            <Button onClick={toggleColorMode}>
+            <Button onClick={toggleColorMode} rounded="full" boxShadow="base">
               {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
             </Button>
           </DrawerHeader>

@@ -37,23 +37,22 @@ import IcLogo from "../../../../assets/ic-logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { e8sToIcp, icpToE8s } from "../../../tools/conversions";
 import { startLedgerClient } from "../../../client/Client";
-import { fetchWallet } from "../../../state/LoginSlice";
+import { fetchWallet } from "../../../state/ProfileSlice";
 import { AccountIdentifier } from "@dfinity/ledger-icp";
 import {
   darkBorderColor,
   darkColorBox,
-  darkGrayColor,
+  darkGrayColorBox,
   darkGrayTextColor,
   lightBorderColor,
   lightColorBox,
-  lightGrayColor,
+  lightGrayColorBox,
   lightGrayTextColor,
 } from "../../../colors";
 import { Auth } from "../../../components";
 
 const IcpWallet = () => {
-  const icpBalance = useSelector((state) => state.Profile.icp_balance);
-  const loggedIn = useSelector((state) => state.Profile.loggedIn);
+  const { logged_in, icp_balance } = useSelector((state) => state.Profile);
 
   const { colorMode, toggleColorMode } = useColorMode();
   return (
@@ -79,16 +78,16 @@ const IcpWallet = () => {
         </VStack>
         <Spacer />
         <Heading size={{ base: "sm", md: "md" }} noOfLines={1}>
-          {loggedIn ? Number(e8sToIcp(icpBalance)).toFixed(4) : "--"}
+          {logged_in ? Number(e8sToIcp(icp_balance)).toFixed(4) : "--"}
         </Heading>
       </Flex>
-      {loggedIn ? (
+      {logged_in ? (
         <Flex w="100%" gap={3}>
           <ReceiveIcp />
           <SendIcp />
         </Flex>
       ) : (
-        <Auth large />
+        <Auth />
       )}
     </>
   );
@@ -104,7 +103,7 @@ const ReceiveIcp = () => {
 
   return (
     <>
-      <Button onClick={onOpen} w={"100%"}>
+      <Button onClick={onOpen} w={"100%"} rounded="full" boxShadow="base">
         Receive
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
@@ -115,7 +114,7 @@ const ReceiveIcp = () => {
           <ModalBody>
             <FormControl>
               <Box
-                bg={colorMode === "light" ? lightGrayColor : darkGrayColor}
+                bg={colorMode === "light" ? lightGrayColorBox : darkGrayColorBox}
                 border={
                   colorMode === "light"
                     ? `solid ${lightBorderColor} 1px`
@@ -128,6 +127,8 @@ const ReceiveIcp = () => {
                 <Flex mt={3}>
                   <Spacer />
                   <Button
+                    rounded="full"
+                    boxShadow="base"
                     rightIcon={hasCopied ? <CheckIcon /> : <CopyIcon />}
                     size="sm"
                     onClick={onCopy}
@@ -140,7 +141,7 @@ const ReceiveIcp = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button w="100%" onClick={onClose}>
+            <Button w="100%" onClick={onClose} rounded="full" boxShadow="base">
               Done
             </Button>
           </ModalFooter>
@@ -151,7 +152,7 @@ const ReceiveIcp = () => {
 };
 
 const SendIcp = () => {
-  const { icpBalance, principal } = useSelector((state) => state.Profile);
+  const { icp_balance, principal } = useSelector((state) => state.Profile);
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
@@ -200,7 +201,7 @@ const SendIcp = () => {
 
   return (
     <>
-      <Button onClick={onOpen} w={"100%"}>
+      <Button onClick={onOpen} w={"100%"} rounded="full" boxShadow="base">
         Send
       </Button>
       <Modal isOpen={isOpen} onClose={closeModal} isCentered>
@@ -212,6 +213,7 @@ const SendIcp = () => {
             {!sent ? (
               <FormControl>
                 <Input
+                  size="lg"
                   mb={3}
                   placeholder="Destination address"
                   isDisabled={sending}
@@ -221,24 +223,27 @@ const SendIcp = () => {
                 />
                 <InputGroup>
                   <Input
+                    size="lg"
                     placeholder="Amount"
                     value={amount}
                     isDisabled={sending}
                     isInvalid={
                       (amount !== "" && icpToE8s(Number(amount)) <= 10000) ||
-                      icpToE8s(Number(amount)) > Number(icpBalance)
+                      icpToE8s(Number(amount)) > Number(icp_balance)
                     }
                     type="number"
                     onChange={(event) => setAmount(event.target.value)}
                   />
-                  <InputRightElement width="4.5rem">
+                  <InputRightElement width="4.5rem" h="100%">
                     <Button
+                      rounded="full"
+                      boxShadow="base"
                       _hover={{ opacity: "0.8" }}
                       h="1.75rem"
                       size="sm"
                       isDisabled={sending}
                       onClick={() => {
-                        const newAmount = e8sToIcp(Number(icpBalance));
+                        const newAmount = e8sToIcp(Number(icp_balance));
                         setAmount(newAmount || "");
                       }}
                     >
@@ -266,7 +271,7 @@ const SendIcp = () => {
                   borderBottomRadius="lg"
                   p={3}
                   mt={-0.5}
-                  bg={colorMode === "light" ? lightGrayColor : darkGrayColor}
+                  bg={colorMode === "light" ? lightGrayColorBox : darkGrayColorBox}
                 >
                   <Flex w="100%">
                     <Flex align={"center"} gap={1}>
@@ -284,7 +289,7 @@ const SendIcp = () => {
                     </Flex>
                     <Spacer />
                     <Text noOfLines={1} fontWeight={500}>
-                      {e8sToIcp(icpBalance)} ICP
+                      {e8sToIcp(icp_balance)} ICP
                     </Text>
                   </Flex>
                   <Divider />
@@ -324,13 +329,15 @@ const SendIcp = () => {
 
           <ModalFooter>
             <Button
+              rounded="full"
+              boxShadow="base"
               w="100%"
               onClick={sent ? closeModal : Transfer}
               isLoading={sending}
               isDisabled={
                 address.length !== 64 ||
                 icpToE8s(Number(amount)) <= 10000 ||
-                (!sent && icpToE8s(Number(amount)) > Number(icpBalance))
+                (!sent && icpToE8s(Number(amount)) > Number(icp_balance))
               }
             >
               {!sent ? "Send now" : null}

@@ -10,14 +10,14 @@ import {
 import {
   lightBorderColor,
   darkBorderColor,
-  darkGrayColor,
-  lightGrayColor,
+  darkGrayColorBox,
+  lightGrayColorBox,
   lightGrayTextColor,
   darkGrayTextColor,
 } from "../../../colors";
 import { useSelector } from "react-redux";
 import { e8sToIcp } from "../../../tools/conversions";
-import { Auth}  from "../../../components/";
+import { Auth } from "../../../components/";
 
 const RequestBalance = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -30,22 +30,12 @@ const RequestBalance = () => {
       borderTopRadius="lg"
       p={3}
       mb={-1}
-      borderRight={
+      border={
         colorMode === "light"
           ? `solid ${lightBorderColor} 1px`
           : `solid ${darkBorderColor} 1px`
       }
-      borderLeft={
-        colorMode === "light"
-          ? `solid ${lightBorderColor} 1px`
-          : `solid ${darkBorderColor} 1px`
-      }
-      borderTop={
-        colorMode === "light"
-          ? `solid ${lightBorderColor} 1px`
-          : `solid ${darkBorderColor} 1px`
-      }
-      bg={colorMode === "light" ? lightGrayColor : darkGrayColor}
+      bg={colorMode === "light" ? lightGrayColorBox : darkGrayColorBox}
     >
       <Flex align="center">
         <VStack align="start">

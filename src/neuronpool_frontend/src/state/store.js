@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import Profile from "./LoginSlice";
+import Profile from "./ProfileSlice";
 import Protocol from "./ProtocolSlice";
 import History from "./HistorySlice";
 

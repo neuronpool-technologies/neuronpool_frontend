@@ -25,11 +25,11 @@ import { useSelector } from "react-redux";
 
 const Stake = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const loggedIn = useSelector((state) => state.Profile.loggedIn);
+  const logged_in = useSelector((state) => state.Profile.logged_in);
 
   return (
     <Container maxW="xl" my={5}>
-      {loggedIn ? <StakerBalance /> : null}
+      {logged_in ? <StakerBalance /> : null}
       <Box
         boxShadow="md"
         borderRadius="lg"

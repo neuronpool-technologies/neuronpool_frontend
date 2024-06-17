@@ -46,12 +46,14 @@ import {
   startNeuronPoolClient,
 } from "../../../client/Client";
 import { Principal } from "@dfinity/principal";
-import { fetchWallet } from "../../../state/LoginSlice";
+import { fetchWallet } from "../../../state/ProfileSlice";
 
 const steps = [{ description: "Approve ICP" }, { description: "Stake ICP" }];
 
 const IcpStake = () => {
-  const { icp_balance, loggedIn, principal } = useSelector((state) => state.Profile);
+  const { icp_balance, logged_in, principal } = useSelector(
+    (state) => state.Profile
+  );
   const { icrc_identifier, minimum_stake } = useSelector(
     (state) => state.Protocol
   );
@@ -159,10 +161,12 @@ const IcpStake = () => {
         />
         <InputRightElement width="4.5rem" h="100%">
           <Button
+            rounded="full"
+            boxShadow="base"
             _hover={{ opacity: "0.8" }}
             h="1.75rem"
             size="sm"
-            isDisabled={staking || !loggedIn}
+            isDisabled={staking || !logged_in}
             onClick={() => {
               const newAmount = e8sToIcp(Number(icp_balance));
               setAmount(newAmount || "");
@@ -172,10 +176,12 @@ const IcpStake = () => {
           </Button>
         </InputRightElement>
       </InputGroup>
-      {loggedIn ? (
+      {logged_in ? (
         <>
           <Button
             onClick={onOpen}
+            rounded="full"
+            boxShadow="base"
             w="100%"
             colorScheme="blue"
             isDisabled={
@@ -194,7 +200,7 @@ const IcpStake = () => {
               bg={colorMode === "light" ? lightColorBox : darkColorBox}
             >
               <ModalHeader align="center">Confirm stake</ModalHeader>
-              <ModalCloseButton />
+              {!staking ? <ModalCloseButton /> : null}
               <ModalBody>
                 {staked && !failed ? (
                   <Fireworks autorun={{ speed: 3, duration: 3 }} />
@@ -262,6 +268,8 @@ const IcpStake = () => {
 
               <ModalFooter>
                 <Button
+                  rounded="full"
+                  boxShadow="base"
                   w="100%"
                   colorScheme="blue"
                   isLoading={staking}
