@@ -31,7 +31,10 @@ import {
 } from "@chakra-ui/react";
 import { WarningIcon } from "@chakra-ui/icons";
 import IcLogo from "../../../../assets/ic-logo.png";
-import { e8sToIcp, icpToE8s } from "../../../tools/conversions";
+import {
+  e8sToIcp,
+  icpToE8s,
+} from "../../../tools/conversions";
 import { useSelector, useDispatch } from "react-redux";
 import { Auth, InfoRow } from "../../../components";
 import {
@@ -47,6 +50,7 @@ import {
 } from "../../../client/Client";
 import { Principal } from "@dfinity/principal";
 import { fetchWallet } from "../../../state/ProfileSlice";
+import StakingWarning from "./StakingWarning";
 
 const steps = [{ description: "Approve ICP" }, { description: "Stake ICP" }];
 
@@ -236,7 +240,6 @@ const IcpStake = () => {
                           </StepIndicator>
                           <StepDescription>{step.description}</StepDescription>
                         </VStack>
-
                         <StepSeparator />
                       </Step>
                     ))}
@@ -263,7 +266,9 @@ const IcpStake = () => {
                       )} ICP`}
                     />
                   </Box>
+                  <Divider />
                 </VStack>
+                <StakingWarning />
               </ModalBody>
 
               <ModalFooter>
