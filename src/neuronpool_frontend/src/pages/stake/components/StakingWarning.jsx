@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  useColorMode,
   Text,
   Popover,
   PopoverTrigger,
