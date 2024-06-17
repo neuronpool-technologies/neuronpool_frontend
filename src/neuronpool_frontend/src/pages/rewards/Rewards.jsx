@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Rewards = () => {
-  return (
-    <div>Rewards</div>
-  )
-}
+  return <div>rewards</div>;
+};
 
-export default Rewards
+export default Rewards;

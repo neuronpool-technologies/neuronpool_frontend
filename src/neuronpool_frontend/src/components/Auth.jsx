@@ -205,7 +205,12 @@ const UserProfile = () => {
           </Flex>
         </MenuGroup>
         <MenuDivider />
-        <MenuItem icon={<CloseIcon />} onClick={logout}>
+        <MenuItem
+          icon={<CloseIcon />}
+          onClick={logout}
+          bg="none"
+          _hover={{ opacity: "0.9" }}
+        >
           Disconnect
         </MenuItem>
       </MenuList>
@@ -221,6 +226,8 @@ const CopyToClipboardButton = ({ value, type }) => {
       closeOnSelect={false}
       icon={hasCopied ? <CheckIcon /> : <CopyIcon />}
       onClick={value ? onCopy : null}
+      bg="none"
+      _hover={{ opacity: "0.9" }}
     >
       {value ? `Copy ${type}` : "Loading..."}
     </MenuItem>
