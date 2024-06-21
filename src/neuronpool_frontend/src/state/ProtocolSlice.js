@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { InitProtocolInformation } from "../client/data/InitProtocolInformation";
+import { InitProtocolInfo } from "../client/data/InitProtocolInfo";
 
 const ProtocolSlice = createSlice({
   name: "protocol",
@@ -50,7 +50,7 @@ const ProtocolSlice = createSlice({
 
 export const fetchProtocolInformation = createAsyncThunk(
   "protocol/fetchProtocolInformation",
-  async () => await InitProtocolInformation()
+  async () => await InitProtocolInfo()
 );
 
 export default ProtocolSlice.reducer;

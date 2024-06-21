@@ -33,12 +33,14 @@ import IcLogo from "../../assets/ic-logo.png";
 import { darkColorBox, lightColorBox } from "../colors";
 import { fetchProtocolInformation } from "../state/ProtocolSlice";
 import { fetchHistory } from "../state/HistorySlice";
+import { fetchNeuron } from "../state/NeuronSlice";
 
 const Auth = () => {
   const dispatch = useDispatch();
   const logged_in = useSelector((state) => state.Profile.logged_in);
   const protocolStatus = useSelector((state) => state.Protocol.status);
   const historyStatus = useSelector((state) => state.History.status);
+  const neuronStatus = useSelector((state) => state.Neuron.status);
 
   const [client, setClient] = useState();
 
@@ -70,6 +72,10 @@ const Auth = () => {
 
     if (historyStatus === "idle" || historyStatus === "failed") {
       dispatch(fetchHistory());
+    }
+
+    if (neuronStatus === "idle" || neuronStatus === "failed") {
+      dispatch(fetchNeuron());
     }
   };
 

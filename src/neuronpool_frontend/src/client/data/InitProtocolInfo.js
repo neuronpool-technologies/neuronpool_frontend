@@ -1,6 +1,6 @@
 import { startNeuronPoolClient } from "../Client";
 
-export const InitProtocolInformation = async () => {
+export const InitProtocolInfo = async () => {
   try {
     const neuronpool = await startNeuronPoolClient();
 
