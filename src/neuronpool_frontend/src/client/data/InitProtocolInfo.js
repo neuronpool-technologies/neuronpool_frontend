@@ -1,3 +1,4 @@
+import { showToast } from "../../tools/toast";
 import { startNeuronPoolClient } from "../Client";
 
 export const InitProtocolInfo = async () => {
@@ -44,6 +45,12 @@ export const InitProtocolInfo = async () => {
     };
   } catch (error) {
     console.error(error);
+
+    showToast({
+      title: "Error fetching protocol information",
+      description: error.toString(),
+      status: "warning",
+    });
 
     return {
       account_identifier: "",

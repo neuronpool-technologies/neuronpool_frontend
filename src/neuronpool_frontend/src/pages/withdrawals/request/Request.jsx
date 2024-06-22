@@ -44,6 +44,7 @@ import { e8sToIcp, icpToE8s } from "../../../tools/conversions";
 import { InfoRow } from "../../../components";
 import { startNeuronPoolClient } from "../../../client/Client";
 import { InitWallet } from "../../../client/data/InitWallet";
+import { showToast } from "../../../tools/toast";
 
 const steps = [
   { description: "Request ICP" },
@@ -87,7 +88,13 @@ const Request = () => {
         setRequesting(false);
         setFailed(true);
         setRequested(true);
-        console.error(withdrawalResult);
+        console.error(withdrawalResult.err);
+
+        showToast({
+          title: "Error requesting withdrawal",
+          description: withdrawalResult.err.toString(),
+          status: "warning",
+        });
       } else {
         // if ok
         setActiveStep(1);
@@ -114,7 +121,13 @@ const Request = () => {
           setRequesting(false);
           setFailed(true);
           setRequested(true);
-          console.error(dissolveResult);
+          console.error(dissolveResult.err);
+
+          showToast({
+            title: "Error requesting withdrawal",
+            description: dissolveResult.err.toString(),
+            status: "warning",
+          });
         } else {
           dispatch(fetchWallet({ principal }));
           // if ok
@@ -132,6 +145,12 @@ const Request = () => {
       setFailed(true);
       setRequested(true);
       console.error(error);
+
+      showToast({
+        title: "Error requesting withdrawal",
+        description: error.toString(),
+        status: "warning",
+      });
     }
   };
 

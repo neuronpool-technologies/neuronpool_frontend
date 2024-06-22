@@ -1,3 +1,4 @@
+import { showToast } from "../../tools/toast";
 import { startNeuronPoolClient } from "../Client";
 
 export const InitMainNeuronInfo = async () => {
@@ -7,7 +8,13 @@ export const InitMainNeuronInfo = async () => {
     const res = await neuronpool.get_main_neuron();
 
     if ("err" in res) {
-      console.error(res.error);
+      console.error(res.err);
+
+      showToast({
+        title: "Error fetching main neuron information",
+        description: res.err.toString(),
+        status: "warning",
+      });
 
       return { maturity_e8s_equivalent: "" };
     } else {
@@ -16,6 +23,11 @@ export const InitMainNeuronInfo = async () => {
     }
   } catch (error) {
     console.error(error);
+    showToast({
+      title: "Error fetching main neuron information",
+      description: error.toString(),
+      status: "warning",
+    });
 
     return { maturity_e8s_equivalent: "" };
   }

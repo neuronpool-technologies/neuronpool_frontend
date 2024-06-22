@@ -50,6 +50,7 @@ import {
   lightGrayTextColor,
 } from "../../../colors";
 import { Auth } from "../../../components";
+import { showToast } from "../../../tools/toast";
 
 const IcpWallet = () => {
   const { logged_in, icp_balance } = useSelector((state) => state.Profile);
@@ -114,7 +115,9 @@ const ReceiveIcp = () => {
           <ModalBody>
             <FormControl>
               <Box
-                bg={colorMode === "light" ? lightGrayColorBox : darkGrayColorBox}
+                bg={
+                  colorMode === "light" ? lightGrayColorBox : darkGrayColorBox
+                }
                 border={
                   colorMode === "light"
                     ? `solid ${lightBorderColor} 1px`
@@ -187,6 +190,12 @@ const SendIcp = () => {
         setSending(false);
         setSent(true);
         setFailed(true);
+
+        showToast({
+          title: "Error sending ICP",
+          description: error.toString(),
+          status: "warning",
+        });
       }
     }
   };
@@ -271,7 +280,9 @@ const SendIcp = () => {
                   borderBottomRadius="lg"
                   p={3}
                   mt={-0.5}
-                  bg={colorMode === "light" ? lightGrayColorBox : darkGrayColorBox}
+                  bg={
+                    colorMode === "light" ? lightGrayColorBox : darkGrayColorBox
+                  }
                 >
                   <Flex w="100%">
                     <Flex align={"center"} gap={1}>

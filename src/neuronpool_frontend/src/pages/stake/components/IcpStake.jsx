@@ -31,10 +31,7 @@ import {
 } from "@chakra-ui/react";
 import { WarningIcon } from "@chakra-ui/icons";
 import IcLogo from "../../../../assets/ic-logo.png";
-import {
-  e8sToIcp,
-  icpToE8s,
-} from "../../../tools/conversions";
+import { e8sToIcp, icpToE8s } from "../../../tools/conversions";
 import { useSelector, useDispatch } from "react-redux";
 import { Auth, InfoRow } from "../../../components";
 import {
@@ -51,6 +48,7 @@ import {
 import { Principal } from "@dfinity/principal";
 import { fetchWallet } from "../../../state/ProfileSlice";
 import StakingWarning from "./StakingWarning";
+import { showToast } from "../../../tools/toast";
 
 const steps = [{ description: "Approve ICP" }, { description: "Stake ICP" }];
 
@@ -107,7 +105,13 @@ const IcpStake = () => {
         setStaking(false);
         setFailed(true);
         setStaked(true);
-        console.error(stakeResult);
+        console.error(stakeResult.err);
+
+        showToast({
+          title: "Error staking",
+          description: stakeResult.err.toString(),
+          status: "warning",
+        });
       } else {
         // refresh balances
         dispatch(fetchWallet({ principal }));
@@ -125,6 +129,12 @@ const IcpStake = () => {
       setFailed(true);
       setStaked(true);
       console.error(error);
+
+      showToast({
+        title: "Error staking",
+        description: error.toString(),
+        status: "warning",
+      });
     }
   };
 

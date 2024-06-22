@@ -1,6 +1,7 @@
 import { startLedgerIndexClient, startNeuronPoolClient } from "../Client";
 import { AccountIdentifier } from "@dfinity/ledger-icp";
 import { Principal } from "@dfinity/principal";
+import { showToast } from "../../tools/toast";
 
 export const InitWallet = async ({ principal }) => {
   try {
@@ -29,7 +30,7 @@ export const InitWallet = async ({ principal }) => {
       neuronpool.get_staker_withdrawal_neurons(),
       neuronpool.get_staker_prize_neurons(),
     ]);
-    
+
     // TODO may need to convert elements within arrays to srings for redux
     return {
       icp_address: account.toHex(),
@@ -41,6 +42,12 @@ export const InitWallet = async ({ principal }) => {
     };
   } catch (error) {
     console.error(error);
+
+    showToast({
+      title: "Error fetching wallet information",
+      description: error.toString(),
+      status: "warning",
+    });
 
     return {
       icp_address: "",

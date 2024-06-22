@@ -215,7 +215,7 @@ const UserProfile = () => {
           icon={<CloseIcon />}
           onClick={logout}
           bg="none"
-          _hover={{ opacity: "0.9" }}
+          _hover={{ opacity: "0.8" }}
         >
           Disconnect
         </MenuItem>
@@ -233,7 +233,7 @@ const CopyToClipboardButton = ({ value, type }) => {
       icon={hasCopied ? <CheckIcon /> : <CopyIcon />}
       onClick={value ? onCopy : null}
       bg="none"
-      _hover={{ opacity: "0.9" }}
+      _hover={{ opacity: "0.8" }}
     >
       {value ? `Copy ${type}` : "Loading..."}
     </MenuItem>
