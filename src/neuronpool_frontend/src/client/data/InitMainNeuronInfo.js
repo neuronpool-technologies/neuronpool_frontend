@@ -19,7 +19,7 @@ export const InitMainNeuronInfo = async () => {
       return { maturity_e8s_equivalent: "" };
     } else {
       const { ok: maturity_e8s_equivalent } = res;
-      return maturity_e8s_equivalent;
+      return maturity_e8s_equivalent.toString();
     }
   } catch (error) {
     console.error(error);

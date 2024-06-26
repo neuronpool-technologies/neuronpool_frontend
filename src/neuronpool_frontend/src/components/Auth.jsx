@@ -34,6 +34,7 @@ import { darkColorBox, lightColorBox } from "../colors";
 import { fetchProtocolInformation } from "../state/ProtocolSlice";
 import { fetchHistory } from "../state/HistorySlice";
 import { fetchNeuron } from "../state/NeuronSlice";
+import { clearWithdrawals } from "../state/WithdrawalsSlice";
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -104,7 +105,7 @@ const Auth = () => {
   useEffect(() => {
     initAuth();
     fetchData();
-  }, [logged_in]);
+  }, []);
 
   return (
     <>
@@ -132,19 +133,27 @@ export default Auth;
 const UserProfile = () => {
   const dispatch = useDispatch();
 
-  const principal = useSelector((state) => state.Profile.principal);
-  const icp_address = useSelector((state) => state.Profile.icp_address);
+  const { principal, icp_address } = useSelector((state) => state.Profile);
+  const walletStatus = useSelector((state) => state.Profile.status);
+  
   const { colorMode, toggleColorMode } = useColorMode();
 
   const logout = async () => {
     const authClient = await AuthClient.create();
     await authClient.logout();
     dispatch(setLogout());
+    dispatch(clearWithdrawals());
     Usergeek.setPrincipal(undefined);
   };
 
+  const fetchProfile = async () => {
+    if (walletStatus === "idle" || walletStatus === "failed") {
+      dispatch(fetchWallet({ principal }));
+    }
+  };
+
   useEffect(() => {
-    dispatch(fetchWallet({ principal }));
+    fetchProfile();
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Container,
   useColorMode,
@@ -16,33 +16,30 @@ import {
 } from "../../colors";
 import { Claim, ClaimBalance, ClaimWithdrawal } from "./claim";
 import { Request, RequestBalance, RequestInfo } from "./request";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { WithdrawalFaq } from "../../components";
+import { fetchWithdrawals } from "../../state/WithdrawalsSlice";
 
 const Withdrawals = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const logged_in = useSelector((state) => state.Profile.logged_in);
+  const { logged_in } = useSelector((state) => state.Profile);
+  const { neuronpool_withdrawal_neurons_information, status } = useSelector(
+    (state) => state.Withdrawals
+  );
 
-  // TODO fetch the status of all the neurons withdrawing using a Promise.all
-  // TODO pass this data into the ClaimBalance and the Claim withdrawal
+  const dispatch = useDispatch();
 
-  // TODO we need to access the neurons information such as how many days left and how long till spawn
-  // TODO this will also allow us to have the ready and pending indicator
-  // const fetchWithdrawalNeuronsStatus = async () => {
-  //   const neuronpool = await startNeuronPoolClient();
+  const fetchWithdrawalInfo = async () => {
+    if (status === "idle" || status === "failed") {
+      dispatch(fetchWithdrawals());
+    }
+  };
 
-  //   if (neuronpool_withdrawal_neurons.length > 0) {
-  //     const neuronPromises = neuronpool_withdrawal_neurons.map((id) =>
-  //       neuronpool.get_neuron_information(BigInt(id))
-  //     );
-
-  //     const neuronResults = await Promise.all(neuronPromises);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchWithdrawalNeuronsStatus();
-  // }, []);
+  useEffect(() => {
+    if (logged_in) {
+      fetchWithdrawalInfo();
+    }
+  }, [logged_in]);
 
   return (
     <Container maxW="xl" my={5}>
@@ -70,7 +67,12 @@ const Withdrawals = () => {
           <RequestInfo />
         </VStack>
       </Box>
-      {logged_in ? <ClaimBalance /> : null}
+      {logged_in ? (
+        <ClaimBalance
+          withdrawalNeuronsInfo={neuronpool_withdrawal_neurons_information}
+          status={status}
+        />
+      ) : null}
       <Box
         boxShadow="md"
         borderRadius="lg"
@@ -90,7 +92,10 @@ const Withdrawals = () => {
         </Flex>
         <VStack spacing={3} align="start">
           <Divider />
-          <Claim />
+          <Claim
+            withdrawalNeuronsInfo={neuronpool_withdrawal_neurons_information}
+            status={status}
+          />
           <ClaimWithdrawal />
         </VStack>
       </Box>

@@ -168,7 +168,7 @@ const IcpStake = () => {
             (amount !== "" &&
               icpToE8s(Number(amount)) <
                 Number(minimum_stake) + networkFeeE8s * 2) ||
-            icpToE8s(Number(amount)) > Number(icp_balance)
+            (!staked && icpToE8s(Number(amount)) > Number(icp_balance))
           }
           type="number"
           onChange={(event) => setAmount(event.target.value)}

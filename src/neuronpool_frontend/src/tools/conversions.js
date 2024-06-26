@@ -23,3 +23,44 @@ export function convertNanosecondsToDays(nanoseconds) {
   const days = moment.duration(seconds, "seconds").asDays();
   return days;
 }
+
+export function convertSecondsToDaysOrHours(seconds) {
+  const duration = moment.duration(seconds, "seconds");
+
+  if (duration.asDays() <= 1) {
+    // If less than or equal to one day, return hours
+    const hours = duration.asHours();
+    // Check if it's exactly 1 hour to adjust the unit
+    return hours <= 1
+      ? `${Math.ceil(hours)} hour`
+      : `${Math.ceil(hours)} hours`;
+  } else {
+    // Otherwise, return days
+    return `${Math.ceil(duration.asDays())} days`;
+  }
+}
+
+export function deepConvertToString(obj) {
+  // Base case: if obj is already a primitive type
+  if (obj === null || typeof obj !== "object") {
+    return String(obj);
+  }
+
+  // Special case: BigInt
+  if (typeof obj === "bigint") {
+    return obj.toString();
+  }
+
+  // Special case: Array
+  if (Array.isArray(obj)) {
+    return obj.map(deepConvertToString);
+  }
+
+  // Recursive case: object
+  const newObj = {};
+  for (const [key, value] of Object.entries(obj)) {
+    newObj[key] = deepConvertToString(value);
+  }
+
+  return newObj;
+}

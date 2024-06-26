@@ -9,7 +9,7 @@ const ClaimWithdrawal = () => {
   return (
     <>
       {logged_in ? (
-        <Button w="100%" colorScheme="blue" rounded="full" boxShadow="base">
+        <Button w="100%" colorScheme="blue" rounded="full" boxShadow="base" isDisabled>
           Claim withdrawal
         </Button>
       ) : (

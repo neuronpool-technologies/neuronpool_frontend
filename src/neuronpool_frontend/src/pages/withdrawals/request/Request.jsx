@@ -43,8 +43,9 @@ import IcLogo from "../../../../assets/ic-logo.png";
 import { e8sToIcp, icpToE8s } from "../../../tools/conversions";
 import { InfoRow } from "../../../components";
 import { startNeuronPoolClient } from "../../../client/Client";
-import { InitWallet } from "../../../client/data/InitWallet";
 import { showToast } from "../../../tools/toast";
+import { InitWithdrawalNeurons } from "../../../client/data/InitWithdrawalNeurons";
+import { fetchWithdrawals } from "../../../state/WithdrawalsSlice";
 
 const steps = [
   { description: "Request ICP" },
@@ -99,14 +100,13 @@ const Request = () => {
         // if ok
         setActiveStep(1);
         // step 2 dissolve ICP
-        const { neuronpool_withdrawal_neurons } = await InitWallet({
-          principal,
-        });
+        const { neuronpool_withdrawal_neurons_ids } =
+          await InitWithdrawalNeurons();
 
         // get the last ID added
         const latestId =
-          neuronpool_withdrawal_neurons[
-            neuronpool_withdrawal_neurons.length - 1
+          neuronpool_withdrawal_neurons_ids[
+            neuronpool_withdrawal_neurons_ids.length - 1
           ];
 
         // start dissolving
@@ -130,6 +130,8 @@ const Request = () => {
           });
         } else {
           dispatch(fetchWallet({ principal }));
+          dispatch(fetchWithdrawals());
+
           // if ok
           setActiveStep(2);
 
@@ -184,7 +186,8 @@ const Request = () => {
             (amount !== "" &&
               icpToE8s(Number(amount)) <
                 Number(minimum_withdrawal) + networkFeeE8s) ||
-            icpToE8s(Number(amount)) > Number(neuronpool_balance)
+            (!requested &&
+              icpToE8s(Number(amount)) > Number(neuronpool_balance))
           }
           type="number"
           onChange={(event) => setAmount(event.target.value)}

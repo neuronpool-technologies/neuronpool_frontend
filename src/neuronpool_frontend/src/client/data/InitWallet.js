@@ -2,6 +2,7 @@ import { startLedgerIndexClient, startNeuronPoolClient } from "../Client";
 import { AccountIdentifier } from "@dfinity/ledger-icp";
 import { Principal } from "@dfinity/principal";
 import { showToast } from "../../tools/toast";
+import { deepConvertToString } from "../../tools/conversions";
 
 export const InitWallet = async ({ principal }) => {
   try {
@@ -19,7 +20,6 @@ export const InitWallet = async ({ principal }) => {
     const [
       icpBalance,
       neuronpoolBalance,
-      neuronpoolWithdrawalNeurons,
       { claimed, all_prize_neurons },
     ] = await Promise.all([
       index.accountBalance({
@@ -27,18 +27,15 @@ export const InitWallet = async ({ principal }) => {
         accountIdentifier: account,
       }),
       neuronpool.get_staker_balance(),
-      neuronpool.get_staker_withdrawal_neurons(),
       neuronpool.get_staker_prize_neurons(),
     ]);
 
-    // TODO may need to convert elements within arrays to srings for redux
     return {
       icp_address: account.toHex(),
       icp_balance: icpBalance.toString(),
       neuronpool_balance: neuronpoolBalance.toString(),
-      neuronpool_withdrawal_neurons: Array.from(neuronpoolWithdrawalNeurons),
-      claimed_prize_neurons: claimed,
-      all_prize_neurons: Array.from(all_prize_neurons),
+      claimed_prize_neurons: deepConvertToString(Array.from(claimed)),
+      all_prize_neurons: deepConvertToString(Array.from(all_prize_neurons)),
     };
   } catch (error) {
     console.error(error);
@@ -53,7 +50,6 @@ export const InitWallet = async ({ principal }) => {
       icp_address: "",
       icp_balance: "",
       neuronpool_balance: "",
-      neuronpool_withdrawal_neurons: [],
       claimed_prize_neurons: [],
       all_prize_neurons: [],
     };

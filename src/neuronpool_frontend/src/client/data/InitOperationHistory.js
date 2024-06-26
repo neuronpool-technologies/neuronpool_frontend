@@ -1,3 +1,4 @@
+import { deepConvertToString } from "../../tools/conversions";
 import { showToast } from "../../tools/toast";
 import { startNeuronPoolClient } from "../Client";
 
@@ -32,7 +33,7 @@ export const InitOperationHistory = async () => {
           length: totalOperations,
         });
 
-        return { total: total.toString(), operations: operations };
+        return { total: total.toString(), operations: deepConvertToString(operations) };
       } else {
         const {
           ok: { total, operations },
@@ -41,7 +42,7 @@ export const InitOperationHistory = async () => {
           length: totalOperations,
         });
 
-        return { total: total.toString(), operations: operations };
+        return { total: total.toString(), operations: deepConvertToString(operations) };
       }
     }
   } catch (error) {

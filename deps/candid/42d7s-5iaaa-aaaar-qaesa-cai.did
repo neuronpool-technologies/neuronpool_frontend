@@ -141,6 +141,7 @@ type DisburseReward =
  };
 type CreateNeuron = 
  record {
+   amount_e8s: nat64;
    neuron_id: nat64;
    token: text;
  };
@@ -169,8 +170,7 @@ service : {
   controller_set_main_neuron_following: (record {topic: int32;}) ->
    (ConfigureResponse);
   controller_set_spawn_reward_timer: () -> (OperationResponse);
-  controller_stake_main_neuron: (record {amount_e8s: nat64;}) ->
-   (OperationResponse);
+  controller_stake_main_neuron: () -> (OperationResponse);
   get_main_neuron: () -> (NnsInformationResult);
   get_neuron_information: (NeuronId) -> (NnsInformationResult);
   get_operation_history: (record {
