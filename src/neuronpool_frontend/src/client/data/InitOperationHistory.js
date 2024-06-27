@@ -25,15 +25,18 @@ export const InitOperationHistory = async () => {
 
       return { total: "", operations: [] };
     } else {
-      if (res.ok.total > amountToFetch) {
+      if (totalOperations > amountToFetch) {
         const {
           ok: { total, operations },
         } = await neuronpool.get_operation_history({
-          start: Number(total - BigInt(amountToFetch)),
-          length: totalOperations,
+          start: Number(totalOperations - BigInt(amountToFetch)),
+          length: amountToFetch,
         });
 
-        return { total: total.toString(), operations: deepConvertToString(operations) };
+        return {
+          total: total.toString(),
+          operations: deepConvertToString(operations),
+        };
       } else {
         const {
           ok: { total, operations },
@@ -42,7 +45,10 @@ export const InitOperationHistory = async () => {
           length: totalOperations,
         });
 
-        return { total: total.toString(), operations: deepConvertToString(operations) };
+        return {
+          total: total.toString(),
+          operations: deepConvertToString(operations),
+        };
       }
     }
   } catch (error) {

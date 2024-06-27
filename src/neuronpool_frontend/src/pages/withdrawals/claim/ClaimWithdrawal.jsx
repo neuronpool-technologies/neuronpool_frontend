@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   useDisclosure,
@@ -18,19 +18,18 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { WarningIcon, CheckCircleIcon } from "@chakra-ui/icons";
-import {
-  lightColorBox,
-  darkColorBox,
-} from "../../../colors";
-import { e8sToIcp} from "../../../tools/conversions";
+import { lightColorBox, darkColorBox } from "../../../colors";
+import { e8sToIcp } from "../../../tools/conversions";
 import { InfoRow } from "../../../components";
 import { startNeuronPoolClient } from "../../../client/Client";
 import { showToast } from "../../../tools/toast";
 import { fetchWithdrawals } from "../../../state/WithdrawalsSlice";
+import { fetchWallet } from "../../../state/ProfileSlice";
 
 const ClaimWithdrawal = ({ state, id, stake }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+  const { principal } = useSelector((state) => state.Profile);
 
   const networkFeeE8s = 10_000;
   const dispatch = useDispatch();
@@ -63,6 +62,7 @@ const ClaimWithdrawal = ({ state, id, stake }) => {
         });
       } else {
         // success
+        dispatch(fetchWallet({ principal }));
         dispatch(fetchWithdrawals());
 
         setClaiming(false);

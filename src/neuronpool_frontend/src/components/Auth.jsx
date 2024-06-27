@@ -35,6 +35,7 @@ import { fetchProtocolInformation } from "../state/ProtocolSlice";
 import { fetchHistory } from "../state/HistorySlice";
 import { fetchNeuron } from "../state/NeuronSlice";
 import { clearWithdrawals } from "../state/WithdrawalsSlice";
+import { clearRewardNeurons } from "../state/RewardSlice";
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -143,6 +144,7 @@ const UserProfile = () => {
     await authClient.logout();
     dispatch(setLogout());
     dispatch(clearWithdrawals());
+    dispatch(clearRewardNeurons());
     Usergeek.setPrincipal(undefined);
   };
 

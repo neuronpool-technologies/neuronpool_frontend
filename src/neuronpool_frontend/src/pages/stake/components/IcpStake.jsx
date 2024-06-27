@@ -49,7 +49,6 @@ import { Principal } from "@dfinity/principal";
 import { fetchWallet } from "../../../state/ProfileSlice";
 import StakingWarning from "./StakingWarning";
 import { showToast } from "../../../tools/toast";
-import { fetchProtocolInformation } from "../../../state/ProtocolSlice";
 
 const steps = [{ description: "Approve ICP" }, { description: "Stake ICP" }];
 
@@ -116,7 +115,6 @@ const IcpStake = () => {
       } else {
         // refresh balances
         dispatch(fetchWallet({ principal }));
-        dispatch(fetchProtocolInformation());
         
         // if ok
         setActiveStep(2);
