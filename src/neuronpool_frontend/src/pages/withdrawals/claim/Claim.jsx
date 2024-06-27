@@ -6,19 +6,21 @@ import {
   useColorMode,
   Image as ChakraImage,
   Badge,
+  Box,
 } from "@chakra-ui/react";
 import { darkGrayTextColor, lightGrayTextColor } from "../../../colors";
 import IcLogo from "../../../../assets/ic-logo.png";
 import {
   LockIcon,
   TimeIcon,
-  UnlockIcon,
+  CheckCircleIcon,
   PlusSquareIcon,
 } from "@chakra-ui/icons";
 import {
   convertSecondsToDaysOrHours,
   e8sToIcp,
 } from "../../../tools/conversions";
+import ClaimWithdrawal from "./ClaimWithdrawal";
 
 const Claim = ({ withdrawalNeuronsInfo, status }) => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -73,16 +75,16 @@ export default Claim;
 const WithdrawalNeuron = ({ state, id, timeLeftSeconds, stake }) => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <>
-      <Flex
-        align="center"
-        p={3}
-        w="100%"
-        boxShadow="md"
-        borderRadius="lg"
-        color={state === "3" ? "green.500" : "orange.500"}
-        border={"solid 1px"}
-      >
+    <Box
+      align="center"
+      p={3}
+      w="100%"
+      boxShadow="md"
+      borderRadius="lg"
+      color={state === "3" ? "green.500" : "orange.500"}
+      border={"solid 1px"}
+    >
+      <Flex align="center" w="100%" mb={3}>
         <ChakraImage
           src={IcLogo}
           alt="ICP logo"
@@ -106,17 +108,20 @@ const WithdrawalNeuron = ({ state, id, timeLeftSeconds, stake }) => {
               gap={1}
               align="center"
               color={state === "3" ? "green.500" : "orange.500"}
+              fontSize={{ base: "xs", md: "sm" }}
             >
               {state === "1" ? <LockIcon /> : null}
               {state === "2" ? <TimeIcon /> : null}
-              {state === "3" ? <UnlockIcon /> : null}
+              {state === "3" ? <CheckCircleIcon /> : null}
               {state === "4" ? <PlusSquareIcon /> : null}
-              <Text fontSize="sm">
-                {state === "1" ? "Locked" : null}
-                {state === "2" ? "Unlocking" : null}
-                {state === "3" ? "Unlocked" : null}
-                {state === "4" ? "Spawning" : null} (
-                {convertSecondsToDaysOrHours(Number(timeLeftSeconds))})
+              <Text>
+                {state === "1" ? "Locked (Contact support)" : null}
+                {state === "2" ? "Withdrawing" : null}
+                {state === "3" ? "Available" : null}
+                {state === "4" ? "Spawning" : null}
+                {Number(timeLeftSeconds) > 0
+                  ? ` (${convertSecondsToDaysOrHours(Number(timeLeftSeconds))})`
+                  : null}
               </Text>
             </Flex>
           </Flex>
@@ -125,6 +130,7 @@ const WithdrawalNeuron = ({ state, id, timeLeftSeconds, stake }) => {
           </Badge>
         </VStack>
       </Flex>
-    </>
+      <ClaimWithdrawal state={state} id={id} stake={stake} />
+    </Box>
   );
 };

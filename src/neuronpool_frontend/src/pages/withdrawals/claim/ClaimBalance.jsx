@@ -20,7 +20,7 @@ import {
 } from "../../../colors";
 import Auth from "../../../components/Auth";
 
-const ClaimBalance = ({ withdrawalNeuronsInfo, status }) => {
+const ClaimBalance = ({ withdrawalNeuronsInfo }) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   const [pendingNeurons, setPendingNeurons] = useState(null);
@@ -32,8 +32,9 @@ const ClaimBalance = ({ withdrawalNeuronsInfo, status }) => {
       let ready = 0;
       for (let { state, cached_neuron_stake_e8s } of withdrawalNeuronsInfo) {
         // we need to ignore already claimed neurons
-        if (cached_neuron_stake_e8s > 0) {
-          if (state === 3) {
+
+        if (Number(cached_neuron_stake_e8s) > 0) {
+          if (Number(state) === 3) {
             ready++;
           } else {
             // this means if the dissolve request failed it will show in pending as well

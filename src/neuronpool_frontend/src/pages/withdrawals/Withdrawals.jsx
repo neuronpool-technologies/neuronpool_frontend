@@ -14,7 +14,7 @@ import {
   lightBorderColor,
   darkBorderColor,
 } from "../../colors";
-import { Claim, ClaimBalance, ClaimWithdrawal } from "./claim";
+import { Claim, ClaimBalance } from "./claim";
 import { Request, RequestBalance, RequestInfo } from "./request";
 import { useSelector, useDispatch } from "react-redux";
 import { WithdrawalFaq } from "../../components";
@@ -96,7 +96,6 @@ const Withdrawals = () => {
             withdrawalNeuronsInfo={neuronpool_withdrawal_neurons_information}
             status={status}
           />
-          <ClaimWithdrawal />
         </VStack>
       </Box>
       <WithdrawalFaq />

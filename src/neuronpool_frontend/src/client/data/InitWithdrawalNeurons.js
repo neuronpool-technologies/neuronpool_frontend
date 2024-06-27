@@ -8,9 +8,7 @@ export const InitWithdrawalNeurons = async () => {
     const neuronpool = await startNeuronPoolClient();
     const neuronIds = await neuronpool.get_staker_withdrawal_neurons();
 
-    const neuronpool_withdrawal_neurons = deepConvertToString(
-      Array.from(neuronIds)
-    );
+    const neuronpool_withdrawal_neurons = Array.from(neuronIds);
 
     if (neuronpool_withdrawal_neurons.length > 0) {
       const neuronPromises = neuronpool_withdrawal_neurons.map((id) =>
@@ -32,6 +30,11 @@ export const InitWithdrawalNeurons = async () => {
         neuronpool_withdrawal_neurons_ids: deepConvertToString(
           Array.from(neuronIds)
         ),
+      };
+    } else {
+      return {
+        neuronpool_withdrawal_neurons_information: [],
+        neuronpool_withdrawal_neurons_ids: [],
       };
     }
   } catch (error) {
