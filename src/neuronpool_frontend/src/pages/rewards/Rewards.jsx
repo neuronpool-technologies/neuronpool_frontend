@@ -16,12 +16,7 @@ import {
 } from "../../colors";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchRewardNeurons } from "../../state/RewardSlice";
-import {
-  RewardBalance,
-  RewardPool,
-  PreviousWinners,
-  RewardTimer,
-} from "./components";
+import { RewardBalance, RewardPool, PreviousWinners } from "./components";
 import { Collect, CollectInfo } from "./components/collect";
 import { RewardsFaq } from "../../components";
 
@@ -71,7 +66,6 @@ const Rewards = () => {
           <CollectInfo />
         </VStack>
       </Box>
-      <RewardTimer />
       <RewardPool />
       <PreviousWinners />
       <RewardsFaq />
