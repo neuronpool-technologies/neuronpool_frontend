@@ -46,6 +46,7 @@ import { startNeuronPoolClient } from "../../../client/Client";
 import { showToast } from "../../../tools/toast";
 import { InitWithdrawalNeurons } from "../../../client/data/InitWithdrawalNeurons";
 import { fetchWithdrawals } from "../../../state/WithdrawalsSlice";
+import { fetchProtocolInformation } from "../../../state/ProtocolSlice";
 
 const steps = [
   { description: "Request ICP" },
@@ -131,6 +132,7 @@ const Request = () => {
         } else {
           dispatch(fetchWallet({ principal }));
           dispatch(fetchWithdrawals());
+          dispatch(fetchProtocolInformation());
           
           // if ok
           setActiveStep(2);
