@@ -44,7 +44,7 @@ const StakeInfo = () => {
       >
         <HintPopover
           details={
-            "This fee applies to staking reward winnings only and is not taken from your staked amount."
+            "This fee is deducted from staking reward winnings only and is not taken from your staked amount."
           }
         />
       </InfoRow>

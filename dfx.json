@@ -1,7 +1,7 @@
 {
   "canisters": {
     "NeuronPool": {
-      "id": "42d7s-5iaaa-aaaar-qaesa-cai",
+      "id": "einw2-uqaaa-aaaar-qagkq-cai",
       "type": "pull"
     },
     "neuronpool_frontend": {

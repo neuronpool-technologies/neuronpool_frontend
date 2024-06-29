@@ -28,9 +28,8 @@ import { RewardsFaq } from "../../components";
 const Rewards = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const { logged_in } = useSelector((state) => state.Profile);
-  const { unclaimed_prize_neurons, status } = useSelector(
-    (state) => state.Reward
-  );
+  // we need to get the reward neurons here
+  const { status } = useSelector((state) => state.Reward);
 
   const dispatch = useDispatch();
 
