@@ -16,6 +16,12 @@ type StakeTransfer =
    blockchain_fee: nat64;
    staker: principal;
  };
+type StakeDonation = 
+ record {
+   amount_e8s: nat64;
+   blockchain_fee: nat64;
+   from: opt principal;
+ };
 type SpawnReward = 
  record {
    neuron_id: NeuronId;
@@ -161,16 +167,23 @@ type Action =
    DisburseReward: DisburseReward;
    RewardTimer: RewardTimer;
    SpawnReward: SpawnReward;
+   StakeDonation: StakeDonation;
    StakeTransfer: StakeTransfer;
    StakeWithdrawal: StakeWithdrawal;
  };
 service : {
+  controller_add_stake_donation:
+   (record {
+      amount_e8s: nat64;
+      from: opt principal;
+    }) -> (OperationResponse);
   controller_get_canister_memory: () -> (HeapData) query;
   controller_set_main_neuron_dissolve_delay: () -> (ConfigureResponse);
   controller_set_main_neuron_following: (record {topic: int32;}) ->
    (ConfigureResponse);
   controller_set_spawn_reward_timer: () -> (OperationResponse);
-  controller_stake_main_neuron: () -> (OperationResponse);
+  controller_stake_main_neuron: (record {amount_e8s: nat64;}) ->
+   (OperationResponse);
   get_main_neuron: () -> (NnsInformationResult);
   get_neuron_information: (NeuronId) -> (NnsInformationResult);
   get_operation_history: (record {
@@ -178,6 +191,7 @@ service : {
                             start: nat;
                           }) -> (HistoryResult) query;
   get_protocol_information: () -> (ProtocolInformationResult) query;
+  get_reward_distributions: () -> (vec Operation) query;
   get_staker_balance: () -> (nat64) query;
   get_staker_prize_neurons: () -> (StakerPrizeNeurons) query;
   get_staker_withdrawal_neurons: () -> (vec NeuronId) query;

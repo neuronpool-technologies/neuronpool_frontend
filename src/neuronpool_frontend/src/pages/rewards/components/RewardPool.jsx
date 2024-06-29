@@ -1,54 +1,40 @@
 import React from "react";
 import {
-  Input,
-  InputGroup,
-  InputRightElement,
-  InputLeftElement,
-  Button,
-  Image as ChakraImage,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
   VStack,
   Divider,
-  Step,
-  StepDescription,
-  StepIcon,
-  StepIndicator,
-  StepNumber,
-  StepSeparator,
-  StepStatus,
-  Stepper,
-  useSteps,
   Box,
   useColorMode,
-  Spinner,
   Flex,
-  Heading,
   Text,
 } from "@chakra-ui/react";
 import {
   darkColor,
   darkColorBox,
-  darkGrayTextColor,
   lightColor,
   lightColorBox,
-  lightGrayTextColor,
   lightBorderColor,
   darkBorderColor,
 } from "../../../colors";
 import { useSelector } from "react-redux";
 import { InfoRow } from "../../../components";
-import { e8sToIcp } from "../../../tools/conversions";
+import {
+  convertNanoToFormattedDate,
+  e8sToIcp,
+} from "../../../tools/conversions";
 
 const RewardPool = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const protocolInfo = useSelector((state) => state.Protocol);
+  const { maturity_e8s_equivalent, reward_distributions, status } = useSelector(
+    (state) => state.Neuron
+  );
+  const { reward_timer_duration_nanos } = useSelector(
+    (state) => state.Protocol
+  );
+
+  const lastDistribution =
+    reward_distributions.length > 0
+      ? reward_distributions[reward_distributions.length - 1]
+      : 0;
 
   return (
     <Box>
@@ -75,13 +61,24 @@ const RewardPool = () => {
         <VStack align="start" p={3} gap={3}>
           <InfoRow
             title={"Current reward pool"}
-            stat={protocolInfo.status === "succeeded" ? "Need to fetch" : "--"}
+            stat={
+              status === "succeeded"
+                ? `${e8sToIcp(Number(maturity_e8s_equivalent)).toFixed(2)} ICP`
+                : "Checking..."
+            }
           />
           <Divider />
           <InfoRow
             title={"Next distribution"}
             stat={
-              protocolInfo.status === "succeeded" ? "Need to calculate" : "--"
+              status === "succeeded"
+                ? lastDistribution
+                  ? convertNanoToFormattedDate(
+                      Number(lastDistribution.timestamp_nanos) +
+                        Number(reward_timer_duration_nanos)
+                    )
+                  : "--/--/--"
+                : "Checking..."
             }
           />
         </VStack>

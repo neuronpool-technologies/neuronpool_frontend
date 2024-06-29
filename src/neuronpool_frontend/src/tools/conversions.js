@@ -24,6 +24,17 @@ export function convertNanosecondsToDays(nanoseconds) {
   return days;
 }
 
+export function convertNanoToFormattedDate(timestampNanos, format = 'MMMM Do, h:mm A') {
+  // Convert nanoseconds to milliseconds
+  const timestampMillis = Math.floor(timestampNanos / 1_000_000);
+  
+  // Create a moment object from the milliseconds
+  const momentDate = moment(timestampMillis);
+  
+  // Format the date as needed
+  return momentDate.format(format);
+}
+
 export function convertSecondsToDaysOrHours(seconds) {
   const duration = moment.duration(seconds, "seconds");
 
