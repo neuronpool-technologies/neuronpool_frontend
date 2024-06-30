@@ -21,6 +21,7 @@ import {
   convertNanoToFormattedDate,
   e8sToIcp,
 } from "../../../tools/conversions";
+import HintPopover from "../../../components/HintPopover";
 
 const RewardPool = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -66,7 +67,13 @@ const RewardPool = () => {
                 ? `${e8sToIcp(Number(maturity_e8s_equivalent)).toFixed(2)} ICP`
                 : "Checking..."
             }
-          />
+          >
+            <HintPopover
+              details={
+                "An estimate of the amount of ICP in the current reward pool. The actual amount may vary slightly."
+              }
+            />
+          </InfoRow>
           <Divider />
           <InfoRow
             title={"Next distribution"}

@@ -5,10 +5,14 @@ import {
   PopoverContent,
   PopoverArrow,
   PopoverBody,
+  useColorMode,
 } from "@chakra-ui/react";
 import { InfoIcon } from "@chakra-ui/icons";
+import { darkColorBox, lightColorBox } from "../colors";
 
 const HintPopover = ({ details }) => {
+  const { colorMode, toggleColorMode } = useColorMode();
+
   return (
     <Popover trigger="hover">
       <PopoverTrigger>
@@ -20,7 +24,7 @@ const HintPopover = ({ details }) => {
           }}
         />
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent bg={colorMode === "light" ? lightColorBox : darkColorBox}>
         <PopoverArrow />
         <PopoverBody>{details}</PopoverBody>
       </PopoverContent>

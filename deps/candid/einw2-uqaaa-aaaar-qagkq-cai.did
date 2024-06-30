@@ -130,6 +130,10 @@ type HeapData =
    heap_mb: nat;
    mem_bytes: nat;
    mem_mb: nat;
+   ongoing_withdrawals: vec record {
+                              principal;
+                              nat64;
+                            };
    operation_entries: nat;
  };
 type Followees = record {followees: vec NeuronId__1;};
