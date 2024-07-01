@@ -9,8 +9,11 @@ export const InitOperationHistory = async () => {
     // return the last x entries
     const amountToFetch = 20;
 
-    // get the total amount by fetching once
-    const res = await neuronpool.get_operation_history({ start: 0, length: 1 });
+    // get the total amount by fetching once and get the reward distributions
+    const [res, rewardDistributions] = await Promise.all([
+      neuronpool.get_operation_history({ start: 0, length: 1 }),
+      neuronpool.get_reward_distributions(),
+    ]);
 
     const totalOperations = res.ok.total;
 
@@ -23,7 +26,7 @@ export const InitOperationHistory = async () => {
         status: "warning",
       });
 
-      return { total: "", operations: [] };
+      return { total: "", operations: [], reward_distributions: [] };
     } else {
       if (totalOperations > amountToFetch) {
         const {
@@ -36,6 +39,9 @@ export const InitOperationHistory = async () => {
         return {
           total: total.toString(),
           operations: deepConvertToString(operations),
+          reward_distributions: deepConvertToString(
+            Array.from(rewardDistributions)
+          ),
         };
       } else {
         const {
@@ -48,6 +54,9 @@ export const InitOperationHistory = async () => {
         return {
           total: total.toString(),
           operations: deepConvertToString(operations),
+          reward_distributions: deepConvertToString(
+            Array.from(rewardDistributions)
+          ),
         };
       }
     }
@@ -59,6 +68,6 @@ export const InitOperationHistory = async () => {
       status: "warning",
     });
 
-    return { total: "", operations: [] };
+    return { total: "", operations: [], reward_distributions: [] };
   }
 };

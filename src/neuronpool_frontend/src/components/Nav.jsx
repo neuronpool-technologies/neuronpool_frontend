@@ -28,7 +28,7 @@ import {
   HamburgerIcon,
   CopyIcon,
 } from "@chakra-ui/icons";
-import logo from "../../assets/neuronpool_logo.svg";
+import logo from "../../assets/logo.svg";
 import { NavLink } from "react-router-dom";
 import { darkColor, lightColor } from "../colors";
 import Auth from "./Auth";
@@ -57,10 +57,10 @@ const Nav = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <>
-      <Box px={{ base: 3, md: 5 }}>
+      <Box px={{ base: 3, md: 6 }}>
         <Flex h={20} alignItems={"center"}>
           <NavLink to="/">
-            <ChakraImage alt="rakeoff logo" h={"70px"} src={logo} />
+            <ChakraImage alt="NeuronPool logo" h={35} src={logo} />
           </NavLink>
           {isDesktop ? (
             <HStack ms={5} fontWeight={700} fontSize={16}>

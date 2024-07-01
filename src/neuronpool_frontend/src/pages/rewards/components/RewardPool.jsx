@@ -6,6 +6,7 @@ import {
   useColorMode,
   Flex,
   Text,
+  Spinner,
 } from "@chakra-ui/react";
 import {
   darkColor,
@@ -25,9 +26,10 @@ import HintPopover from "../../../components/HintPopover";
 
 const RewardPool = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { maturity_e8s_equivalent, reward_distributions, status } = useSelector(
-    (state) => state.Neuron
-  );
+  const { maturity_e8s_equivalent } = useSelector((state) => state.Neuron);
+  const neuronStatus = useSelector((state) => state.Neuron.status);
+  const { reward_distributions } = useSelector((state) => state.History);
+  const historyStatus = useSelector((state) => state.History.status);
   const { reward_timer_duration_nanos } = useSelector(
     (state) => state.Protocol
   );
@@ -63,9 +65,11 @@ const RewardPool = () => {
           <InfoRow
             title={"Current reward pool"}
             stat={
-              status === "succeeded"
-                ? `${e8sToIcp(Number(maturity_e8s_equivalent)).toFixed(2)} ICP`
-                : "Checking..."
+              neuronStatus === "succeeded" ? (
+                `${e8sToIcp(Number(maturity_e8s_equivalent)).toFixed(2)} ICP`
+              ) : (
+                <Spinner size="sm" />
+              )
             }
           >
             <HintPopover
@@ -78,14 +82,18 @@ const RewardPool = () => {
           <InfoRow
             title={"Next distribution"}
             stat={
-              status === "succeeded"
-                ? lastDistribution
-                  ? convertNanoToFormattedDate(
-                      Number(lastDistribution.timestamp_nanos) +
-                        Number(reward_timer_duration_nanos)
-                    )
-                  : "--/--/--"
-                : "Checking..."
+              historyStatus === "succeeded" ? (
+                lastDistribution ? (
+                  convertNanoToFormattedDate(
+                    Number(lastDistribution.timestamp_nanos) +
+                      Number(reward_timer_duration_nanos)
+                  )
+                ) : (
+                  "--/--/--"
+                )
+              ) : (
+                <Spinner size="sm" />
+              )
             }
           />
         </VStack>

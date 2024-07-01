@@ -6,6 +6,7 @@ const HistorySlice = createSlice({
   initialState: {
     total: "",
     operations: [],
+    reward_distributions: [],
     status: "idle",
     error: null,
   },
@@ -18,6 +19,7 @@ const HistorySlice = createSlice({
         state.status = "succeeded";
         state.total = action.payload.total;
         state.operations = action.payload.operations;
+        state.reward_distributions = action.payload.reward_distributions;
       })
       .addCase(fetchHistory.rejected, (state, action) => {
         state.status = "failed";

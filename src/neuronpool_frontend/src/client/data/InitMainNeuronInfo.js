@@ -1,4 +1,3 @@
-import { deepConvertToString } from "../../tools/conversions";
 import { showToast } from "../../tools/toast";
 import { startNeuronPoolClient } from "../Client";
 
@@ -6,10 +5,7 @@ export const InitMainNeuronInfo = async () => {
   try {
     const neuronpool = await startNeuronPoolClient();
 
-    const [res, rewardDistributions] = await Promise.all([
-      await neuronpool.get_main_neuron(),
-      neuronpool.get_reward_distributions(),
-    ]);
+    const res = await neuronpool.get_main_neuron();
 
     if ("err" in res) {
       console.error(res.err);
@@ -22,7 +18,6 @@ export const InitMainNeuronInfo = async () => {
 
       return {
         maturity_e8s_equivalent: "",
-        reward_distributions: [],
       };
     } else {
       const {
@@ -31,9 +26,6 @@ export const InitMainNeuronInfo = async () => {
 
       return {
         maturity_e8s_equivalent: maturity_e8s_equivalent.toString(),
-        reward_distributions: deepConvertToString(
-          Array.from(rewardDistributions)
-        ),
       };
     }
   } catch (error) {
@@ -44,6 +36,6 @@ export const InitMainNeuronInfo = async () => {
       status: "warning",
     });
 
-    return { maturity_e8s_equivalent: "", reward_distributions: [] };
+    return { maturity_e8s_equivalent: "" };
   }
 };

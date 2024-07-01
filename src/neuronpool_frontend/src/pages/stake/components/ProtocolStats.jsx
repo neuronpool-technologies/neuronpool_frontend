@@ -6,6 +6,7 @@ import {
   Text,
   VStack,
   Divider,
+  Spinner,
 } from "@chakra-ui/react";
 import {
   darkColorBox,
@@ -53,26 +54,36 @@ const ProtocolStats = () => {
           <InfoRow
             title={"Stakers"}
             stat={
-              protocolInfo.status === "succeeded"
-                ? protocolInfo.total_stakers
-                : "--"
+              protocolInfo.status === "succeeded" ? (
+                protocolInfo.total_stakers
+              ) : (
+                <Spinner size="sm" />
+              )
             }
           />
           <Divider />
           <InfoRow
             title={"Total staked"}
             stat={
-              protocolInfo.status === "succeeded"
-                ? `${e8sToIcp(Number(protocolInfo.total_stake_amount)).toFixed(
-                    2
-                  )} ICP`
-                : "--"
+              protocolInfo.status === "succeeded" ? (
+                `${e8sToIcp(Number(protocolInfo.total_stake_amount)).toFixed(
+                  2
+                )} ICP`
+              ) : (
+                <Spinner size="sm" />
+              )
             }
           />
           <Divider />
           <InfoRow
             title={"Total value locked"}
-            stat={protocolInfo.status === "succeeded" ? `$${tvl}` : "--"}
+            stat={
+              protocolInfo.status === "succeeded" ? (
+                `$${tvl}`
+              ) : (
+                <Spinner size="sm" />
+              )
+            }
           />
         </VStack>
       </Box>

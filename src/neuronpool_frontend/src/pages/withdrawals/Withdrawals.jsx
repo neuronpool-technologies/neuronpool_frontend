@@ -7,6 +7,8 @@ import {
   Flex,
   VStack,
   Divider,
+  Spacer,
+  Spinner,
 } from "@chakra-ui/react";
 import {
   darkColorBox,
@@ -89,6 +91,8 @@ const Withdrawals = () => {
           <Heading size={"md"} noOfLines={1}>
             Claim
           </Heading>
+          <Spacer />
+          {status === "loading" ? <Spinner size="sm" /> : null}
         </Flex>
         <VStack spacing={3} align="start">
           <Divider />

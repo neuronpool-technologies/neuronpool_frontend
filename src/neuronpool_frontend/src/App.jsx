@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav } from "./components";
+import { Nav, Footer } from "./components";
 import { Flex, Box } from "@chakra-ui/react";
 import { Stake, Wallet, Withdrawals, Rewards } from "./pages";
 import {
@@ -35,6 +35,7 @@ const AppLayout = () => {
         <Nav />
         <Outlet />
       </Box>
+      <Footer />
     </Flex>
   );
 };

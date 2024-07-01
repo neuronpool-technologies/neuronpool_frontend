@@ -6,3 +6,4 @@ export { default as WalletFaq } from "./faqs/WalletFaq";
 export { default as StakeFaq } from "./faqs/StakeFaq";
 export { default as WithdrawalFaq } from "./faqs/WithdrawalFaq";
 export { default as RewardsFaq } from "./faqs/RewardsFaq";
+export { default as Footer } from "./Footer";

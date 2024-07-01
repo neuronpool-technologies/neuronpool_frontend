@@ -5,7 +5,6 @@ const NeuronSlice = createSlice({
   name: "neuron",
   initialState: {
     maturity_e8s_equivalent: "",
-    reward_distributions: [],
     status: "idle",
     error: null,
   },
@@ -17,7 +16,6 @@ const NeuronSlice = createSlice({
       .addCase(fetchNeuron.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.maturity_e8s_equivalent = action.payload.maturity_e8s_equivalent;
-        state.reward_distributions = action.payload.reward_distributions;
       })
       .addCase(fetchNeuron.rejected, (state, action) => {
         state.status = "failed";
