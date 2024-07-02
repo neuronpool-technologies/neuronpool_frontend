@@ -5,7 +5,8 @@ export const InitProtocolInfo = async () => {
   try {
     const neuronpool = await startNeuronPoolClient();
 
-    const url = "https://api.pro.coinbase.com/products/ICP-USD/ticker";
+    const priceUrl = "https://api.pro.coinbase.com/products/ICP-USD/ticker";
+    const statsUrl = "https://ic-api.internetcomputer.org/api/v3/daily-stats";
 
     const [
       {
@@ -24,10 +25,29 @@ export const InitProtocolInfo = async () => {
         },
       },
       { price },
+      {
+        daily_stats: [
+          {
+            estimated_rewards_percentage: {
+              "1_year": oneYearReward, // assign the destructured items
+              "2_year": twoYearReward,
+            },
+          },
+        ],
+      },
     ] = await Promise.all([
       neuronpool.get_protocol_information(),
-      fetch(url).then((x) => x.json()),
+      fetch(priceUrl).then((x) => x.json()),
+      fetch(statsUrl).then((x) => x.json()),
     ]);
+
+    // Calculate the 6-month reward and subtract the 10% protocol fee
+    const sixMonthRewardAfterFee =
+      (oneYearReward - (twoYearReward - oneYearReward) / 2) * 0.9;
+
+    // Estimate the ICP rewards for the 6-month stake
+    const rewards_e8s =
+      Number(total_stake_amount) * (sixMonthRewardAfterFee / 100);
 
     return {
       account_identifier: account_identifier.toString(),
@@ -42,6 +62,8 @@ export const InitProtocolInfo = async () => {
       total_stake_amount: total_stake_amount.toString(),
       total_stakers: total_stakers.toString(),
       icp_price_usd: price,
+      apr_estimate: sixMonthRewardAfterFee.toFixed(2).toString(),
+      apr_e8s: rewards_e8s.toString(),
     };
   } catch (error) {
     console.error(error);
@@ -65,6 +87,8 @@ export const InitProtocolInfo = async () => {
       total_stake_amount: "",
       total_stakers: "",
       icp_price_usd: "",
+      apr_estimate: "",
+      apr_e8s: "",
     };
   }
 };

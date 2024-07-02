@@ -18,6 +18,8 @@ import {
   lightColorBox,
   lightBorderColor,
   darkBorderColor,
+  lightGrayTextColor,
+  darkGrayTextColor,
 } from "../../../colors";
 import { useSelector } from "react-redux";
 
@@ -51,9 +53,42 @@ const PreviousWinners = () => {
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th px={4}>Winner</Th>
-              <Th px={4}>Amount</Th>
-              <Th px={4}>Date</Th>
+              <Th
+                px={4}
+                color={
+                  colorMode === "light" ? lightGrayTextColor : darkGrayTextColor
+                }
+                fontWeight={500}
+                fontSize="md"
+                textTransform="none"
+                letterSpacing="none"
+              >
+                Winner
+              </Th>
+              <Th
+                px={4}
+                color={
+                  colorMode === "light" ? lightGrayTextColor : darkGrayTextColor
+                }
+                fontWeight={500}
+                fontSize="md"
+                textTransform="none"
+                letterSpacing="none"
+              >
+                Amount
+              </Th>
+              <Th
+                px={4}
+                color={
+                  colorMode === "light" ? lightGrayTextColor : darkGrayTextColor
+                }
+                fontWeight={500}
+                fontSize="md"
+                textTransform="none"
+                letterSpacing="none"
+              >
+                Date
+              </Th>
             </Tr>
           </Thead>
           <Tbody>

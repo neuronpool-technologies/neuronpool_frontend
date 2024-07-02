@@ -24,6 +24,7 @@ type StakeDonation =
  };
 type SpawnReward = 
  record {
+   maturity_e8s: nat64;
    neuron_id: NeuronId;
    winner: principal;
  };

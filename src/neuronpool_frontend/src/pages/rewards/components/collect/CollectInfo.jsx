@@ -24,7 +24,7 @@ const CollectInfo = () => {
         title={"Reward fee"}
         stat={
           protocolInfo.status === "succeeded" ? (
-            `${protocolInfo.protocol_fee_percentage}%`
+            `${Number(protocolInfo.protocol_fee_percentage)}%`
           ) : (
             <Spinner size="sm" />
           )

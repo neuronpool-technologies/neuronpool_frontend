@@ -16,6 +16,8 @@ const ProtocolSlice = createSlice({
     total_stake_amount: "",
     total_stakers: "",
     icp_price_usd: "",
+    apr_estimate: "",
+    apr_e8s: "",
     status: "idle",
     error: null,
   },
@@ -40,6 +42,8 @@ const ProtocolSlice = createSlice({
         state.total_stake_amount = action.payload.total_stake_amount;
         state.total_stakers = action.payload.total_stakers;
         state.icp_price_usd = action.payload.icp_price_usd;
+        state.apr_estimate = action.payload.apr_estimate;
+        state.apr_e8s = action.payload.apr_e8s;
       })
       .addCase(fetchProtocolInformation.rejected, (state, action) => {
         state.status = "failed";

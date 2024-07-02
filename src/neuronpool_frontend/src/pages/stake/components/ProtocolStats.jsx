@@ -19,6 +19,7 @@ import {
 import { useSelector } from "react-redux";
 import { e8sToIcp } from "../../../tools/conversions";
 import { InfoRow } from "../../../components";
+import HintPopover from "../../../components/HintPopover";
 
 const ProtocolStats = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -85,6 +86,25 @@ const ProtocolStats = () => {
               )
             }
           />
+          <Divider />
+          <InfoRow
+            title={"APR estimate"}
+            stat={
+              protocolInfo.status === "succeeded" ? (
+                `${Number(protocolInfo.apr_estimate)}%`
+              ) : (
+                <Spinner size="sm" />
+              )
+            }
+          >
+            <HintPopover
+              details={`The APR estimate deducts the NeuronPool fees and represents the amount of ICP rewards the protocol will generate annually. The estimate is ${Number(
+                Number(protocolInfo.apr_estimate)
+              )}%, which equals ${e8sToIcp(
+                Number(protocolInfo.apr_e8s)
+              ).toFixed(2)} ICP.`}
+            />
+          </InfoRow>
         </VStack>
       </Box>
     </Box>

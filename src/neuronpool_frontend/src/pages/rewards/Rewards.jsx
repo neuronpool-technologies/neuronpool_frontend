@@ -16,8 +16,8 @@ import {
 } from "../../colors";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchRewardNeurons } from "../../state/RewardSlice";
-import { RewardBalance, RewardPool, PreviousWinners } from "./components";
-import { Collect, CollectInfo } from "./components/collect";
+import { RewardPool, PreviousWinners } from "./components";
+import { Collect, CollectInfo, CollectBalance } from "./components/collect";
 import { RewardsFaq } from "../../components";
 
 const Rewards = () => {
@@ -42,7 +42,7 @@ const Rewards = () => {
 
   return (
     <Container maxW="xl" my={5}>
-      {logged_in ? <RewardBalance /> : null}
+      {logged_in ? <CollectBalance /> : null}
       <Box
         boxShadow="md"
         borderRadius="lg"

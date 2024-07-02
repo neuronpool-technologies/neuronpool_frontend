@@ -10,6 +10,7 @@ const InfoRow = ({ title, stat, children }) => {
         <Text
           noOfLines={1}
           color={colorMode === "light" ? lightGrayTextColor : darkGrayTextColor}
+          fontWeight={500}
         >
           {title}
         </Text>
