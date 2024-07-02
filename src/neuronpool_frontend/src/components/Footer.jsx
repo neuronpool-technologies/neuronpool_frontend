@@ -48,7 +48,7 @@ const Footer = () => {
           <SocialIconLink
             image={githubLogo}
             alt={"github link"}
-            link={"https://github.com/neuronpool-tech"}
+            link={"https://github.com/neuronpool-technologies"}
           />
         </Flex>
       </Flex>
