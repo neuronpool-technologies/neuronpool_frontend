@@ -21,9 +21,9 @@ const RewardsFaq = () => {
   const faqs = [
     {
       title: "What are rewards?",
-      body: `With NeuronPool, users can pool their ICP tokens together, which are then staked. The ICP token rewards earned by staking are disbursed to one lucky winner every ${convertNanosecondsToDays(
+      body: `NeuronPool earns new ICP tokens from its stake. These new ICP tokens are known as "rewards" and accumulate in the NeuronPool reward pool. These rewards are then disbursed to one lucky winner every ${convertNanosecondsToDays(
         Number(reward_timer_duration_nanos)
-      )} days. Instead of receiving small incremental rewards, users have a chance to win a larger amount. This is akin to a positive-sum lottery or a prize bond.`,
+      )} days.`,
     },
     {
       title: "Where do the rewards come from?",

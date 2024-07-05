@@ -40,6 +40,13 @@ const StakeFaq = () => {
       )} days, selects a winner using a weighted selection algorithm (the higher your stake, the higher your chances of winning), and disburses the reward to them.`,
     },
     {
+      title: "Why stake with NeuronPool?",
+      body: `Staking small amounts of ICP typically results in a low APR, making it less appealing. NeuronPool offers an opportunity to earn significant rewards with a stake as low as ${e8sToIcp(
+        Number(minimum_stake)
+      )} ICP. Instead of receiving small, incremental rewards, users have a chance to win the staking rewards from a large pool. NeuronPool provides a new option for users who wish to stake and earn rewards, especially those with small amounts of ICP.`,
+    },
+
+    {
       title: "How do I stake?",
       body: `Add at least the minimum stake amount of ${e8sToIcp(
         Number(minimum_stake)
