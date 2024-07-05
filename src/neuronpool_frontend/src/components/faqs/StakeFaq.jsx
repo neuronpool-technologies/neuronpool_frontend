@@ -37,7 +37,7 @@ const StakeFaq = () => {
       title: "How does NeuronPool work?",
       body: `The NeuronPool smart contract (canister) controls an NNS neuron that votes on governance proposals and earns staking rewards. Users can add to the stake of this neuron. The canister checks for new staking rewards every ${convertNanosecondsToDays(
         Number(reward_timer_duration_nanos)
-      )} days, selects a winner using a weighted selection algorithm (the higher your stake, the higher your chances of winning), and spawns the reward to them.`,
+      )} days, selects a winner using a weighted selection algorithm (the higher your stake, the higher your chances of winning), and disburses the reward to them.`,
     },
     {
       title: "How do I stake?",
@@ -57,7 +57,7 @@ const StakeFaq = () => {
     },
     {
       title: "Where do the rewards come from?",
-      body: "The canister-controlled neuron votes on governance proposals on the NNS and earns ICP staking rewards for doing so. Therefore, the rewards come from the ICP network/NNS itself.",
+      body: "The NeuronPool smart contract controls a neuron on the Network Nervous System (NNS). This neuron votes on governance proposals and earns ICP rewards for doing so. The ICP rewards come from the NNS / the ICP network.",
     },
     {
       title: "What are the risks?",
@@ -65,7 +65,7 @@ const StakeFaq = () => {
     },
     {
       title: "Are there any fees?",
-      body: `There is a fee of ${protocol_fee_percentage}% on the spawned staking reward winnings only. The fee is not taken from anyone's staked amount, meaning users retain their original staked amounts (minus any network fees).`,
+      body: `There is a fee of ${protocol_fee_percentage}% on the reward winnings only. The fee is not taken from anyone's staked amount, meaning users retain their original staked amounts (minus any network fees).`,
     },
     {
       title: "What is the governance followee?",
