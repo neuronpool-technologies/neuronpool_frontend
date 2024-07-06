@@ -21,7 +21,7 @@ const RewardsFaq = () => {
   const faqs = [
     {
       title: "What are rewards?",
-      body: `NeuronPool earns new ICP tokens from its stake. These new ICP tokens are known as "rewards" and accumulate in the NeuronPool reward pool. These rewards are then disbursed to one lucky winner every ${convertNanosecondsToDays(
+      body: `Rewards are new ICP tokens earned from staking. NeuronPool accumulates these rewards in the reward pool to be disbursed to one lucky winner every ${convertNanosecondsToDays(
         Number(reward_timer_duration_nanos)
       )} days.`,
     },
