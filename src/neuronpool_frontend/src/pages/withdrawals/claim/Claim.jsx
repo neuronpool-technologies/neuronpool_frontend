@@ -30,14 +30,14 @@ const Claim = ({ withdrawalNeuronsInfo, status }) => {
       {withdrawalNeuronsInfo.length > 0 ? (
         <VStack gap={3} w="100%">
           {withdrawalNeuronsInfo.map((neuron) => {
-            if (neuron.cached_neuron_stake_e8s > 0) {
+            if (neuron.stake_e8s > 0) {
               return (
                 <WithdrawalNeuron
-                  key={neuron.id[0].id}
+                  key={neuron.id}
                   state={neuron.state.toString()}
-                  id={neuron.id[0].id.toString()}
+                  id={neuron.id.toString()}
                   timeLeftSeconds={neuron.dissolve_delay_seconds.toString()}
-                  stake={neuron.cached_neuron_stake_e8s.toString()}
+                  stake={neuron.stake_e8s.toString()}
                 />
               );
             }

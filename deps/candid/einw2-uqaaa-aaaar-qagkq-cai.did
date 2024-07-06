@@ -44,6 +44,7 @@ type ProtocolInformation =
    default_neuron_followee: NeuronId;
    icrc_identifier: text;
    main_neuron_dissolve_seconds: nat32;
+   main_neuron_id: NeuronId;
    minimum_stake: nat64;
    minimum_withdrawal: nat64;
    protocol_fee_percentage: nat64;
@@ -93,6 +94,14 @@ type NnsNeuronInformation =
    transfer: opt NeuronStakeTransfer;
    voting_power: nat64;
  };
+type NnsListNeuronsResponse = 
+ record {
+   full_neurons: vec Neuron;
+   neuron_infos: vec record {
+                       nat64;
+                       NeuronInfo;
+                     };
+ };
 type NnsInformationResult = 
  variant {
    err: text;
@@ -108,8 +117,45 @@ type NeuronStakeTransfer =
    to_subaccount: vec nat8;
    transfer_timestamp: nat64;
  };
+type NeuronInfo = 
+ record {
+   age_seconds: nat64;
+   created_timestamp_seconds: nat64;
+   dissolve_delay_seconds: nat64;
+   joined_community_fund_timestamp_seconds: opt nat64;
+   known_neuron_data: opt KnownNeuronData;
+   recent_ballots: vec BallotInfo;
+   retrieved_at_timestamp_seconds: nat64;
+   stake_e8s: nat64;
+   state: int32;
+   voting_power: nat64;
+ };
 type NeuronId__1 = record {id: nat64;};
 type NeuronId = nat64;
+type Neuron = 
+ record {
+   account: vec nat8;
+   aging_since_timestamp_seconds: nat64;
+   cached_neuron_stake_e8s: nat64;
+   controller: opt principal;
+   created_timestamp_seconds: nat64;
+   dissolve_state: opt DissolveState;
+   followees: vec record {
+                    int32;
+                    Followees;
+                  };
+   hot_keys: vec principal;
+   id: opt NeuronId__1;
+   joined_community_fund_timestamp_seconds: opt nat64;
+   known_neuron_data: opt KnownNeuronData;
+   kyc_verified: bool;
+   maturity_e8s_equivalent: nat64;
+   neuron_fees_e8s: nat64;
+   not_for_profit: bool;
+   recent_ballots: vec BallotInfo;
+   spawn_at_timestamp_seconds: opt nat64;
+   transfer: opt NeuronStakeTransfer;
+ };
 type KnownNeuronData = 
  record {
    description: opt text;
@@ -203,6 +249,11 @@ service : {
   initiate_icp_stake_transfer: () -> (OperationResponse);
   initiate_icp_stake_withdrawal: (record {amount_e8s: nat64;}) ->
    (OperationResponse);
+  list_neuron_information:
+   (record {
+      neuronIds: vec NeuronId;
+      readable: bool;
+    }) -> (NnsListNeuronsResponse);
   process_icp_prize_disburse: (record {neuronId: NeuronId;}) ->
    (OperationResponse);
   process_icp_stake_disburse: (record {neuronId: NeuronId;}) ->

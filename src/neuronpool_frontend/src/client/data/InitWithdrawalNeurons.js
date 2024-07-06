@@ -11,18 +11,20 @@ export const InitWithdrawalNeurons = async () => {
     const neuronpool_withdrawal_neurons = Array.from(neuronIds);
 
     if (neuronpool_withdrawal_neurons.length > 0) {
-      const neuronPromises = neuronpool_withdrawal_neurons.map((id) =>
-        neuronpool.get_neuron_information(BigInt(id))
-      );
+      const { neuron_infos } = await neuronpool.list_neuron_information({
+        neuronIds: neuronpool_withdrawal_neurons,
+        readable: false,
+      });
 
-      const neuronResults = await Promise.all(neuronPromises);
-
-      // Filter results to only include neurons wrapped in 'ok'
-      const validNeurons = neuronResults
-        .filter(
-          (result) => "ok" in result && result.ok.cached_neuron_stake_e8s > 0
-        )
-        .map((result) => result.ok);
+      const validNeurons = neuron_infos
+        .filter((item) => item[1].stake_e8s > 0n) // Filter arrays with stake_e8s > 0
+        .map((item) => {
+          // Map to a new structure
+          return {
+            id: item[0],
+            ...item[1],
+          };
+        });
 
       return {
         neuronpool_withdrawal_neurons_information:

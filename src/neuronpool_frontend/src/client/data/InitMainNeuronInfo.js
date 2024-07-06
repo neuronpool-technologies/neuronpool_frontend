@@ -5,29 +5,16 @@ export const InitMainNeuronInfo = async () => {
   try {
     const neuronpool = await startNeuronPoolClient();
 
-    const res = await neuronpool.get_main_neuron();
+    const {
+      full_neurons: [{ maturity_e8s_equivalent }],
+    } = await neuronpool.list_neuron_information({
+      neuronIds: [BigInt(process.env.REACT_APP_MAIN_NEURON_ID)],
+      readable: false,
+    });
 
-    if ("err" in res) {
-      console.error(res.err);
-
-      showToast({
-        title: "Error fetching main neuron information",
-        description: res.err.toString(),
-        status: "warning",
-      });
-
-      return {
-        maturity_e8s_equivalent: "",
-      };
-    } else {
-      const {
-        ok: { maturity_e8s_equivalent },
-      } = res;
-
-      return {
-        maturity_e8s_equivalent: maturity_e8s_equivalent.toString(),
-      };
-    }
+    return {
+      maturity_e8s_equivalent: maturity_e8s_equivalent.toString(),
+    };
   } catch (error) {
     console.error(error);
     showToast({

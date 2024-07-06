@@ -11,6 +11,7 @@ const ProtocolSlice = createSlice({
     protocol_fee_percentage: "",
     reward_timer_duration_nanos: "",
     default_neuron_followee: "",
+    main_neuron_id: "",
     main_neuron_dissolve_seconds: "",
     total_protocol_fees: "",
     total_stake_amount: "",
@@ -36,6 +37,7 @@ const ProtocolSlice = createSlice({
         state.reward_timer_duration_nanos =
           action.payload.reward_timer_duration_nanos;
         state.default_neuron_followee = action.payload.default_neuron_followee;
+        state.main_neuron_id = action.payload.main_neuron_id;
         state.main_neuron_dissolve_seconds =
           action.payload.main_neuron_dissolve_seconds;
         state.total_protocol_fees = action.payload.total_protocol_fees;

@@ -30,10 +30,10 @@ const ClaimBalance = ({ withdrawalNeuronsInfo }) => {
     if (withdrawalNeuronsInfo.length > 0) {
       let pending = 0;
       let ready = 0;
-      for (let { state, cached_neuron_stake_e8s } of withdrawalNeuronsInfo) {
+      for (let { state, stake_e8s } of withdrawalNeuronsInfo) {
         // we need to ignore already claimed neurons
 
-        if (Number(cached_neuron_stake_e8s) > 0) {
+        if (Number(stake_e8s) > 0) {
           if (Number(state) === 3) {
             ready++;
           } else {
