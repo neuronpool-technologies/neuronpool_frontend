@@ -13,6 +13,7 @@ import githubLogo from "../../assets/github_logo.svg";
 import { darkBorderColor, lightBorderColor } from "../colors";
 import logoHorizontalLight from "../../assets/logo_horizontal_light.svg";
 import logoHorizontalDark from "../../assets/logo_horizontal_dark.svg";
+import Terms from "./Terms";
 
 const Footer = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -32,6 +33,7 @@ const Footer = () => {
           src={colorMode === "light" ? logoHorizontalLight : logoHorizontalDark}
           h={35}
         />
+        <Terms />
         <Spacer />
         <Flex align="center" gap={3}>
           <SocialIconLink

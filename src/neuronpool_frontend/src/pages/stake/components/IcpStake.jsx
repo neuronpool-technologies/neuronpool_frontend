@@ -210,7 +210,7 @@ const IcpStake = () => {
             Stake
           </Button>
 
-          <Modal isOpen={isOpen} onClose={closeModal} isCentered z>
+          <Modal isOpen={isOpen} onClose={closeModal} isCentered>
             <ModalOverlay />
             <ModalContent
               bg={colorMode === "light" ? lightColorBox : darkColorBox}
