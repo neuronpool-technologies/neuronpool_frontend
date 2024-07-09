@@ -63,7 +63,7 @@ const RewardPool = () => {
       >
         <VStack align="start" p={3} gap={3}>
           <InfoRow
-            title={"Current reward pool"}
+            title={"Est. Reward pool"}
             stat={
               neuronStatus === "succeeded" ? (
                 `${e8sToIcp(Number(maturity_e8s_equivalent)).toFixed(2)} ICP`
@@ -71,16 +71,10 @@ const RewardPool = () => {
                 <Spinner size="sm" />
               )
             }
-          >
-            <HintPopover
-              details={
-                "An estimate of the amount of ICP in the current reward pool. The actual amount may vary slightly."
-              }
-            />
-          </InfoRow>
+          />
           <Divider />
           <InfoRow
-            title={"Next distribution"}
+            title={"Est. Next distribution"}
             stat={
               historyStatus === "succeeded" ? (
                 lastDistribution ? (
