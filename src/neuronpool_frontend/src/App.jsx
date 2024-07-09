@@ -1,7 +1,7 @@
 import React from "react";
 import { Nav, Footer } from "./components";
 import { Flex, Box } from "@chakra-ui/react";
-import { Stake, Wallet, Withdrawals, Rewards } from "./pages";
+import { Stake, Wallet, Withdrawals, Rewards, ErrorPage } from "./pages";
 import {
   BrowserRouter as Router,
   Routes,
@@ -18,6 +18,7 @@ const App = () => {
           <Route path="/wallet" element={<Wallet />} />
           <Route path="/withdrawals" element={<Withdrawals />} />
           <Route path="/rewards" element={<Rewards />} />
+          <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
     </Router>
