@@ -36,6 +36,11 @@ import Auth from "./Auth";
 const LinkItems = [
   { name: "Stake", link: "/", icon: <LockIcon /> },
   {
+    name: "Rewards",
+    link: "/rewards",
+    icon: <StarIcon />,
+  },
+  {
     name: "Wallet",
     link: "/wallet",
     icon: <CopyIcon transform="rotate(90deg)" />,
@@ -44,11 +49,6 @@ const LinkItems = [
     name: "Withdrawals",
     link: "/withdrawals",
     icon: <TimeIcon />,
-  },
-  {
-    name: "Rewards",
-    link: "/rewards",
-    icon: <StarIcon />,
   },
 ];
 
