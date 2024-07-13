@@ -21,7 +21,7 @@ const RewardsFaq = () => {
   const faqs = [
     {
       title: "What are rewards?",
-      body: `Rewards are new ICP tokens earned from staking. The reward pool automatically increases every few days due to the accumulation of these staking rewards. These accumulated rewards are then disbursed to one lucky winner every ${convertNanosecondsToDays(
+      body: `Rewards are new ICP tokens earned from staking. The reward pool automatically increases every few days as these staking rewards accumulate. These accumulated rewards are then disbursed to one lucky winner every ${convertNanosecondsToDays(
         Number(reward_timer_duration_nanos)
       )} days.`,
     },

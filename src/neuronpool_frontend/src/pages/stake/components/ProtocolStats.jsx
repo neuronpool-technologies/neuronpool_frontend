@@ -25,9 +25,19 @@ const ProtocolStats = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const protocolInfo = useSelector((state) => state.Protocol);
 
-  let tvl = Number(
-    protocolInfo.icp_price_usd * e8sToIcp(protocolInfo.total_stake_amount)
-  ).toFixed(2);
+  let formatCurrency = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2, // No decimals
+    maximumFractionDigits: 2, // No decimals
+    currencyDisplay: "symbol"
+  });
+
+  let tvl = formatCurrency.format(
+    Number(
+      protocolInfo.icp_price_usd * e8sToIcp(protocolInfo.total_stake_amount)
+    )
+  );
 
   return (
     <Box>
@@ -80,7 +90,7 @@ const ProtocolStats = () => {
             title={"Total value locked"}
             stat={
               protocolInfo.status === "succeeded" ? (
-                `$${tvl}`
+                `${tvl}`
               ) : (
                 <Spinner size="sm" />
               )
