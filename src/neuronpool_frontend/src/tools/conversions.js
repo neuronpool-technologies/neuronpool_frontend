@@ -70,7 +70,12 @@ export function deepConvertToString(obj) {
   // Recursive case: object
   const newObj = {};
   for (const [key, value] of Object.entries(obj)) {
-    newObj[key] = deepConvertToString(value);
+    // Special case: handle the "winner" key
+    if (key === "winner") {
+      newObj[key] = value.toString();
+    } else {
+      newObj[key] = deepConvertToString(value);
+    }
   }
 
   return newObj;
