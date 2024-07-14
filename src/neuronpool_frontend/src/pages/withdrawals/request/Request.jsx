@@ -133,7 +133,7 @@ const Request = () => {
           dispatch(fetchWallet({ principal }));
           dispatch(fetchWithdrawals());
           dispatch(fetchProtocolInformation());
-          
+
           // if ok
           setActiveStep(2);
 
@@ -279,12 +279,12 @@ const Request = () => {
                 <VStack align="start" p={3} gap={3}>
                   <InfoRow
                     title={"Request amount"}
-                    stat={`${Number(amount)} ICP`}
+                    stat={`${Number(amount).toFixed(4)} ICP`}
                   />
                   <Divider />
                   <InfoRow
                     title={"Network fee"}
-                    stat={`${e8sToIcp(networkFeeE8s)} ICP`}
+                    stat={`${e8sToIcp(networkFeeE8s).toFixed(4)} ICP`}
                   />
                   <Divider />
                   <Box w="100%" color="green.500">
@@ -292,7 +292,7 @@ const Request = () => {
                       title={"Amount after fee"}
                       stat={`${e8sToIcp(
                         Number(icpToE8s(Number(amount)) - BigInt(networkFeeE8s))
-                      )} ICP`}
+                      ).toFixed(4)} ICP`}
                     />
                   </Box>
                 </VStack>

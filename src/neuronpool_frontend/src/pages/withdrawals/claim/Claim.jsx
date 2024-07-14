@@ -102,7 +102,7 @@ const WithdrawalNeuron = ({ state, id, timeLeftSeconds, stake }) => {
               fontWeight={500}
               color={colorMode === "light" ? "black" : "white"}
             >
-              {e8sToIcp(Number(stake))} ICP
+              {e8sToIcp(Number(stake)).toFixed(2)} ICP
             </Text>
             <Flex
               gap={1}
@@ -118,7 +118,7 @@ const WithdrawalNeuron = ({ state, id, timeLeftSeconds, stake }) => {
                 {state === "1" ? "Locked (Contact support)" : null}
                 {state === "2" ? "Withdrawing" : null}
                 {state === "3" ? "Available" : null}
-                {state === "4" ? "Spawning" : null}
+                {state === "4" ? "Unlocking" : null}
                 {Number(timeLeftSeconds) > 0
                   ? ` (${convertSecondsToDaysOrHours(Number(timeLeftSeconds))})`
                   : null}

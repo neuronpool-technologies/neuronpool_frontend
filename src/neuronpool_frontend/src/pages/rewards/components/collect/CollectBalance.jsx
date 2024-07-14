@@ -19,40 +19,39 @@ import {
   darkGrayTextColor,
 } from "../../../../colors";
 import Auth from "../../../../components/Auth";
+import { useSelector } from "react-redux";
 
-const CollectBalance = () => {
+const CollectBalance = ({ unclaimedPrizeNeuronsInfo }) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
-  // can copy the claim balance way below:
+  const stakedBalance = useSelector(
+    (state) => state.Profile.neuronpool_balance
+  );
+  const totalStakeDeposits = useSelector((state) => state.Protocol.total_stake_deposits);
 
-  //   const [pendingNeurons, setPendingNeurons] = useState(null);
-  //   const [readyNeurons, setReadyNeurons] = useState(null);
+  const [pendingNeurons, setPendingNeurons] = useState(null);
+  const [readyNeurons, setReadyNeurons] = useState(null);
 
-  //   const getMyWithdrawals = () => {
-  //     if (withdrawalNeuronsInfo.length > 0) {
-  //       let pending = 0;
-  //       let ready = 0;
-  //       for (let { state, cached_neuron_stake_e8s } of withdrawalNeuronsInfo) {
-  //         // we need to ignore already claimed neurons
+  const getMyRewards = () => {
+    if (unclaimedPrizeNeuronsInfo.length > 0) {
+      let pending = 0;
+      let ready = 0;
+      for (let { state } of unclaimedPrizeNeuronsInfo) {
+        if (Number(state) === 3) {
+          ready++;
+        } else {
+          pending++;
+        }
+      }
+      setPendingNeurons(pending);
+      setReadyNeurons(ready);
+    }
+  };
 
-  //         if (Number(cached_neuron_stake_e8s) > 0) {
-  //           if (Number(state) === 3) {
-  //             ready++;
-  //           } else {
-  //             // this means if the dissolve request failed it will show in pending as well
-  //             pending++;
-  //           }
-  //         }
-  //       }
+  useEffect(() => {
+    getMyRewards();
+  }, [unclaimedPrizeNeuronsInfo]);
 
-  //       setPendingNeurons(pending);
-  //       setReadyNeurons(ready);
-  //     }
-  //   };
-
-  //   useEffect(() => {
-  //     getMyWithdrawals();
-  //   }, [withdrawalNeuronsInfo]);
   return (
     <Box
       boxShadow="md"
@@ -78,7 +77,12 @@ const CollectBalance = () => {
             Winning chance
           </Text>
           <Flex align="center" gap={1}>
-            <Text fontWeight={500}>0.00%</Text>
+            <Text fontWeight={500}>
+              {stakedBalance
+                ? ((stakedBalance / totalStakeDeposits) * 100).toFixed(2)
+                : "0.00"}
+              %
+            </Text>
           </Flex>
         </VStack>
         <Spacer />
@@ -102,7 +106,7 @@ const CollectBalance = () => {
             <Flex align="center" gap={1.5}>
               <CheckCircleIcon color="green.500" />
               <Text fontWeight={500}>
-                0{/* {readyNeurons !== null ? readyNeurons : "--"} */}
+                {readyNeurons !== null ? readyNeurons : "--"}
               </Text>
             </Flex>
           </Tooltip>
@@ -122,7 +126,7 @@ const CollectBalance = () => {
             <Flex align="center" gap={1.5}>
               <TimeIcon color="orange.500" />
               <Text fontWeight={500}>
-                0{/* {pendingNeurons !== null ? pendingNeurons : "--"} */}
+                {pendingNeurons !== null ? pendingNeurons : "--"}
               </Text>
             </Flex>
           </Tooltip>

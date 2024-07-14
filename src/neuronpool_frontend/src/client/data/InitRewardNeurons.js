@@ -14,17 +14,44 @@ export const InitRewardNeurons = async () => {
 
     // get unclaimed neurons
     const claimedNeuronIds = claimedNeurons.map((neuron) => neuron.neuron_id);
-    const unclaimedNeurons = allNeurons.filter(
+    const unclaimedNeuronsIds = allNeurons.filter(
       (neuron) => !claimedNeuronIds.includes(neuron)
     );
 
-    // TODO may want to fetch more information here about the prize neurons like the withdrawals
-    // TODO to continue that on testing I will need to actually win a reward
+    const { neuron_infos, full_neurons } =
+      await neuronpool.list_neuron_information({
+        neuronIds: unclaimedNeuronsIds,
+        readable: false,
+      });
+
+    // while neurons are spawning the ICP amount is still maturity
+    // when a neuron is ready to disburse the maturity is converted to the stake amount
+    
+    // Create a map of neuron ids to their full_neurons information for quick lookup
+    const neuronMap = new Map(
+      full_neurons.map((neuron) => {
+        const neuronId = neuron.id[0].id;
+        return [neuronId, neuron.maturity_e8s_equivalent];
+      })
+    );
+
+    // Map through neuron_infos and add maturity_e8s_equivalent from corresponding full_neuron
+    const enrichedNeurons = neuron_infos.map((info) => {
+      const neuronId = info[0]; // Assuming neuron id is at index 0 in neuron_infos
+      const maturity_e8s_equivalent = neuronMap.get(neuronId);
+      return {
+        id: neuronId,
+        ...info[1],
+        maturity_e8s_equivalent,
+      };
+    });
+
     return {
-      claimed_prize_neurons: deepConvertToString(Array.from(claimed)),
-      unclaimed_prize_neurons: deepConvertToString(
-        Array.from(unclaimedNeurons)
+      claimed_prize_neurons_ids: deepConvertToString(Array.from(claimed)),
+      unclaimed_prize_neurons_ids: deepConvertToString(
+        Array.from(unclaimedNeuronsIds)
       ),
+      unclaimed_prize_neurons_information: deepConvertToString(enrichedNeurons),
     };
   } catch (error) {
     console.error(error);
@@ -36,8 +63,9 @@ export const InitRewardNeurons = async () => {
     });
 
     return {
-      claimed_prize_neurons: [],
-      unclaimed_prize_neurons: [],
+      claimed_prize_neurons_ids: [],
+      unclaimed_prize_neurons_ids: [],
+      unclaimed_prize_neurons_information: [],
     };
   }
 };

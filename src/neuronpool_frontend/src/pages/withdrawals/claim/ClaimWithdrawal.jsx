@@ -115,12 +115,12 @@ const ClaimWithdrawal = ({ state, id, stake }) => {
                 <Divider />
                 <InfoRow
                   title={"Claim amount"}
-                  stat={`${e8sToIcp(Number(stake))} ICP`}
+                  stat={`${e8sToIcp(Number(stake)).toFixed(4)} ICP`}
                 />
                 <Divider />
                 <InfoRow
                   title={"Network fee"}
-                  stat={`${e8sToIcp(networkFeeE8s)} ICP`}
+                  stat={`${e8sToIcp(networkFeeE8s).toFixed(4)} ICP`}
                 />
                 <Divider />
                 <Box w="100%" color="green.500">
@@ -128,7 +128,7 @@ const ClaimWithdrawal = ({ state, id, stake }) => {
                     title={"Amount after fee"}
                     stat={`${e8sToIcp(
                       Number(BigInt(stake) - BigInt(networkFeeE8s))
-                    )} ICP`}
+                    ).toFixed(4)} ICP`}
                   />
                 </Box>
               </VStack>

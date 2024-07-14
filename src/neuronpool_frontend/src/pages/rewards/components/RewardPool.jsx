@@ -22,7 +22,6 @@ import {
   convertNanoToFormattedDate,
   e8sToIcp,
 } from "../../../tools/conversions";
-import HintPopover from "../../../components/HintPopover";
 
 const RewardPool = () => {
   const { colorMode, toggleColorMode } = useColorMode();

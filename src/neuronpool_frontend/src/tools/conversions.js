@@ -24,7 +24,7 @@ export function convertNanosecondsToDays(nanoseconds) {
   return days;
 }
 
-export function convertNanoToFormattedDate(timestampNanos, format = 'MMMM Do, h:mm A') {
+export function convertNanoToFormattedDate(timestampNanos, format = 'MMMM Do') {
   // Convert nanoseconds to milliseconds
   const timestampMillis = Math.floor(timestampNanos / 1_000_000);
   

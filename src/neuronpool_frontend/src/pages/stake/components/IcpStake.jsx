@@ -117,7 +117,7 @@ const IcpStake = () => {
         // refresh balances
         dispatch(fetchWallet({ principal }));
         dispatch(fetchProtocolInformation());
-        
+
         // if ok
         setActiveStep(2);
 
@@ -260,12 +260,12 @@ const IcpStake = () => {
                 <VStack align="start" p={3} gap={3}>
                   <InfoRow
                     title={"Stake amount"}
-                    stat={`${Number(amount)} ICP`}
+                    stat={`${Number(amount).toFixed(4)} ICP`}
                   />
                   <Divider />
                   <InfoRow
                     title={"Network fee"}
-                    stat={`${e8sToIcp(networkFeeE8s * 2)} ICP`}
+                    stat={`${e8sToIcp(networkFeeE8s * 2).toFixed(4)} ICP`}
                   />
                   <Divider />
                   <Box w="100%" color="green.500">
@@ -275,7 +275,7 @@ const IcpStake = () => {
                         Number(
                           icpToE8s(Number(amount)) - BigInt(networkFeeE8s * 2)
                         )
-                      )} ICP`}
+                      ).toFixed(4)} ICP`}
                     />
                   </Box>
                   <Divider />

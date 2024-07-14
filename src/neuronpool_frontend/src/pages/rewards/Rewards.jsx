@@ -7,6 +7,8 @@ import {
   Flex,
   VStack,
   Divider,
+  Spinner,
+  Spacer,
 } from "@chakra-ui/react";
 import {
   darkColorBox,
@@ -23,8 +25,9 @@ import { RewardsFaq } from "../../components";
 const Rewards = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const { logged_in } = useSelector((state) => state.Profile);
-  // we need to get the reward neurons here
-  const { status } = useSelector((state) => state.Reward);
+  const { unclaimed_prize_neurons_information, status } = useSelector(
+    (state) => state.Reward
+  );
 
   const dispatch = useDispatch();
 
@@ -42,7 +45,11 @@ const Rewards = () => {
 
   return (
     <Container maxW="xl" my={5}>
-      {logged_in ? <CollectBalance /> : null}
+      {logged_in ? (
+        <CollectBalance
+          unclaimedPrizeNeuronsInfo={unclaimed_prize_neurons_information}
+        />
+      ) : null}
       <Box
         boxShadow="md"
         borderRadius="lg"
@@ -59,11 +66,15 @@ const Rewards = () => {
           <Heading size={"md"} noOfLines={1}>
             Collect
           </Heading>
+          <Spacer />
+          {status === "loading" ? <Spinner size="sm" /> : null}
         </Flex>
         <VStack spacing={3} align="start">
           <Divider />
-          <Collect />
-          <CollectInfo />
+          <Collect
+            unclaimedPrizeNeuronsInfo={unclaimed_prize_neurons_information}
+            status={status}
+          />
         </VStack>
       </Box>
       <RewardPool />
