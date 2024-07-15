@@ -1,6 +1,7 @@
 import { startNeuronPoolClient } from "../Client";
 import { showToast } from "../../tools/toast";
 import { deepConvertToString } from "../../tools/conversions";
+import { Usergeek } from "usergeek-ic-js";
 
 export const InitRewardNeurons = async () => {
   try {
@@ -55,6 +56,8 @@ export const InitRewardNeurons = async () => {
     };
   } catch (error) {
     console.error(error);
+
+    Usergeek.trackEvent("Error fetching prize neurons");
 
     showToast({
       title: "Error fetching prize neurons",

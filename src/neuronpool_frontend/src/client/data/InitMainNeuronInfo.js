@@ -1,5 +1,6 @@
 import { showToast } from "../../tools/toast";
 import { startNeuronPoolClient } from "../Client";
+import { Usergeek } from "usergeek-ic-js";
 
 export const InitMainNeuronInfo = async () => {
   try {
@@ -17,6 +18,9 @@ export const InitMainNeuronInfo = async () => {
     };
   } catch (error) {
     console.error(error);
+
+    Usergeek.trackEvent("Error fetching main neuron information");
+
     showToast({
       title: "Error fetching main neuron information",
       description: `${error.toString().substring(0, 200)}...`,

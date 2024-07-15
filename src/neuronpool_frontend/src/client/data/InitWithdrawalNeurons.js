@@ -1,6 +1,7 @@
 import { deepConvertToString } from "../../tools/conversions";
 import { showToast } from "../../tools/toast";
 import { startNeuronPoolClient } from "../Client";
+import { Usergeek } from "usergeek-ic-js";
 
 export const InitWithdrawalNeurons = async () => {
   // we need to get information about the withdrawl neurons since all we have is the IDs
@@ -41,6 +42,8 @@ export const InitWithdrawalNeurons = async () => {
     }
   } catch (error) {
     console.error(error);
+
+    Usergeek.trackEvent("Error fetching withdrawal neurons");
 
     showToast({
       title: "Error fetching withdrawal neurons",

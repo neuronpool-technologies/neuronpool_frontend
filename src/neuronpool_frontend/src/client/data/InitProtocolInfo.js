@@ -1,5 +1,6 @@
 import { showToast } from "../../tools/toast";
 import { startNeuronPoolClient } from "../Client";
+import { Usergeek } from "usergeek-ic-js";
 
 export const InitProtocolInfo = async () => {
   try {
@@ -71,6 +72,8 @@ export const InitProtocolInfo = async () => {
     };
   } catch (error) {
     console.error(error);
+
+    Usergeek.trackEvent("Error fetching protocol information");
 
     showToast({
       title: "Error fetching protocol information",

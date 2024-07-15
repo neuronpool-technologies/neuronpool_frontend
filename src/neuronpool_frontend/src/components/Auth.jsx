@@ -56,7 +56,7 @@ const Auth = () => {
     setClient(authClient);
 
     const isAuthenticated = await authClient.isAuthenticated();
-
+  
     if (isAuthenticated) {
       const identity = authClient.getIdentity();
       const principal = identity.getPrincipal();
@@ -64,12 +64,6 @@ const Auth = () => {
       dispatch(setLogin());
       Usergeek.setPrincipal(principal);
       Usergeek.trackSession();
-    } else {
-      // in case there was a logout
-      dispatch(setLogout());
-      dispatch(clearWithdrawals());
-      dispatch(clearRewardNeurons());
-      Usergeek.setPrincipal(undefined);
     }
   };
 

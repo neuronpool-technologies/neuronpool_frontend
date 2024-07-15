@@ -1,6 +1,7 @@
 import { deepConvertToString } from "../../tools/conversions";
 import { showToast } from "../../tools/toast";
 import { startNeuronPoolClient } from "../Client";
+import { Usergeek } from "usergeek-ic-js";
 
 export const InitOperationHistory = async () => {
   try {
@@ -19,6 +20,8 @@ export const InitOperationHistory = async () => {
 
     if ("err" in res) {
       console.error(res.err);
+      
+      Usergeek.trackEvent("Error fetching operation history");
 
       showToast({
         title: "Error fetching operation history",
@@ -62,6 +65,9 @@ export const InitOperationHistory = async () => {
     }
   } catch (error) {
     console.error(error);
+
+    Usergeek.trackEvent("Error fetching operation history");
+
     showToast({
       title: "Error fetching operation history",
       description: `${error.toString().substring(0, 200)}...`,
