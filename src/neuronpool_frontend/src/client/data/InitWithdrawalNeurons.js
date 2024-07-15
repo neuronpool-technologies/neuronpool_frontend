@@ -44,7 +44,7 @@ export const InitWithdrawalNeurons = async () => {
 
     showToast({
       title: "Error fetching withdrawal neurons",
-      description: error.toString(),
+      description: `${error.toString().substring(0, 200)}...`,
       status: "warning",
     });
 

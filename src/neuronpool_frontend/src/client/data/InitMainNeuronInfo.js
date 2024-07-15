@@ -19,7 +19,7 @@ export const InitMainNeuronInfo = async () => {
     console.error(error);
     showToast({
       title: "Error fetching main neuron information",
-      description: error.toString(),
+      description: `${error.toString().substring(0, 200)}...`,
       status: "warning",
     });
 

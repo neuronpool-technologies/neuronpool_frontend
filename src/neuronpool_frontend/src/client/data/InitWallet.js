@@ -1,7 +1,7 @@
 import { startLedgerIndexClient, startNeuronPoolClient } from "../Client";
 import { AccountIdentifier } from "@dfinity/ledger-icp";
+import { AuthClient } from "@dfinity/auth-client";
 import { Principal } from "@dfinity/principal";
-import { showToast } from "../../tools/toast";
 
 export const InitWallet = async ({ principal }) => {
   try {
@@ -32,11 +32,11 @@ export const InitWallet = async ({ principal }) => {
   } catch (error) {
     console.error(error);
 
-    showToast({
-      title: "Error fetching wallet information",
-      description: error.toString(),
-      status: "warning",
-    });
+    // if wallet cannot be fetched it's best to log out the user anyway
+    // this allows them to try again
+    const authClient = await AuthClient.create();
+    await authClient.logout();
+    window.location.reload();
 
     return {
       icp_address: "",

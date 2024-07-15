@@ -64,7 +64,7 @@ export const InitOperationHistory = async () => {
     console.error(error);
     showToast({
       title: "Error fetching operation history",
-      description: error.toString(),
+      description: `${error.toString().substring(0, 200)}...`,
       status: "warning",
     });
 

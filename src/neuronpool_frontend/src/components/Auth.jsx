@@ -64,6 +64,12 @@ const Auth = () => {
       dispatch(setLogin());
       Usergeek.setPrincipal(principal);
       Usergeek.trackSession();
+    } else {
+      // in case there was a logout
+      dispatch(setLogout());
+      dispatch(clearWithdrawals());
+      dispatch(clearRewardNeurons());
+      Usergeek.setPrincipal(undefined);
     }
   };
 
@@ -136,7 +142,7 @@ const UserProfile = () => {
 
   const { principal, icp_address } = useSelector((state) => state.Profile);
   const walletStatus = useSelector((state) => state.Profile.status);
-  
+
   const { colorMode, toggleColorMode } = useColorMode();
 
   const logout = async () => {
