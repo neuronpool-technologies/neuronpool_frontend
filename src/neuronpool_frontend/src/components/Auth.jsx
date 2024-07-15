@@ -27,6 +27,7 @@ import {
   fetchWallet,
 } from "../state/ProfileSlice";
 import { AuthClient } from "@dfinity/auth-client";
+import { Actor } from "@dfinity/agent";
 import { Usergeek } from "usergeek-ic-js";
 import { useDispatch, useSelector } from "react-redux";
 import IcLogo from "../../assets/ic-logo.png";
@@ -36,6 +37,7 @@ import { fetchHistory } from "../state/HistorySlice";
 import { fetchNeuron } from "../state/NeuronSlice";
 import { clearWithdrawals } from "../state/WithdrawalsSlice";
 import { clearRewardNeurons } from "../state/RewardSlice";
+import { startNeuronPoolClient } from "../client/Client";
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -56,7 +58,7 @@ const Auth = () => {
     setClient(authClient);
 
     const isAuthenticated = await authClient.isAuthenticated();
-  
+
     if (isAuthenticated) {
       const identity = authClient.getIdentity();
       const principal = identity.getPrincipal();
@@ -91,6 +93,14 @@ const Auth = () => {
         : null,
       onSuccess: async () => {
         const identity = client.getIdentity();
+
+        // a fix for discarding the old actor with the anonymous identity
+        // see https://forum.dfinity.org/t/issue-with-dfinity-agent-npm-package-agenterror-server-returned-an-error-code-403/33253/2?u=dfxjesse
+        // replaceIdentity makes sure the old local delegation is not cached anymore
+        const actor = await startNeuronPoolClient();
+        const agent = Actor.agentOf(actor);
+        agent.replaceIdentity(identity);
+
         const principal = identity.getPrincipal();
         dispatch(setPrincipal(principal.toString()));
         dispatch(setLogin());
