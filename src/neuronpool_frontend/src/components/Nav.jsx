@@ -31,7 +31,6 @@ import {
 import logo from "../../assets/logo.svg";
 import { NavLink } from "react-router-dom";
 import { darkColor, lightColor } from "../colors";
-import Auth from "./Auth";
 
 const LinkItems = [
   { name: "Stake", link: "/", icon: <LockIcon /> },
@@ -77,7 +76,6 @@ const Nav = () => {
           <Spacer />
           <Flex alignItems={"center"}>
             <Stack direction={"row"} spacing={3}>
-              <Auth />
               {isDesktop ? (
                 <Button
                   onClick={toggleColorMode}
