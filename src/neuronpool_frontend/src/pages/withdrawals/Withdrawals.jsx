@@ -8,7 +8,7 @@ import {
   VStack,
   Divider,
   Spacer,
-  Spinner,
+  Button,
 } from "@chakra-ui/react";
 import {
   darkColorBox,
@@ -21,6 +21,7 @@ import { Request, RequestBalance, RequestInfo } from "./request";
 import { useSelector, useDispatch } from "react-redux";
 import { WithdrawalFaq } from "../../components";
 import { fetchWithdrawals } from "../../state/WithdrawalsSlice";
+import Auth from "../../components/Auth";
 
 const Withdrawals = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -32,14 +33,14 @@ const Withdrawals = () => {
   const dispatch = useDispatch();
 
   const fetchWithdrawalInfo = async () => {
-    if (status === "idle" || status === "failed") {
-      dispatch(fetchWithdrawals());
-    }
+    dispatch(fetchWithdrawals());
   };
 
   useEffect(() => {
     if (logged_in) {
-      fetchWithdrawalInfo();
+      if (status === "idle" || status === "failed") {
+        fetchWithdrawalInfo();
+      }
     }
   }, [logged_in]);
 
@@ -91,7 +92,6 @@ const Withdrawals = () => {
             Claim
           </Heading>
           <Spacer />
-          {status === "loading" ? <Spinner size="sm" /> : null}
         </Flex>
         <VStack spacing={3} align="start">
           <Divider />
@@ -99,6 +99,19 @@ const Withdrawals = () => {
             withdrawalNeuronsInfo={neuronpool_withdrawal_neurons_information}
             status={status}
           />
+          {logged_in ? (
+            <Button
+              w="100%"
+              rounded="full"
+              boxShadow="base"
+              isLoading={status === "loading"}
+              onClick={fetchWithdrawalInfo}
+            >
+              Resync
+            </Button>
+          ) : (
+            <Auth />
+          )}
         </VStack>
       </Box>
       <WithdrawalFaq />

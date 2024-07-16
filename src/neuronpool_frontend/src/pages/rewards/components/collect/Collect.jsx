@@ -57,7 +57,7 @@ const Collect = ({ unclaimedPrizeNeuronsInfo, status }) => {
           No rewards detected.
         </Text>
       ) : null}
-      {status === "loading" ? (
+      {status === "loading" && unclaimedPrizeNeuronsInfo.length === 0 ? (
         <Text
           py={8}
           w="100%"

@@ -55,7 +55,7 @@ const Claim = ({ withdrawalNeuronsInfo, status }) => {
           No withdrawal requests detected.
         </Text>
       ) : null}
-      {status === "loading" ? (
+      {status === "loading" && withdrawalNeuronsInfo.length === 0 ? (
         <Text
           py={8}
           w="100%"

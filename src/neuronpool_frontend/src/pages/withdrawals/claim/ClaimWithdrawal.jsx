@@ -99,6 +99,7 @@ const ClaimWithdrawal = ({ state, id, stake }) => {
         onClick={onOpen}
         w="100%"
         isDisabled={state !== "3"}
+        colorScheme="blue"
       >
         Claim withdrawal
       </Button>

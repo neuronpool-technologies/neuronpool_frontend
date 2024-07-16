@@ -105,6 +105,7 @@ const CollectReward = ({ state, id, stake }) => {
         onClick={onOpen}
         w="100%"
         isDisabled={state !== "3"}
+        colorScheme="blue"
       >
         Collect reward
       </Button>

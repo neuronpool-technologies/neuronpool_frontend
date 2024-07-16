@@ -7,8 +7,8 @@ import {
   Flex,
   VStack,
   Divider,
-  Spinner,
   Spacer,
+  Button,
 } from "@chakra-ui/react";
 import {
   darkColorBox,
@@ -19,8 +19,9 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { fetchRewardNeurons } from "../../state/RewardSlice";
 import { RewardPool, PreviousWinners } from "./components";
-import { Collect, CollectInfo, CollectBalance } from "./components/collect";
+import { Collect, CollectBalance } from "./components/collect";
 import { RewardsFaq } from "../../components";
+import Auth from "../../components/Auth";
 
 const Rewards = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -32,14 +33,14 @@ const Rewards = () => {
   const dispatch = useDispatch();
 
   const fetchRewards = async () => {
-    if (status === "idle" || status === "failed") {
-      dispatch(fetchRewardNeurons());
-    }
+    dispatch(fetchRewardNeurons());
   };
 
   useEffect(() => {
     if (logged_in) {
-      fetchRewards();
+      if (status === "idle" || status === "failed") {
+        fetchRewards();
+      }
     }
   }, [logged_in]);
 
@@ -67,7 +68,6 @@ const Rewards = () => {
             Collect
           </Heading>
           <Spacer />
-          {status === "loading" ? <Spinner size="sm" /> : null}
         </Flex>
         <VStack spacing={3} align="start">
           <Divider />
@@ -75,6 +75,19 @@ const Rewards = () => {
             unclaimedPrizeNeuronsInfo={unclaimed_prize_neurons_information}
             status={status}
           />
+          {logged_in ? (
+            <Button
+              w="100%"
+              rounded="full"
+              boxShadow="base"
+              isLoading={status === "loading"}
+              onClick={fetchRewards}
+            >
+              Resync
+            </Button>
+          ) : (
+            <Auth />
+          )}
         </VStack>
       </Box>
       <RewardPool />
