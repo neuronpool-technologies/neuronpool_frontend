@@ -245,6 +245,7 @@ service : {
   get_protocol_information: () -> (ProtocolInformationResult) query;
   get_reward_distributions: () -> (vec Operation) query;
   get_staker_balance: () -> (nat64) query;
+  get_staker_history: (record {staker: text;}) -> (vec Operation) query;
   get_staker_prize_neurons: () -> (StakerPrizeNeurons) query;
   get_staker_withdrawal_neurons: () -> (vec NeuronId) query;
   initiate_icp_stake_transfer: () -> (OperationResponse);
