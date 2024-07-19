@@ -36,7 +36,7 @@ import {
   lightColor,
 } from "../../../colors";
 import { InfoRow } from "../../../components";
-import { WarningIcon } from "@chakra-ui/icons";
+import { WarningIcon, LockIcon, UnlockIcon } from "@chakra-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
 import Auth from "../../../components/Auth";
 import {
@@ -255,9 +255,20 @@ const Giveaway = () => {
               boxShadow="base"
               colorScheme="blue"
               mt={3}
-              isDisabled={eligibility !== "eligible"}
+              isDisabled={
+                eligibility !== "eligible" ||
+                Number(giveawayInfo.claims_left) === 0
+              }
               isLoading={loading}
               onClick={onOpen}
+              rightIcon={
+                eligibility === "eligible" ||
+                Number(giveawayInfo.claims_left === 0) ? (
+                  <UnlockIcon />
+                ) : (
+                  <LockIcon />
+                )
+              }
             >
               {eligibility === "eligible" ? "Claim bonus" : "Bonus claimed"}
             </Button>
