@@ -262,8 +262,8 @@ const Giveaway = () => {
               isLoading={loading}
               onClick={onOpen}
               rightIcon={
-                eligibility === "eligible" ||
-                Number(giveawayInfo.claims_left === 0) ? (
+                eligibility === "eligible" &&
+                Number(giveawayInfo.claims_left > 0) ? (
                   <UnlockIcon />
                 ) : (
                   <LockIcon />
