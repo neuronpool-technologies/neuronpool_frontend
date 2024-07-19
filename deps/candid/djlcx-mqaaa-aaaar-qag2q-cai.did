@@ -1,0 +1,24 @@
+type Result = 
+ variant {
+   err: text;
+   ok;
+ };
+type GiveawayInformation = 
+ record {
+   bonus_amount: nat;
+   claims_left: nat;
+   icp_needed_for_giveaway: nat;
+   ongoing_claims: vec record {
+                         principal;
+                         nat;
+                       };
+   total_claims: nat;
+ };
+service : {
+  check_eligibility: () -> (text) query;
+  claim_giveaway: (record {secret: text;}) -> (Result);
+  controller_get_address: () -> (text);
+  controller_get_icp_balance: () -> (nat);
+  controller_set_secret: (record {newSecret: text;}) -> (text);
+  get_giveaway_information: () -> (GiveawayInformation) query;
+}

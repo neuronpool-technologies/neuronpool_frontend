@@ -2,6 +2,7 @@ import { Actor, HttpAgent } from "@dfinity/agent";
 import { AuthClient } from "@dfinity/auth-client";
 import { LedgerCanister, IndexCanister } from "@dfinity/ledger-icp";
 import { idlFactory as NeuronPoolCanisterIDL } from "../../../declarations/NeuronPool/index";
+import { idlFactory as GiveawayCanisterIDL } from "../../../declarations/Giveaway/index";
 
 const ICP_API = "https://icp-api.io";
 
@@ -12,6 +13,21 @@ export const startNeuronPoolClient = async () => {
   const identity = await authClient.getIdentity();
 
   return Actor.createActor(NeuronPoolCanisterIDL, {
+    agent: new HttpAgent({
+      identity,
+      host: ICP_API,
+    }),
+    canisterId: canisterId,
+  });
+};
+
+export const startGiveawayClient = async () => {
+  const canisterId = process.env.REACT_APP_GIVEAWAY_CANISTER_ID;
+
+  const authClient = await AuthClient.create();
+  const identity = await authClient.getIdentity();
+
+  return Actor.createActor(GiveawayCanisterIDL, {
     agent: new HttpAgent({
       identity,
       host: ICP_API,

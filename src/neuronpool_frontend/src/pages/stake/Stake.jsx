@@ -19,6 +19,7 @@ import {
   ProtocolStats,
   StakerBalance,
   StakeInfo,
+  Giveaway,
 } from "./components";
 import { StakeFaq } from "../../components/";
 import { useSelector } from "react-redux";
@@ -52,6 +53,7 @@ const Stake = () => {
           <StakeInfo />
         </VStack>
       </Box>
+      <Giveaway />
       <ProtocolStats />
       <StakeFaq />
     </Container>
