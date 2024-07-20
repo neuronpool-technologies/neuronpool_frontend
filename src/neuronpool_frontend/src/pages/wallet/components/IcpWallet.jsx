@@ -43,14 +43,13 @@ import {
   darkBorderColor,
   darkColorBox,
   darkGrayColorBox,
-  darkGrayTextColor,
   lightBorderColor,
   lightColorBox,
   lightGrayColorBox,
-  lightGrayTextColor,
 } from "../../../colors";
 import { Auth } from "../../../components";
 import { showToast } from "../../../tools/toast";
+import InfoRow from "../../../components/InfoRow";
 
 const IcpWallet = () => {
   const { logged_in, icp_balance } = useSelector((state) => state.Profile);
@@ -182,8 +181,6 @@ const SendIcp = () => {
           amount: amountConverted - icp_fee,
         });
 
-        dispatch(fetchWallet({ principal }));
-
         setSending(false);
         setSent(true);
       } catch (error) {
@@ -206,6 +203,11 @@ const SendIcp = () => {
     setSending(false);
     setSent(false);
     onClose();
+
+    // index canister does not update instantly
+    // but it should update by the time the modal is closed
+    // so balance will be most accurate here
+    dispatch(fetchWallet({ principal }));
   };
 
   return (
@@ -260,69 +262,13 @@ const SendIcp = () => {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
-                <VStack
-                  align="start"
-                  borderLeft={
-                    colorMode === "light"
-                      ? `solid ${lightBorderColor} 1px`
-                      : `solid ${darkBorderColor} 1px`
-                  }
-                  borderRight={
-                    colorMode === "light"
-                      ? `solid ${lightBorderColor} 1px`
-                      : `solid ${darkBorderColor} 1px`
-                  }
-                  borderBottom={
-                    colorMode === "light"
-                      ? `solid ${lightBorderColor} 1px`
-                      : `solid ${darkBorderColor} 1px`
-                  }
-                  borderBottomRadius="lg"
-                  p={3}
-                  mt={-0.5}
-                  bg={
-                    colorMode === "light" ? lightGrayColorBox : darkGrayColorBox
-                  }
-                >
-                  <Flex w="100%">
-                    <Flex align={"center"} gap={1}>
-                      <Text
-                        noOfLines={1}
-                        fontWeight={500}
-                        color={
-                          colorMode === "light"
-                            ? lightGrayTextColor
-                            : darkGrayTextColor
-                        }
-                      >
-                        Available
-                      </Text>
-                    </Flex>
-                    <Spacer />
-                    <Text noOfLines={1} fontWeight={500}>
-                      {e8sToIcp(icp_balance)} ICP
-                    </Text>
-                  </Flex>
+                <VStack align="start" p={3} gap={3}>
+                  <InfoRow
+                    title={"Wallet balance"}
+                    stat={`${e8sToIcp(icp_balance)} ICP`}
+                  />
                   <Divider />
-                  <Flex w="100%">
-                    <Flex align={"center"} gap={1}>
-                      <Text
-                        noOfLines={1}
-                        fontWeight={500}
-                        color={
-                          colorMode === "light"
-                            ? lightGrayTextColor
-                            : darkGrayTextColor
-                        }
-                      >
-                        Network fee
-                      </Text>
-                    </Flex>
-                    <Spacer />
-                    <Text noOfLines={1} fontWeight={500}>
-                      0.0001 ICP
-                    </Text>
-                  </Flex>
+                  <InfoRow title={"Network fee"} stat={"0.0001 ICP"} />
                 </VStack>
               </FormControl>
             ) : null}
