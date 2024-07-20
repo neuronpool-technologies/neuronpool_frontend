@@ -79,8 +79,8 @@ const CollectBalance = ({ unclaimedPrizeNeuronsInfo }) => {
           <Flex align="center" gap={1}>
             <Text fontWeight={500}>
               {stakedBalance
-                ? ((stakedBalance / totalStakeDeposits) * 100).toFixed(2)
-                : "0.00"}
+                ? ((stakedBalance / totalStakeDeposits) * 100).toFixed(4)
+                : "0.0000"}
               %
             </Text>
           </Flex>
