@@ -181,7 +181,7 @@ const Giveaway = () => {
 
   useEffect(() => {
     fetchGiveawayInfo();
-  }, [logged_in, eligibility]);
+  }, [logged_in]);
 
   const closeModal = () => {
     setActiveStep(0);
@@ -189,6 +189,7 @@ const Giveaway = () => {
     setClaimed(false);
     setFailed(false);
     onClose();
+    fetchGiveawayInfo();
   };
 
   return (
@@ -261,14 +262,6 @@ const Giveaway = () => {
               }
               isLoading={loading}
               onClick={onOpen}
-              rightIcon={
-                eligibility === "eligible" &&
-                Number(giveawayInfo.claims_left > 0) ? (
-                  <UnlockIcon />
-                ) : (
-                  <LockIcon />
-                )
-              }
             >
               {eligibility === "eligible" ? "Claim bonus" : "Bonus claimed"}
             </Button>
