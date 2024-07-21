@@ -38,6 +38,8 @@ const CollectReward = ({ state, id, stake }) => {
     (Number(stake) * Number(protocol_fee_percentage)) / 100
   );
 
+  const neuronPoolAndBlockchainFee = neuronPoolFee + networkFeeE8s;
+
   const dispatch = useDispatch();
 
   const [collecting, setCollecting] = useState(false);
@@ -130,7 +132,9 @@ const CollectReward = ({ state, id, stake }) => {
                 <Divider />
                 <InfoRow
                   title={"NeuronPool fee"}
-                  stat={`${e8sToIcp(neuronPoolFee).toFixed(4)} ICP`}
+                  stat={`${e8sToIcp(neuronPoolAndBlockchainFee).toFixed(
+                    4
+                  )} ICP`}
                 />
                 <Divider />
                 <InfoRow
@@ -145,7 +149,7 @@ const CollectReward = ({ state, id, stake }) => {
                       Number(
                         BigInt(stake) -
                           BigInt(networkFeeE8s) -
-                          BigInt(neuronPoolFee)
+                          BigInt(neuronPoolAndBlockchainFee)
                       )
                     ).toFixed(4)} ICP`}
                   />
