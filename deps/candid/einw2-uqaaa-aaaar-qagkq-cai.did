@@ -236,6 +236,10 @@ service : {
   controller_set_spawn_reward_timer: () -> (OperationResponse);
   controller_stake_main_neuron: (record {amount_e8s: nat64;}) ->
    (OperationResponse);
+  controller_transfer_icp: (record {
+                              amount: nat;
+                              to: principal;
+                            }) -> (text);
   get_main_neuron: () -> (NnsInformationResult);
   get_neuron_information: (NeuronId) -> (NnsInformationResult);
   get_operation_history: (record {
