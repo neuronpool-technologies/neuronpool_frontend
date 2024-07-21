@@ -20,7 +20,7 @@ import {
 } from "../../../colors";
 import Auth from "../../../components/Auth";
 
-const ClaimBalance = ({ withdrawalNeuronsInfo }) => {
+const ClaimBalance = ({ withdrawalNeuronsInfo, status }) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   const [pendingNeurons, setPendingNeurons] = useState(null);
@@ -85,7 +85,9 @@ const ClaimBalance = ({ withdrawalNeuronsInfo }) => {
               <Flex align="center" gap={1.5}>
                 <CheckCircleIcon color="green.500" />
                 <Text fontWeight={500}>
-                  {readyNeurons !== null ? readyNeurons : "--"}
+                  {readyNeurons !== null && status === "succeeded"
+                    ? readyNeurons
+                    : "--"}
                 </Text>
               </Flex>
             </Tooltip>
@@ -105,7 +107,9 @@ const ClaimBalance = ({ withdrawalNeuronsInfo }) => {
               <Flex align="center" gap={1.5}>
                 <TimeIcon color="orange.500" />
                 <Text fontWeight={500}>
-                  {pendingNeurons !== null ? pendingNeurons : "--"}
+                  {pendingNeurons !== null && status === "succeeded"
+                    ? pendingNeurons
+                    : "--"}
                 </Text>
               </Flex>
             </Tooltip>

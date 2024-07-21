@@ -49,6 +49,7 @@ const Rewards = () => {
       {logged_in ? (
         <CollectBalance
           unclaimedPrizeNeuronsInfo={unclaimed_prize_neurons_information}
+          status={status}
         />
       ) : null}
       <Box

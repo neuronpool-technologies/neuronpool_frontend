@@ -73,6 +73,7 @@ const Withdrawals = () => {
       {logged_in ? (
         <ClaimBalance
           withdrawalNeuronsInfo={neuronpool_withdrawal_neurons_information}
+          status={status}
         />
       ) : null}
       <Box

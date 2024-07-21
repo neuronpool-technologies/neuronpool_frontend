@@ -21,13 +21,15 @@ import {
 import Auth from "../../../../components/Auth";
 import { useSelector } from "react-redux";
 
-const CollectBalance = ({ unclaimedPrizeNeuronsInfo }) => {
+const CollectBalance = ({ unclaimedPrizeNeuronsInfo, status }) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   const stakedBalance = useSelector(
     (state) => state.Profile.neuronpool_balance
   );
-  const totalStakeDeposits = useSelector((state) => state.Protocol.total_stake_deposits);
+  const totalStakeDeposits = useSelector(
+    (state) => state.Protocol.total_stake_deposits
+  );
 
   const [pendingNeurons, setPendingNeurons] = useState(null);
   const [readyNeurons, setReadyNeurons] = useState(null);
@@ -106,7 +108,9 @@ const CollectBalance = ({ unclaimedPrizeNeuronsInfo }) => {
             <Flex align="center" gap={1.5}>
               <CheckCircleIcon color="green.500" />
               <Text fontWeight={500}>
-                {readyNeurons !== null ? readyNeurons : "--"}
+                {readyNeurons !== null && status === "succeeded"
+                  ? readyNeurons
+                  : "--"}
               </Text>
             </Flex>
           </Tooltip>
@@ -126,7 +130,9 @@ const CollectBalance = ({ unclaimedPrizeNeuronsInfo }) => {
             <Flex align="center" gap={1.5}>
               <TimeIcon color="orange.500" />
               <Text fontWeight={500}>
-                {pendingNeurons !== null ? pendingNeurons : "--"}
+                {pendingNeurons !== null && status === "succeeded"
+                  ? pendingNeurons
+                  : "--"}
               </Text>
             </Flex>
           </Tooltip>
