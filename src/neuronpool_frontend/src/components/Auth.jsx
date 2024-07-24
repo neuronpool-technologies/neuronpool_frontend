@@ -150,9 +150,6 @@ const Auth = () => {
         : null,
       onSuccess: async () => {
         const identity = client.getIdentity();
-
-        await validateAgents(identity);
-
         const principal = identity.getPrincipal();
         dispatch(setPrincipal(principal.toString()));
         dispatch(setLogin());
