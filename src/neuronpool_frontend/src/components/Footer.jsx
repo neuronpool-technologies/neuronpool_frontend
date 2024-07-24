@@ -31,6 +31,7 @@ const Footer = () => {
       >
         <ChakraImage
           src={colorMode === "light" ? logoHorizontalLight : logoHorizontalDark}
+          alt="NeuronPool logo displayed horizontally"
           h={35}
         />
         <Terms />

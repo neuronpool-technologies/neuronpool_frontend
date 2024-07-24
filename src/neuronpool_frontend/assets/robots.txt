@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://stake.neuronpool.com/sitemap.xml
+Host: https://stake.neuronpool.com/
