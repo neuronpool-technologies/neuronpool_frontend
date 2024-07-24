@@ -36,7 +36,7 @@ import {
   lightColor,
 } from "../../../colors";
 import { InfoRow } from "../../../components";
-import { WarningIcon, LockIcon, UnlockIcon } from "@chakra-ui/icons";
+import { WarningIcon } from "@chakra-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
 import Auth from "../../../components/Auth";
 import {
