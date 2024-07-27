@@ -147,6 +147,7 @@ const MobileMenu = () => {
         onClick={onOpen}
         rounded="full"
         boxShadow="base"
+        aria-label="Toggle navigation menu"
       />
       <Drawer onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />

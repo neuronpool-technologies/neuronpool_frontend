@@ -61,7 +61,7 @@ const PreviousWinners = () => {
           <Thead>
             <Tr>
               <Th
-                px={4}
+                px={3}
                 color={
                   colorMode === "light" ? lightGrayTextColor : darkGrayTextColor
                 }
@@ -69,11 +69,12 @@ const PreviousWinners = () => {
                 fontSize="md"
                 textTransform="none"
                 letterSpacing="none"
+                textAlign="start"
               >
                 Winner
               </Th>
               <Th
-                px={4}
+                px={3}
                 color={
                   colorMode === "light" ? lightGrayTextColor : darkGrayTextColor
                 }
@@ -81,11 +82,12 @@ const PreviousWinners = () => {
                 fontSize="md"
                 textTransform="none"
                 letterSpacing="none"
+                textAlign="start"
               >
                 Date
               </Th>
               <Th
-                px={4}
+                px={3}
                 color={
                   colorMode === "light" ? lightGrayTextColor : darkGrayTextColor
                 }
@@ -93,6 +95,7 @@ const PreviousWinners = () => {
                 fontSize="md"
                 textTransform="none"
                 letterSpacing="none"
+                textAlign="end"
               >
                 Amount
               </Th>
@@ -128,13 +131,17 @@ const WinnerTableItem = ({ winner, timestamp, amount }) => {
           colorMode === "light" ? `solid #edf2f5 1px` : `solid #414951 1px`
         }
       >
-        <Td px={4}>
+        <Td px={3} textAlign="start">
           {winner.substring(0, 5) +
             "..." +
             winner.substring(winner.length - 3, winner.length)}
         </Td>
-        <Td px={4}>{convertNanoToFormattedDate(Number(timestamp))}</Td>
-        <Td px={4}>{e8sToIcp(Number(amount)).toFixed(2)} ICP</Td>
+        <Td px={3} textAlign="start">
+          {convertNanoToFormattedDate(Number(timestamp))}
+        </Td>
+        <Td px={3} textAlign="end">
+          {e8sToIcp(Number(amount)).toFixed(2)} ICP
+        </Td>
       </Tr>
     </>
   );

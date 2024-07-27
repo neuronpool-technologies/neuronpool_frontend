@@ -232,7 +232,8 @@ const UserProfile = () => {
           <Avatar
             size="xs"
             src={`https://identicons.github.com/${principal[0]}.png`}
-            alt="Avatar icon"
+            name={principal}
+            ignoreFallback
           />
           {principal
             ? principal.substring(0, 5) + "..." + principal.substring(60, 63)
