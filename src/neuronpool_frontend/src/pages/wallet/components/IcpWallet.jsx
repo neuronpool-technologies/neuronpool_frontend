@@ -84,7 +84,7 @@ const IcpWallet = () => {
         <Heading size={{ base: "sm", md: "md" }} noOfLines={1}>
           {logged_in ? Number(e8sToIcp(icp_balance)).toFixed(4) : "--"}
         </Heading>
-        <Refresh principal={principal} />
+        {logged_in ? <Refresh principal={principal} /> : null}
       </Flex>
       {logged_in ? (
         <Flex w="100%" gap={3}>
