@@ -82,9 +82,9 @@ const IcpWallet = () => {
         </VStack>
         <Spacer />
         <Heading size={{ base: "sm", md: "md" }} noOfLines={1}>
-          {logged_in ? Number(e8sToIcp(icp_balance)).toFixed(4) : "--"}
+          {logged_in ? Number(e8sToIcp(icp_balance)).toFixed(4) : "0.0000"}
         </Heading>
-        {logged_in ? <Refresh principal={principal} /> : null}
+        <Refresh principal={principal} logged_in={logged_in} />
       </Flex>
       {logged_in ? (
         <Flex w="100%" gap={3}>
@@ -100,7 +100,7 @@ const IcpWallet = () => {
 
 export default IcpWallet;
 
-const Refresh = ({ principal }) => {
+const Refresh = ({ principal, logged_in }) => {
   const dispatch = useDispatch();
   const [rotation, setRotation] = useState(0);
 
@@ -120,6 +120,7 @@ const Refresh = ({ principal }) => {
           transform={`rotate(${rotation}deg)`}
         />
       }
+      isDisabled={logged_in === false}
       size="xs"
       onClick={refresh}
       rounded="full"
