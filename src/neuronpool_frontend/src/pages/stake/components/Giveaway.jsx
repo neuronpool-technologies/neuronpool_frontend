@@ -35,7 +35,7 @@ import {
   darkColor,
   lightColor,
 } from "../../../colors";
-import { InfoRow } from "../../../components";
+import { InfoRow, ProcessTime } from "../../../components";
 import { WarningIcon } from "@chakra-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
 import Auth from "../../../components/Auth";
@@ -51,8 +51,8 @@ import { Principal } from "@dfinity/principal";
 import { fetchProtocolInformation } from "../../../state/ProtocolSlice";
 
 const steps = [
-  { description: "Initiate claim" },
-  { description: "Process stake" },
+  { description: "Verify claim" },
+  { description: "Process bonus" },
 ];
 
 // we are not using stable state here as this component will be removed shortly after launch and all icp is claimed
@@ -277,6 +277,7 @@ const Giveaway = () => {
                   {claimed && !failed ? (
                     <Fireworks autorun={{ speed: 3, duration: 3 }} />
                   ) : null}
+                  <ProcessTime estimate={"1 min"} />
                   <Box
                     border={
                       colorMode === "light"
@@ -336,7 +337,7 @@ const Giveaway = () => {
                     isLoading={claiming}
                     onClick={claimed ? closeModal : claim}
                   >
-                    {!claimed ? "Confirm claim" : null}
+                    {!claimed ? "Confirm bonus" : null}
                     {claimed && !failed ? "Bonus claimed" : null}
                     {claimed && failed ? "claim failed" : null}
                   </Button>

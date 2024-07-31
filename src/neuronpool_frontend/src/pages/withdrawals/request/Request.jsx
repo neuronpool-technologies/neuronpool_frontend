@@ -38,10 +38,9 @@ import {
   lightColorBox,
   darkColorBox,
 } from "../../../colors";
-import { Auth } from "../../../components";
+import { Auth, ProcessTime, InfoRow } from "../../../components";
 import IcLogo from "../../../../assets/ic-logo.png";
 import { e8sToIcp, icpToE8s } from "../../../tools/conversions";
-import { InfoRow } from "../../../components";
 import { startNeuronPoolClient } from "../../../client/Client";
 import { showToast } from "../../../tools/toast";
 import { InitWithdrawalNeurons } from "../../../client/data/InitWithdrawalNeurons";
@@ -239,6 +238,7 @@ const Request = () => {
               <ModalHeader align="center">Confirm request</ModalHeader>
               {!requesting ? <ModalCloseButton /> : null}
               <ModalBody>
+                <ProcessTime estimate={"1 min"} />
                 <Box
                   border={
                     colorMode === "light"

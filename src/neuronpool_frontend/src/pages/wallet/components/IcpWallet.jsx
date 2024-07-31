@@ -26,12 +26,14 @@ import {
   useColorMode,
   useClipboard,
   Divider,
+  IconButton,
 } from "@chakra-ui/react";
 import {
   CopyIcon,
   CheckIcon,
   CheckCircleIcon,
   WarningIcon,
+  RepeatIcon,
 } from "@chakra-ui/icons";
 import IcLogo from "../../../../assets/ic-logo.png";
 import { useSelector, useDispatch } from "react-redux";
@@ -52,7 +54,9 @@ import { showToast } from "../../../tools/toast";
 import InfoRow from "../../../components/InfoRow";
 
 const IcpWallet = () => {
-  const { logged_in, icp_balance } = useSelector((state) => state.Profile);
+  const { logged_in, icp_balance, principal } = useSelector(
+    (state) => state.Profile
+  );
 
   const { colorMode, toggleColorMode } = useColorMode();
   return (
@@ -80,6 +84,7 @@ const IcpWallet = () => {
         <Heading size={{ base: "sm", md: "md" }} noOfLines={1}>
           {logged_in ? Number(e8sToIcp(icp_balance)).toFixed(4) : "--"}
         </Heading>
+        <Refresh principal={principal} />
       </Flex>
       {logged_in ? (
         <Flex w="100%" gap={3}>
@@ -94,6 +99,35 @@ const IcpWallet = () => {
 };
 
 export default IcpWallet;
+
+const Refresh = ({ principal }) => {
+  const dispatch = useDispatch();
+  const [rotation, setRotation] = useState(0);
+
+  const refresh = () => {
+    const newRotation = rotation + 360; // Increment by 360 degrees
+    setRotation(newRotation);
+
+    dispatch(fetchWallet({ principal }));
+  };
+
+  return (
+    <IconButton
+      ms={2}
+      icon={
+        <RepeatIcon
+          transition={"transform 0.5s linear"}
+          transform={`rotate(${rotation}deg)`}
+        />
+      }
+      size="xs"
+      onClick={refresh}
+      rounded="full"
+      boxShadow="base"
+      aria-label="Refresh wallet button"
+    />
+  );
+};
 
 const ReceiveIcp = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

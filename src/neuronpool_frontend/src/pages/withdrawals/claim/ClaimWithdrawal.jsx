@@ -25,6 +25,7 @@ import { startNeuronPoolClient } from "../../../client/Client";
 import { showToast } from "../../../tools/toast";
 import { fetchWithdrawals } from "../../../state/WithdrawalsSlice";
 import { fetchWallet } from "../../../state/ProfileSlice";
+import ProcessTime from "../../../components/ProcessTime";
 
 const ClaimWithdrawal = ({ state, id, stake }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -111,28 +112,29 @@ const ClaimWithdrawal = ({ state, id, stake }) => {
           {!claiming ? <ModalCloseButton /> : null}
           <ModalBody>
             {!claimed ? (
-              <VStack align="start" p={3} gap={3}>
-                <InfoRow title={"ID"} stat={id} />
-                <Divider />
-                <InfoRow
-                  title={"Claim amount"}
-                  stat={`${e8sToIcp(Number(stake)).toFixed(4)} ICP`}
-                />
-                <Divider />
-                <InfoRow
-                  title={"Network fee"}
-                  stat={`${e8sToIcp(networkFeeE8s).toFixed(4)} ICP`}
-                />
-                <Divider />
-                <Box w="100%" color="green.500">
+              <>
+                <ProcessTime estimate="30 secs" />
+                <VStack align="start" p={3} gap={3}>
                   <InfoRow
-                    title={"Amount after fee"}
-                    stat={`${e8sToIcp(
-                      Number(BigInt(stake) - BigInt(networkFeeE8s))
-                    ).toFixed(4)} ICP`}
+                    title={"Claim amount"}
+                    stat={`${e8sToIcp(Number(stake)).toFixed(4)} ICP`}
                   />
-                </Box>
-              </VStack>
+                  <Divider />
+                  <InfoRow
+                    title={"Network fee"}
+                    stat={`${e8sToIcp(networkFeeE8s).toFixed(4)} ICP`}
+                  />
+                  <Divider />
+                  <Box w="100%" color="green.500">
+                    <InfoRow
+                      title={"Amount after fee"}
+                      stat={`${e8sToIcp(
+                        Number(BigInt(stake) - BigInt(networkFeeE8s))
+                      ).toFixed(4)} ICP`}
+                    />
+                  </Box>
+                </VStack>
+              </>
             ) : null}
             {claimed && !failed ? (
               <Center>

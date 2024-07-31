@@ -33,7 +33,7 @@ import { WarningIcon } from "@chakra-ui/icons";
 import IcLogo from "../../../../assets/ic-logo.png";
 import { e8sToIcp, icpToE8s } from "../../../tools/conversions";
 import { useSelector, useDispatch } from "react-redux";
-import { Auth, InfoRow } from "../../../components";
+import { Auth, InfoRow, ProcessTime } from "../../../components";
 import {
   lightBorderColor,
   darkBorderColor,
@@ -47,7 +47,6 @@ import {
 } from "../../../client/Client";
 import { Principal } from "@dfinity/principal";
 import { fetchWallet } from "../../../state/ProfileSlice";
-import StakingWarning from "./StakingWarning";
 import { showToast } from "../../../tools/toast";
 import { fetchProtocolInformation } from "../../../state/ProtocolSlice";
 
@@ -221,6 +220,7 @@ const IcpStake = () => {
                 {staked && !failed ? (
                   <Fireworks autorun={{ speed: 3, duration: 3 }} />
                 ) : null}
+                <ProcessTime estimate={"30 secs"} />
                 <Box
                   border={
                     colorMode === "light"
@@ -278,9 +278,7 @@ const IcpStake = () => {
                       ).toFixed(4)} ICP`}
                     />
                   </Box>
-                  <Divider />
                 </VStack>
-                <StakingWarning />
               </ModalBody>
 
               <ModalFooter>
