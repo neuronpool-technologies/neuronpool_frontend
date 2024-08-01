@@ -1,16 +1,20 @@
 import React from "react";
-import { useColorMode, Text } from "@chakra-ui/react";
+import { useColorMode, Text, Flex } from "@chakra-ui/react";
 import {
   darkGrayTextColor,
   lightGrayTextColor,
   lightBorderColor,
   darkBorderColor,
 } from "../colors";
+import { TimeIcon } from "@chakra-ui/icons";
 
 const ProcessTime = ({ estimate }) => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <Text
+    <Flex
+      align="center"
+      gap={2}
+      w="100%"
       border={
         colorMode === "light"
           ? `solid ${lightBorderColor} 1px`
@@ -19,13 +23,12 @@ const ProcessTime = ({ estimate }) => {
       borderRadius="md"
       p={3}
       mb={3}
-      textAlign="center"
-      noOfLines={1}
+      justify="center"
       color={colorMode === "light" ? lightGrayTextColor : darkGrayTextColor}
-      fontWeight={500}
     >
-      This will take about {estimate}
-    </Text>
+      <TimeIcon />
+      <Text noOfLines={1}>This may take about {estimate}</Text>
+    </Flex>
   );
 };
 
