@@ -38,22 +38,16 @@ import { fetchNeuron } from "../state/NeuronSlice";
 import { clearWithdrawals } from "../state/WithdrawalsSlice";
 import { clearRewardNeurons } from "../state/RewardSlice";
 import {
-  startGiveawayClient,
   startLedgerClient,
   startLedgerIndexClient,
   startNeuronPoolClient,
 } from "../client/Client";
 
 const invalidateAgents = async () => {
-  const actors = await Promise.all([
-    await startNeuronPoolClient(),
-    await startGiveawayClient(),
-  ]);
+  const actor = await startNeuronPoolClient();
 
-  for (let actor of actors) {
-    const agent = Actor.agentOf(actor);
-    agent.invalidateIdentity();
-  }
+  const agent = Actor.agentOf(actor);
+  agent.invalidateIdentity();
 
   const packageActors = await Promise.all([
     await startLedgerClient(),
@@ -70,15 +64,9 @@ const validateAgents = async (identity) => {
   // // a fix for discarding the old actor with the anonymous identity
   // // see https://forum.dfinity.org/t/issue-with-dfinity-agent-npm-package-agenterror-server-returned-an-error-code-403/33253/2?u=dfxjesse
   // // replaceIdentity makes sure the old local delegation is not cached anymore
-  const actors = await Promise.all([
-    await startNeuronPoolClient(),
-    await startGiveawayClient(),
-  ]);
-
-  for (let actor of actors) {
-    const agent = Actor.agentOf(actor);
-    agent.replaceIdentity(identity);
-  }
+  const actor = await startNeuronPoolClient();
+  const agent = Actor.agentOf(actor);
+  agent.replaceIdentity(identity);
 
   const packageActors = await Promise.all([
     await startLedgerClient(),
