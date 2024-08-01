@@ -13,7 +13,7 @@ const ProcessTime = ({ estimate }) => {
   return (
     <Flex
       align="center"
-      gap={2}
+      gap={1}
       w="100%"
       border={
         colorMode === "light"
