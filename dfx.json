@@ -4,15 +4,16 @@
       "id": "einw2-uqaaa-aaaar-qagkq-cai",
       "type": "pull"
     },
+    "Giveaway": {
+      "id": "djlcx-mqaaa-aaaar-qag2q-cai",
+      "type": "pull"
+    },
     "neuronpool_frontend": {
       "dependencies": ["NeuronPool"],
       "frontend": {
         "entrypoint": "src/neuronpool_frontend/src/index.html"
       },
-      "source": [
-        "src/neuronpool_frontend/assets",
-        "dist/neuronpool_frontend/"
-      ],
+      "source": ["src/neuronpool_frontend/assets", "dist/neuronpool_frontend/"],
       "type": "assets"
     }
   },

@@ -8,6 +8,15 @@
       "init_arg": null,
       "candid_args": "()",
       "gzip": false
+    },
+    "djlcx-mqaaa-aaaar-qag2q-cai": {
+      "name": "Giveaway",
+      "wasm_hash": "b6d49d705c51e0262b588295d43fa46e5043757b3a21b8a1393ae84caff4cc52",
+      "wasm_hash_download": "b6d49d705c51e0262b588295d43fa46e5043757b3a21b8a1393ae84caff4cc52",
+      "init_guide": "dfx deps pull",
+      "init_arg": null,
+      "candid_args": "()",
+      "gzip": false
     }
   }
 }
