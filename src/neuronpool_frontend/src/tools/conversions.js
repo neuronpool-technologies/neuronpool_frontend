@@ -84,7 +84,8 @@ export function deepConvertToString(obj) {
 export const getWinningChanceIncrease = (
   oldStakeE8s,
   newAmountIcp,
-  totalStakeE8s
+  totalStakeE8s,
+  networkFeeE8s = 20000n
 ) => {
   // Validate input
   if (
@@ -92,7 +93,7 @@ export const getWinningChanceIncrease = (
     isNaN(newAmountIcp) ||
     isNaN(totalStakeE8s) ||
     oldStakeE8s < 0 ||
-    newAmountIcp < 0 ||
+    newAmountIcp <= 0 ||
     totalStakeE8s <= 0
   ) {
     return `+ ??%`;
@@ -103,7 +104,7 @@ export const getWinningChanceIncrease = (
     (Number(oldStakeE8s) / Number(totalStakeE8s)) * 100;
 
   // Convert the new amount of ICP to e8s (smallest unit of ICP)
-  const newAmount = Number(icpToE8s(newAmountIcp));
+  const newAmount = Number(icpToE8s(newAmountIcp)) - Number(networkFeeE8s);
 
   // Calculate the new total stake after adding the new amount
   const newtotalStake = Number(totalStakeE8s) + newAmount;
