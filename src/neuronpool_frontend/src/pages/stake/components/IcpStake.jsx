@@ -286,11 +286,15 @@ const IcpStake = () => {
                   <Box w="100%" color="green.500">
                     <InfoRow
                       title={"Winning chance"}
-                      stat={getWinningChanceIncrease(
-                        neuronpool_balance,
-                        amount,
-                        total_stake_deposits
-                      )}
+                      stat={
+                        staked && !failed
+                          ? "Updated"
+                          : getWinningChanceIncrease(
+                              neuronpool_balance,
+                              amount,
+                              total_stake_deposits
+                            )
+                      }
                     />
                   </Box>
                 </VStack>
