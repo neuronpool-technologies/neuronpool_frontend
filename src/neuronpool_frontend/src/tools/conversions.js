@@ -24,13 +24,13 @@ export function convertNanosecondsToDays(nanoseconds) {
   return days;
 }
 
-export function convertNanoToFormattedDate(timestampNanos, format = 'MMMM Do') {
+export function convertNanoToFormattedDate(timestampNanos, format = "MMM Do") {
   // Convert nanoseconds to milliseconds
   const timestampMillis = Math.floor(timestampNanos / 1_000_000);
-  
+
   // Create a moment object from the milliseconds
   const momentDate = moment(timestampMillis);
-  
+
   // Format the date as needed
   return momentDate.format(format);
 }
@@ -80,3 +80,40 @@ export function deepConvertToString(obj) {
 
   return newObj;
 }
+
+export const getWinningChanceIncrease = (
+  oldStakeE8s,
+  newAmountIcp,
+  totalStakeE8s
+) => {
+  // Validate input
+  if (
+    isNaN(oldStakeE8s) ||
+    isNaN(newAmountIcp) ||
+    isNaN(totalStakeE8s) ||
+    oldStakeE8s < 0 ||
+    newAmountIcp < 0 ||
+    totalStakeE8s <= 0
+  ) {
+    return `+ ??%`;
+  }
+
+  // Calculate the old percentage chance of winning based on the old stake and total stake
+  const oldPercentageChance =
+    (Number(oldStakeE8s) / Number(totalStakeE8s)) * 100;
+
+  // Convert the new amount of ICP to e8s (smallest unit of ICP)
+  const newAmount = Number(icpToE8s(newAmountIcp));
+
+  // Calculate the new total stake after adding the new amount
+  const newtotalStake = Number(totalStakeE8s) + newAmount;
+
+  // Calculate the new stake after adding the new amount to the old stake
+  const newStake = Number(oldStakeE8s) + newAmount;
+
+  // Calculate the new percentage chance of winning based on the new stake and new total stake
+  const newPercentageChance = (Number(newStake) / Number(newtotalStake)) * 100;
+
+  // Return the increase in winning chance
+  return `+ ${(newPercentageChance - oldPercentageChance).toFixed(4)}%`;
+};

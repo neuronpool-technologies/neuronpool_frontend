@@ -31,7 +31,11 @@ import {
 } from "@chakra-ui/react";
 import { WarningIcon } from "@chakra-ui/icons";
 import IcLogo from "../../../../assets/ic-logo.png";
-import { e8sToIcp, icpToE8s } from "../../../tools/conversions";
+import {
+  e8sToIcp,
+  getWinningChanceIncrease,
+  icpToE8s,
+} from "../../../tools/conversions";
 import { useSelector, useDispatch } from "react-redux";
 import { Auth, InfoRow, ProcessTime } from "../../../components";
 import {
@@ -53,10 +57,10 @@ import { fetchProtocolInformation } from "../../../state/ProtocolSlice";
 const steps = [{ description: "Approve ICP" }, { description: "Stake ICP" }];
 
 const IcpStake = () => {
-  const { icp_balance, logged_in, principal } = useSelector(
+  const { icp_balance, neuronpool_balance, logged_in, principal } = useSelector(
     (state) => state.Profile
   );
-  const { icrc_identifier, minimum_stake } = useSelector(
+  const { icrc_identifier, minimum_stake, total_stake_deposits } = useSelector(
     (state) => state.Protocol
   );
   const dispatch = useDispatch();
@@ -276,6 +280,17 @@ const IcpStake = () => {
                           icpToE8s(Number(amount)) - BigInt(networkFeeE8s * 2)
                         )
                       ).toFixed(4)} ICP`}
+                    />
+                  </Box>
+                  <Divider />
+                  <Box w="100%" color="green.500">
+                    <InfoRow
+                      title={"Winning chance"}
+                      stat={getWinningChanceIncrease(
+                        neuronpool_balance,
+                        amount,
+                        total_stake_deposits
+                      )}
                     />
                   </Box>
                 </VStack>

@@ -73,13 +73,14 @@ const RewardPool = () => {
           />
           <Divider />
           <InfoRow
-            title={"Est. Next distribution"}
+            title={"Next distribution"}
             stat={
               historyStatus === "succeeded" ? (
                 lastDistribution ? (
                   convertNanoToFormattedDate(
                     Number(lastDistribution.timestamp_nanos) +
-                      Number(reward_timer_duration_nanos)
+                      Number(reward_timer_duration_nanos),
+                    "MMM Do, ha"
                   )
                 ) : (
                   "--/--/--"
