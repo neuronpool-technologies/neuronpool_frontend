@@ -24,13 +24,28 @@ import HintPopover from "../../../components/HintPopover";
 const ProtocolStats = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const protocolInfo = useSelector((state) => state.Protocol);
+  const historyInfo = useSelector((state) => state.History);
+
+  const totalRewards = historyInfo.reward_distributions.reduce(
+    (
+      accum,
+      {
+        action: {
+          SpawnReward: { maturity_e8s },
+        },
+      }
+    ) => {
+      return accum + Number(maturity_e8s);
+    },
+    0
+  );
 
   let formatCurrency = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
     minimumFractionDigits: 2, // No decimals
     maximumFractionDigits: 2, // No decimals
-    currencyDisplay: "symbol"
+    currencyDisplay: "symbol",
   });
 
   let tvl = formatCurrency.format(
@@ -98,6 +113,17 @@ const ProtocolStats = () => {
           />
           <Divider />
           <InfoRow
+            title={"Rewards won"}
+            stat={
+              historyInfo.status === "succeeded" ? (
+                `${e8sToIcp(Number(totalRewards)).toFixed(2)} ICP`
+              ) : (
+                <Spinner size="sm" />
+              )
+            }
+          />
+          <Divider />
+          <InfoRow
             title={"APR estimate"}
             stat={
               protocolInfo.status === "succeeded" ? (
@@ -108,7 +134,7 @@ const ProtocolStats = () => {
             }
           >
             <HintPopover
-              details={`The APR estimate deducts the NeuronPool fees and represents the amount of ICP rewards the protocol will generate annually. The estimate is ${Number(
+              details={`The APR estimate represents the amount of ICP rewards the protocol will generate annually. The estimate is ${Number(
                 Number(protocolInfo.apr_estimate)
               )}%, which equals ${e8sToIcp(
                 Number(protocolInfo.apr_e8s)

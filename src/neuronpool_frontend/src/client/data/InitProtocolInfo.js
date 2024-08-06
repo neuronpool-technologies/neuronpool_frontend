@@ -44,9 +44,9 @@ export const InitProtocolInfo = async () => {
       fetch(statsUrl).then((x) => x.json()),
     ]);
 
-    // Calculate the 6-month reward and subtract the 10% protocol fee
+    // Calculate the 6-month reward
     const sixMonthRewardAfterFee =
-      (oneYearReward - (twoYearReward - oneYearReward) / 2) * 0.9;
+      oneYearReward - (twoYearReward - oneYearReward) / 2;
 
     // Estimate the ICP rewards for the 6-month stake
     const rewards_e8s =
