@@ -35,9 +35,9 @@ const CollectBalance = ({ unclaimedPrizeNeuronsInfo, status }) => {
   const [readyNeurons, setReadyNeurons] = useState(null);
 
   const getMyRewards = () => {
+    let pending = 0;
+    let ready = 0;
     if (unclaimedPrizeNeuronsInfo.length > 0) {
-      let pending = 0;
-      let ready = 0;
       for (let { state } of unclaimedPrizeNeuronsInfo) {
         if (Number(state) === 3) {
           ready++;
@@ -45,9 +45,10 @@ const CollectBalance = ({ unclaimedPrizeNeuronsInfo, status }) => {
           pending++;
         }
       }
-      setPendingNeurons(pending);
-      setReadyNeurons(ready);
     }
+
+    setPendingNeurons(pending);
+    setReadyNeurons(ready);
   };
 
   useEffect(() => {

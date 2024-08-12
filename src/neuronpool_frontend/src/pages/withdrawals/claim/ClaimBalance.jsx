@@ -27,9 +27,9 @@ const ClaimBalance = ({ withdrawalNeuronsInfo, status }) => {
   const [readyNeurons, setReadyNeurons] = useState(null);
 
   const getMyWithdrawals = () => {
+    let pending = 0;
+    let ready = 0;
     if (withdrawalNeuronsInfo.length > 0) {
-      let pending = 0;
-      let ready = 0;
       for (let { state, stake_e8s } of withdrawalNeuronsInfo) {
         // we need to ignore already claimed neurons
 
@@ -42,10 +42,10 @@ const ClaimBalance = ({ withdrawalNeuronsInfo, status }) => {
           }
         }
       }
-
-      setPendingNeurons(pending);
-      setReadyNeurons(ready);
     }
+
+    setPendingNeurons(pending);
+    setReadyNeurons(ready);
   };
 
   useEffect(() => {
