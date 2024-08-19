@@ -6,51 +6,23 @@ export const InitProtocolInfo = async () => {
   try {
     const neuronpool = await startNeuronPoolClient();
 
-    const priceUrl = "https://api.pro.coinbase.com/products/ICP-USD/ticker";
-    const statsUrl = "https://ic-api.internetcomputer.org/api/v3/daily-stats";
-
-    const [
-      {
-        ok: {
-          account_identifier,
-          icrc_identifier,
-          minimum_stake,
-          minimum_withdrawal,
-          protocol_fee_percentage,
-          reward_timer_duration_nanos,
-          default_neuron_followee,
-          main_neuron_id,
-          main_neuron_dissolve_seconds,
-          total_protocol_fees,
-          total_stake_amount,
-          total_stake_deposits,
-          total_stakers,
-        },
+    const {
+      ok: {
+        account_identifier,
+        icrc_identifier,
+        minimum_stake,
+        minimum_withdrawal,
+        protocol_fee_percentage,
+        reward_timer_duration_nanos,
+        default_neuron_followee,
+        main_neuron_id,
+        main_neuron_dissolve_seconds,
+        total_protocol_fees,
+        total_stake_amount,
+        total_stake_deposits,
+        total_stakers,
       },
-      { price },
-      {
-        daily_stats: [
-          {
-            estimated_rewards_percentage: {
-              "1_year": oneYearReward, // assign the destructured items
-              "2_year": twoYearReward,
-            },
-          },
-        ],
-      },
-    ] = await Promise.all([
-      neuronpool.get_protocol_information(),
-      fetch(priceUrl).then((x) => x.json()),
-      fetch(statsUrl).then((x) => x.json()),
-    ]);
-
-    // Calculate the 6-month reward
-    const sixMonthRewardAfterFee =
-      oneYearReward - (twoYearReward - oneYearReward) / 2;
-
-    // Estimate the ICP rewards for the 6-month stake
-    const rewards_e8s =
-      Number(total_stake_amount) * (sixMonthRewardAfterFee / 100);
+    } = await neuronpool.get_protocol_information();
 
     return {
       account_identifier: account_identifier.toString(),
@@ -66,9 +38,6 @@ export const InitProtocolInfo = async () => {
       total_stake_amount: total_stake_amount.toString(),
       total_stake_deposits: total_stake_deposits.toString(),
       total_stakers: total_stakers.toString(),
-      icp_price_usd: price,
-      apr_estimate: sixMonthRewardAfterFee.toFixed(2).toString(),
-      apr_e8s: rewards_e8s.toString(),
     };
   } catch (error) {
     console.error(error);
@@ -95,9 +64,6 @@ export const InitProtocolInfo = async () => {
       total_stake_amount: "",
       total_stake_deposits: "",
       total_stakers: "",
-      icp_price_usd: "",
-      apr_estimate: "",
-      apr_e8s: "",
     };
   }
 };

@@ -19,7 +19,6 @@ import {
 import { useSelector } from "react-redux";
 import { e8sToIcp } from "../../../tools/conversions";
 import { InfoRow } from "../../../components";
-import HintPopover from "../../../components/HintPopover";
 
 const ProtocolStats = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -38,20 +37,6 @@ const ProtocolStats = () => {
       return accum + Number(maturity_e8s);
     },
     0
-  );
-
-  let formatCurrency = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2, // No decimals
-    maximumFractionDigits: 2, // No decimals
-    currencyDisplay: "symbol",
-  });
-
-  let tvl = formatCurrency.format(
-    Number(
-      protocolInfo.icp_price_usd * e8sToIcp(protocolInfo.total_stake_amount)
-    )
   );
 
   return (
@@ -102,17 +87,6 @@ const ProtocolStats = () => {
           />
           <Divider />
           <InfoRow
-            title={"Total value locked"}
-            stat={
-              protocolInfo.status === "succeeded" ? (
-                `${tvl}`
-              ) : (
-                <Spinner size="sm" />
-              )
-            }
-          />
-          <Divider />
-          <InfoRow
             title={"Rewards won"}
             stat={
               historyInfo.status === "succeeded" ? (
@@ -122,25 +96,6 @@ const ProtocolStats = () => {
               )
             }
           />
-          <Divider />
-          <InfoRow
-            title={"APR estimate"}
-            stat={
-              protocolInfo.status === "succeeded" ? (
-                `${Number(protocolInfo.apr_estimate)}%`
-              ) : (
-                <Spinner size="sm" />
-              )
-            }
-          >
-            <HintPopover
-              details={`The APR estimate represents the amount of ICP rewards the protocol will generate annually. The estimate is ${Number(
-                Number(protocolInfo.apr_estimate)
-              )}%, which equals ${e8sToIcp(
-                Number(protocolInfo.apr_e8s)
-              ).toFixed(2)} ICP.`}
-            />
-          </InfoRow>
         </VStack>
       </Box>
     </Box>
