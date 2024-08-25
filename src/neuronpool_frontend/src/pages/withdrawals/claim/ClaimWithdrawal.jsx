@@ -49,8 +49,6 @@ const ClaimWithdrawal = ({ state, id, stake }) => {
       });
 
       if ("err" in claimResult) {
-        dispatch(fetchWithdrawals());
-
         setClaiming(false);
         setFailed(true);
         setClaimed(true);
@@ -63,15 +61,10 @@ const ClaimWithdrawal = ({ state, id, stake }) => {
         });
       } else {
         // success
-        dispatch(fetchWallet({ principal }));
-        dispatch(fetchWithdrawals());
-
         setClaiming(false);
         setClaimed(true);
       }
     } catch (error) {
-      dispatch(fetchWithdrawals());
-
       setClaiming(false);
       setFailed(true);
       setClaimed(true);
@@ -86,6 +79,9 @@ const ClaimWithdrawal = ({ state, id, stake }) => {
   };
 
   const closeModal = () => {
+    dispatch(fetchWallet({ principal }));
+    dispatch(fetchWithdrawals());
+    
     setClaiming(false);
     setClaimed(false);
     setFailed(false);

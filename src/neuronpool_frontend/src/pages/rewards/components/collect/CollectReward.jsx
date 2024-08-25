@@ -56,8 +56,6 @@ const CollectReward = ({ state, id, stake }) => {
       });
 
       if ("err" in collectResult) {
-        dispatch(fetchRewardNeurons());
-
         setCollecting(false);
         setFailed(true);
         setCollected(true);
@@ -70,15 +68,10 @@ const CollectReward = ({ state, id, stake }) => {
         });
       } else {
         // success
-        dispatch(fetchWallet({ principal }));
-        dispatch(fetchRewardNeurons());
-
         setCollecting(false);
         setCollected(true);
       }
     } catch (error) {
-      dispatch(fetchRewardNeurons());
-
       setCollecting(false);
       setFailed(true);
       setCollected(true);
@@ -93,6 +86,12 @@ const CollectReward = ({ state, id, stake }) => {
   };
 
   const closeModal = () => {
+    // because the reward neuron fetch is instant if no neurons left,
+    // it's best to update after user has closed the modal
+    // otherwise the popup will remove from the UI
+    dispatch(fetchWallet({ principal }));
+    dispatch(fetchRewardNeurons());
+
     setCollecting(false);
     setCollected(false);
     setFailed(false);

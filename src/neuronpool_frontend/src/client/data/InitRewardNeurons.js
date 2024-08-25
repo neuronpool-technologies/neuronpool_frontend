@@ -19,6 +19,15 @@ export const InitRewardNeurons = async () => {
       (neuron) => !claimedNeuronIds.includes(neuron)
     );
 
+    // if no unclaimed neurons can return here
+    if (unclaimedNeuronsIds.length <= 0) {
+      return {
+        claimed_prize_neurons_ids: deepConvertToString(Array.from(claimed)),
+        unclaimed_prize_neurons_ids: [],
+        unclaimed_prize_neurons_information: [],
+      };
+    }
+
     const { neuron_infos, full_neurons } =
       await neuronpool.list_neuron_information({
         neuronIds: unclaimedNeuronsIds,
@@ -27,7 +36,7 @@ export const InitRewardNeurons = async () => {
 
     // while neurons are spawning the ICP amount is still maturity
     // when a neuron is ready to disburse the maturity is converted to the stake amount
-    
+
     // Create a map of neuron ids to their full_neurons information for quick lookup
     const neuronMap = new Map(
       full_neurons.map((neuron) => {
