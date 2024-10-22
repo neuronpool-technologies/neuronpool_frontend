@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   useColorMode,
@@ -11,7 +11,9 @@ import {
   Th,
   Td,
   Tbody,
+  Button,
 } from "@chakra-ui/react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import {
   darkColor,
   darkColorBox,
@@ -31,9 +33,16 @@ import {
 const PreviousWinners = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const { reward_distributions } = useSelector((state) => state.History);
+  const [page, setPage] = useState(0);
+  const itemsPerPage = 5;
 
   // reverse to show last first in a shallow copy
   const reversedRewards = [...reward_distributions].reverse();
+
+  const rewardsToShow = reversedRewards.slice(
+    page * itemsPerPage,
+    page * itemsPerPage + itemsPerPage
+  );
   return (
     <Box>
       <Flex mt={6}>
@@ -102,7 +111,7 @@ const PreviousWinners = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {reversedRewards.map((reward) => {
+            {rewardsToShow.map((reward) => {
               return (
                 <WinnerTableItem
                   key={reward.timestamp_nanos}
@@ -114,6 +123,40 @@ const PreviousWinners = () => {
             })}
           </Tbody>
         </Table>
+        <Flex w="100%" align="center" justify="center" gap={3}>
+          <Button
+            aria-label="Previous page"
+            leftIcon={<ChevronLeftIcon />}
+            rounded="full"
+            boxShadow="base"
+            w="100%"
+            isDisabled={!page}
+            onClick={() =>
+              setPage((prevPage) => {
+                return prevPage - 1;
+              })
+            }
+          >
+            Prev
+          </Button>
+          <Button
+            aria-label="Previous page"
+            rightIcon={<ChevronRightIcon />}
+            rounded="full"
+            boxShadow="base"
+            w="100%"
+            isDisabled={
+              page * itemsPerPage + itemsPerPage >= reversedRewards.length
+            }
+            onClick={() =>
+              setPage((prevPage) => {
+                return prevPage + 1;
+              })
+            }
+          >
+            Next
+          </Button>
+        </Flex>
       </TableContainer>
     </Box>
   );
