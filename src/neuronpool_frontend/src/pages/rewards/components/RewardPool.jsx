@@ -79,8 +79,9 @@ const RewardPool = () => {
                 lastDistribution ? (
                   convertNanoToFormattedDate(
                     Number(lastDistribution.timestamp_nanos) +
-                      Number(reward_timer_duration_nanos),
-                    "MMM Do, ha"
+                      Number(reward_timer_duration_nanos) +
+                      86400000000000,
+                    "MMM Do"
                   )
                 ) : (
                   "--/--/--"
