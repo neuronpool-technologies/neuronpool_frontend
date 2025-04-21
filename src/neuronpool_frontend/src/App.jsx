@@ -1,6 +1,13 @@
 import React from "react";
 import { Nav, Footer } from "./components";
-import { Flex, Box } from "@chakra-ui/react";
+import {
+  Flex,
+  Box,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from "@chakra-ui/react";
 import { Stake, Wallet, Withdrawals, Rewards, ErrorPage } from "./pages";
 import {
   BrowserRouter as Router,
@@ -34,6 +41,22 @@ const AppLayout = () => {
     <Flex direction="column" h="100vh">
       <Box flex="1">
         <Nav />
+        <Alert
+          status="warning"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+          flexDirection="column"
+        >
+          <AlertIcon />
+          <AlertTitle>Important: Neuron Pool App Closing</AlertTitle>
+          <AlertDescription>
+            This app will be decommissioned in the coming year. Please unstake
+            and withdraw your ICP at your earliest convenience to avoid any
+            interruption. We appreciate your prompt attention and apologize for
+            any inconvenience this may cause.
+          </AlertDescription>
+        </Alert>
         <Outlet />
       </Box>
       <Footer />
