@@ -203,12 +203,7 @@ const IcpStake = () => {
             boxShadow="base"
             w="100%"
             colorScheme="blue"
-            isDisabled={
-              (!staked && Number(icp_balance) < Number(minimum_stake)) ||
-              icpToE8s(Number(amount)) <
-                Number(minimum_stake) + networkFeeE8s * 2 ||
-              (!staked && icpToE8s(Number(amount)) > Number(icp_balance))
-            }
+            isDisabled={true}
           >
             Stake
           </Button>
